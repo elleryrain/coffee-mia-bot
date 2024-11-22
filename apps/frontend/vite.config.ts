@@ -1,12 +1,12 @@
 /// <reference types='vitest' />
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import react from '@vitejs/plugin-react-swc';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 
 export default defineConfig({
   root: __dirname,
-  cacheDir: '../../node_modules/.vite/apps/mia-coffee-bot',
+  cacheDir: '../../node_modules/.vite/apps/frontend',
   server: {
     port: 4200,
     host: 'localhost',
@@ -21,11 +21,14 @@ export default defineConfig({
   //  plugins: [ nxViteTsPaths() ],
   // },
   build: {
-    outDir: '../../dist/apps/mia-coffee-bot',
+    outDir: '../../dist/apps/frontend',
     emptyOutDir: true,
     reportCompressedSize: true,
     commonjsOptions: {
       transformMixedEsModules: true,
     },
+  },
+  define: {
+    'import.meta.vitest': undefined,
   },
 });
