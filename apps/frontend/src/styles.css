@@ -2,3 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 /* You can add global styles to this file, and also import other style files */
+
+@layer components {
+  .container {
+    width: 392px;
+    margin: 0 auto;
+  }
+
+  .navItem {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+  }
+
+  .navItemActive > svg > path {
+    stroke: #ff9500;
+  }
+
+  .mainPageIC > svg > path {
+    stroke: rgba(142, 142, 147, 1);
+  }
+}
