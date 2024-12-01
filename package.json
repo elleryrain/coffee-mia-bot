@@ -9,6 +9,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
+    "@fastify/swagger": "^8",
+    "@fastify/swagger-ui": "^2",
     "@nestjs/platform-fastify": "^10.4.12",
     "@nestjs/schematics": "^10.0.1",
     "@nestjs/testing": "^10.0.2",
