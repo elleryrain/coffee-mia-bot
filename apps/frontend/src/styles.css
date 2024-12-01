@@ -5,8 +5,12 @@
 
 @layer components {
   .container {
-    width: 392px;
+    width: 360px;
     margin: 0 auto;
+  }
+
+  .autoMargin {
+    margin-left: calc((100vw-376px)/2)
   }
 
   .navItem {
@@ -25,5 +29,29 @@
 
   .mainPageIC > svg > path {
     stroke: rgba(142, 142, 147, 1);
+  }
+
+  .topSlide {
+    width: 340px;
+    height: 400px;
+    border-radius: 16px;
+  }
+
+  .linkCard {
+    width: 112px;
+    height: 112px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 12px;
+
+  }
+
+  .smallSlideImg {
+    width: 150px;
+    height: 150px;
+    border-radius: 12px;
+    border-style: solid;
+    border-width: 1px;
+    display: block;
   }
 }

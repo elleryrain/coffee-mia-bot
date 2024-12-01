@@ -4,7 +4,9 @@ import { NavBar } from '../components';
 export function App() {
   return (
     <>
-      <Outlet />
+      <div className="overflow-y-scroll h-[calc(100vh-68px)]">
+        <Outlet />
+      </div>
       <NavBar />
     </>
   );
