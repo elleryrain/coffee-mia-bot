@@ -10,7 +10,7 @@ module.exports = {
       '{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,html}'
     ),
     ...createGlobPatternsForDependencies(__dirname),
-    "../../node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+    '../../node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -33,14 +33,14 @@ module.exports = {
         systemBlue: '#007AFF',
         blue60: '#2F80ED',
         blue10: 'EBF1FF',
-        gray90: '#3C3C43',
-        gray80: '#525259',
-        gray70: '#767680',
-        gray60: '#8E8E93',
-        gray50: '#A9A9AC',
-        gray40: '#D1D1D5',
-        gray30: '#E3E3E8',
-        gray20: '#F2F2F2',
+        gray90: '#404040',
+        gray80: '#565656',
+        gray70: '#7B7B7B',
+        gray60: '#909090',
+        gray50: '#ABABAB',
+        gray40: '#D3D3D3',
+        gray30: '#E6E6E6',
+        gray20: '#F5F5F5',
         gray15: '#F5F5F5',
       },
       boxShadow: {
