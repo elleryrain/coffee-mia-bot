@@ -2,3 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 /* You can add global styles to this file, and also import other style files */
+
+@layer components {
+  .container {
+    width: 360px;
+    margin: 0 auto;
+  }
+
+  .autoMargin {
+    margin-left: calc((100vw-376px)/2)
+  }
+
+  .navItem {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+  }
+
+  .navItemActive > svg > path {
+    stroke: #ff9500;
+  }
+
+  .mainPageIC > svg > path {
+    stroke: rgba(142, 142, 147, 1);
+  }
+
+  .topSlide {
+    width: 340px;
+    height: 400px;
+    border-radius: 16px;
+  }
+
+  .linkCard {
+    width: 112px;
+    height: 112px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 12px;
+
+  }
+
+  .smallSlideImg {
+    width: 150px;
+    height: 150px;
+    border-radius: 12px;
+    border-style: solid;
+    border-width: 1px;
+    display: block;
+  }
+}

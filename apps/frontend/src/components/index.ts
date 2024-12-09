@@ -1,0 +1,5 @@
+export { NavBar } from './navBar/navBar';
+export { TopCarousel } from './mainPageComponents/topCarousel';
+export { CatrgoriesList } from './mainPageComponents/categoriesLinks';
+export { Carousel } from './Carousel/carousel';
+export { Popular } from './mainPageComponents/popular';
