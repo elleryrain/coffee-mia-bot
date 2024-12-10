@@ -1,0 +1,376 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "документация для api для mia coffee bot",
+    "version": "1.0.0",
+    "description": "Описание api для демонстрации документации в формате JSON"
+  },
+  "paths": {
+    "/api/item/grain": {
+      "get": {
+        "description": "роут для получения всех зёрен",
+        "responses": {
+          "200": {
+            "description": "успешное получение данных",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "nameCategory": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/ShortItem"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/item/dripPacks": {
+      "get": {
+        "description": "роут для получения всех дрип пакетов",
+        "responses": {
+          "200": {
+            "description": "успешное получение всех дрип пакетов",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "nameCategory": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/ShortItemWithCost"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/item/other": {
+      "get": {
+        "description": "роут для получения разных вещей",
+        "responses": {
+          "200": {
+            "description": "успешное получение всех разных вещей",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "nameCategory": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/ShortItemWithCost"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/item/new": {
+      "get": {
+        "description": "роут для получения всех новинок",
+        "responses": {
+          "200": {
+            "description": "успешное получение всех новинок",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShortItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/favorite": {
+      "get": {
+        "description": "роут для получения всей продукции, которую пользователь добавил в избранное",
+        "responses": {
+          "200": {
+            "description": "успешное получения всей продукции, добавленной в избранное",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShortItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "роут для добавления определённого товара в избранное",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "idItem",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "успешное добавление товара в избранное",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/item": {
+      "get": {
+        "description": "получение информации о товаре по id",
+        "parameters": [
+          {
+            "name": "idItem",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "успешное получение информации о товаре",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          }
+        },
+        "required": ["title", "description", "icon"]
+      },
+      "ShortItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string",
+            "nullable": true
+          },
+          "favorite": {
+            "type": "boolean"
+          }
+        },
+        "required": ["id", "title", "image", "favorite"]
+      },
+      "ShortItemWithCost": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ShortItem"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "cost": {
+                "type": "number"
+              }
+            },
+            "required": ["cost"]
+          }
+        ]
+      },
+      "ItemChars": {
+        "type": "object",
+        "properties": {
+          "region": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "roasting": {
+            "type": "string"
+          },
+          "cultivation": {
+            "type": "string"
+          },
+          "height": {
+            "type": "number"
+          },
+          "quality": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "region",
+          "country",
+          "roasting",
+          "cultivation",
+          "height",
+          "quality"
+        ]
+      },
+      "ItemConfiguration": {
+        "type": "object",
+        "properties": {
+          "cost": {
+            "type": "number"
+          },
+          "weight": {
+            "type": "string"
+          }
+        },
+        "required": ["cost", "weight"]
+      },
+      "ItemInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "descriptors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["id", "title", "descriptors"]
+      },
+      "Item": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ItemInfo"
+          },
+          {
+            "$ref": "#/components/schemas/ItemChars"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "configurations": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ItemConfiguration"
+                }
+              },
+              "grindingTypes": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/GrindingType"
+                }
+              },
+              "images": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "GrindingType": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "title"]
+      }
+    }
+  }
+}
