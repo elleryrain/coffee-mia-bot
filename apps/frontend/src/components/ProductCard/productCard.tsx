@@ -1,5 +1,7 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
+import { useCartStore } from '../../store/cartStore';
+import { products } from '../../mocks/mockProducts';
 
 export const ProductCard: FC<{
   product: {
@@ -11,10 +13,12 @@ export const ProductCard: FC<{
     discountPrice?: number;
   };
 }> = ({ product }) => {
+  const cartState = useCartStore();
+
   return (
-    <div className="mb-2 flex flex-col justify-between items-start">
+    <div className="mb-2 flex flex-col justify-between items-start w-[calc((100%-24px)/2)]">
       <Link
-        to=""
+        to={`/products/${product.id}`}
         className={`productCard border-gray20 flex flex-col gap-3`}
         key={product.id}
       >
@@ -22,13 +26,13 @@ export const ProductCard: FC<{
           <button>
             <img
               className="absolute top-2 right-2"
-              src={`${product.favorite ? 'heart_active.svg' : 'heart.svg'}`}
+              src={`${product.favorite ? '/heart_active.svg' : 'heart.svg'}`}
               alt="like"
             />
           </button>
           <img
             className=""
-            src={product.image.length === 0 ? 'empty_img.svg' : product.image}
+            src={product.image.length === 0 ? '/empty_img.svg' : product.image}
             alt="coffee"
           />
         </div>
@@ -37,7 +41,12 @@ export const ProductCard: FC<{
         </p>
       </Link>
       {product.price && (
-        <div className="flex items-center gap-1 px-4 py-1 bg-gray20 mt-4 rounded-[20px] text-[16px] leading-6 font-medium">
+        <button
+          onClick={() => {
+            cartState.addProduct({ ...products[product.id], count: 1 });
+          }}
+          className="flex items-center gap-1 px-4 py-1 bg-gray20 mt-4 rounded-[20px] text-[16px] leading-6 font-medium"
+        >
           {product.discountPrice && (
             <p className="discount relative text-[11px] leading-[11px] text-systemOrange">
               {product.discountPrice}₽
@@ -47,7 +56,7 @@ export const ProductCard: FC<{
             {product.price}₽
           </p>
           <img src="/plus-icon-gray.svg" alt="add" />
-        </div>
+        </button>
       )}
     </div>
   );
