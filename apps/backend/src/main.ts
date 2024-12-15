@@ -10,9 +10,10 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-import swagger from '@fastify/swagger';
+
 import swaggerUI from '@fastify/swagger-ui';
 import path from 'node:path';
+import { backendPort } from './config/env';
 
 const swaggerPath = path.join(
   __dirname,
@@ -27,7 +28,7 @@ async function bootstrap() {
     new FastifyAdapter()
   );
   const globalPrefix = 'api';
-  await app.register(swagger, {
+  await app.register(require('@fastify/swagger'), {
     mode: 'static',
     // prefix: 'docs',
 
@@ -37,14 +38,15 @@ async function bootstrap() {
     },
     // exposeRoutes: true,
   });
-  await app.register(swaggerUI, {
+
+  await app.register(require('@fastify/swagger-ui'), {
     routePrefix: '/api/docs',
   });
+
   app.setGlobalPrefix(globalPrefix);
-  const port = Number(process.env.PORT) || 3000;
-  await app.listen({ port: port, host: '0.0.0.0' });
+  await app.listen({ port: backendPort, host: '0.0.0.0' });
   Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
+    `🚀 Application is running on: http://localhost:${backendPort}/${globalPrefix}`
   );
 }
 

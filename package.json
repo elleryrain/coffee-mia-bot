@@ -4,8 +4,12 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev:front": "nx serve frontend",
-    "dev:back": "nx serve backend"
+    "build": "nx run-many -t build",
+    "dev:front": "nx serve frontend --host",
+    "dev:backend": "nx serve backend",
+    "db:generate": "yarn drizzle-kit generate --out apps/backend/src/drizzle/migrations --schema apps/backend/src/drizzle/schemas/schema.ts --dialect postgresql",
+    "db:migrate": "cd apps/backend && yarn drizzle-kit migrate",
+    "db:push": "cd apps/backend && yarn drizzle-kit push"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
@@ -33,6 +37,7 @@
     "@testing-library/react": "15.0.6",
     "@types/jest": "^29.5.12",
     "@types/node": "18.16.9",
+    "@types/pg": "^8.11.10",
     "@types/react": "18.3.1",
     "@types/react-dom": "18.3.0",
     "@vitejs/plugin-react": "^4.2.0",
@@ -50,6 +55,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "jest-environment-node": "^29.7.0",
     "jsdom": "~22.1.0",
+    "localtunnel": "^2.0.2",
     "nx": "20.1.2",
     "postcss": "8.4.38",
     "prettier": "^2.6.2",
@@ -57,12 +63,14 @@
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
     "tslib": "^2.3.0",
+    "tsx": "^4.19.2",
     "typescript": "~5.5.2",
     "typescript-eslint": "^8.0.0",
     "vite": "^5.0.0",
     "vite-plugin-svgr": "^4.2.0",
     "vitest": "^1.3.1",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "zod": "^3.24.1"
   },
   "packageManager": "yarn@4.5.2",
   "dependencies": {
@@ -70,8 +78,16 @@
     "@nestjs/core": "^10.0.2",
     "@nestjs/platform-express": "^10.0.2",
     "@nextui-org/react": "^2.4.8",
+    "@twa-dev/sdk": "^8.0.1",
+    "@vitejs/plugin-basic-ssl": "^1.2.0",
+    "dotenv": "^16.4.7",
+    "drizzle-kit": "^0.30.0",
+    "drizzle-orm": "^0.38.1",
+    "drizzle-zod": "^0.6.0",
     "embla-carousel-react": "^8.5.1",
+    "fastify": "^4",
     "framer-motion": "^11.11.17",
+    "pg": "^8.13.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-router-dom": "6.11.2",

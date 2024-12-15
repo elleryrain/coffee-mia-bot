@@ -204,8 +204,49 @@
           }
         }
       }
+    },
+    "/api/item/popular": {
+      "get": {
+        "description": "Получение часто покупаемых товаров",
+        "responses": {
+          "200": {
+            "description": "успешное получение информации о популярных",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShortItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/grindingTypes": {
+      "get": {
+        "description": "Получение всех типов помола для кофе",
+        "responses": {
+          "200": {
+            "description": "успешное получение информации о всех типах помола",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GrindingType"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
+
   "components": {
     "schemas": {
       "Category": {
@@ -254,6 +295,9 @@
             "type": "object",
             "properties": {
               "cost": {
+                "type": "number"
+              },
+              "discountCost": {
                 "type": "number"
               }
             },
@@ -341,12 +385,6 @@
                 "type": "array",
                 "items": {
                   "$ref": "#/components/schemas/ItemConfiguration"
-                }
-              },
-              "grindingTypes": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/GrindingType"
                 }
               },
               "images": {
