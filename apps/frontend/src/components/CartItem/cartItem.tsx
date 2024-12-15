@@ -1,12 +1,16 @@
 import { FC } from 'react';
 import { CartProduct, useCartStore } from '../../store/cartStore';
+import { Link } from 'react-router-dom';
+import { Modal, ModalContent, useDisclosure } from '@nextui-org/react';
 
 export const CartItem: FC<{ product: CartProduct }> = ({ product }) => {
   const cartState = useCartStore();
 
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   return (
     <div className="rounded-3xl border-gray20 border-1 p-4">
-      <div className="flex gap-3 mb-4">
+      <Link to={`/products/${product.id}`} className="flex gap-3 mb-4">
         <img
           src={`${product.image ? product.image : '/empty_img.svg'}`}
           alt="coffee"
@@ -28,21 +32,23 @@ export const CartItem: FC<{ product: CartProduct }> = ({ product }) => {
             {product.price}₽
           </p>
         </div>
-      </div>
+      </Link>
       <div className="flex justify-between">
         <div className="flex gap-3">
-          <button className="w-8 h-8 rounded-lg bg-gray20 flex justify-center items-center">
+          <button
+            className={`w-8 h-8 rounded-lg ${
+              product.isFavourite ? 'bg-red10' : 'bg-gray20'
+            } flex justify-center items-center`}
+          >
             <img
               src={`${
-                product.isFavourite ? '/heart_active.svg' : '/heart.svg'
+                product.isFavourite ? '/heart_active.svg' : '/heart-nobg.svg'
               }`}
               alt="like"
             />
           </button>
           <button
-            onClick={() => {
-              cartState.deleteProduct(product.id);
-            }}
+            onClick={onOpen}
             className="w-8 h-8 rounded-lg bg-gray20 flex justify-center items-center"
           >
             <img src="/trashbin-icon.svg" alt="delete" />
@@ -70,6 +76,43 @@ export const CartItem: FC<{ product: CartProduct }> = ({ product }) => {
           </button>
         </div>
       </div>
+      <Modal
+        classNames={{
+          base: 'w-[340px] rounded-3xl',
+          wrapper: 'flex items-center justify-center',
+          closeButton: 'hidden',
+        }}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        backdrop="opaque"
+      >
+        <ModalContent className="">
+          {(onClose) => (
+            <div className="p-8 flex flex-col gap-6">
+              <p className="text-[20px] font-semibold leading-[22px]">
+                Удалить товар из корзины?
+              </p>
+              <div className="flex gap-6">
+                <button
+                  className="py-4 px-8 rounded-xl text-primaryBlack bg-orange10 border-[(255,230,208,1)]"
+                  onClick={onClose}
+                >
+                  Отмена
+                </button>
+                <button
+                  className="py-4 px-8 rounded-xl text-orange10 bg-systemRed border-red60 border-1"
+                  onClick={() => {
+                    cartState.deleteProduct(product.id);
+                    onClose();
+                  }}
+                >
+                  Удалить
+                </button>
+              </div>
+            </div>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 };
