@@ -6,12 +6,12 @@ export const TopCarousel: FC = () => {
   const [emblaRef] = useEmblaCarousel();
 
   return (
-    <div className="mt-2 ml-[calc((100vw-376px)/2)]">
+    <div className="mt-2">
       <div className="embla" ref={emblaRef}>
-        <div className="embla__container w-[376px] gap-2">
+        <div className="embla__container w-[calc(100vw-16px)] px-4 gap-2">
           {mainBanners.map((banner) => (
             <div
-              className={`embla__slide topSlide flex items-end relative overflow-hidden`}
+              className={`embla__slide topSlide last:pr-4 flex items-end relative overflow-hidden`}
               key={banner.id}
             >
               <div className="absolute top-0 left-0 w-full h-full z-[5] bg-gradient-to-b from-[rgba(0,0,0,0)] to-[rgba(0,0,0,.5)]"></div>
