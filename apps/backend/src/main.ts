@@ -28,6 +28,7 @@ async function bootstrap() {
     new FastifyAdapter()
   );
   const globalPrefix = 'api';
+  await app.register(require('@fastify/cors'));
   await app.register(require('@fastify/swagger'), {
     mode: 'static',
     // prefix: 'docs',

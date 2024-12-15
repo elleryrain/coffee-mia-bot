@@ -2349,6 +2349,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fastify/cors@npm:^8":
+  version: 8.5.0
+  resolution: "@fastify/cors@npm:8.5.0"
+  dependencies:
+    fastify-plugin: "npm:^4.0.0"
+    mnemonist: "npm:0.39.6"
+  checksum: 10c0/b415fa33c5d9f0f3f9538d1dc3efa5a763428b939de50a4326006a20e4c06bca25ee38f19df2d43ab8e1430f82d9f1e456b4f06acb22206d7847dc2668085134
+  languageName: node
+  linkType: hard
+
 "@fastify/error@npm:^3.2.0, @fastify/error@npm:^3.3.0, @fastify/error@npm:^3.4.0":
   version: 3.4.1
   resolution: "@fastify/error@npm:3.4.1"
@@ -2977,6 +2987,7 @@ __metadata:
   resolution: "@mia-coffee-bot/source@workspace:."
   dependencies:
     "@eslint/js": "npm:^9.8.0"
+    "@fastify/cors": "npm:^8"
     "@fastify/swagger": "npm:^8"
     "@fastify/swagger-ui": "npm:^2"
     "@nestjs/common": "npm:^10.0.2"
