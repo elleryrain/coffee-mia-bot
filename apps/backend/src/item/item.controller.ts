@@ -5,6 +5,23 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 @Controller('item')
 export class ItemController {
   constructor(private readonly itemServiceDB: ItemServiceDB) {}
+
+  @Get()
+  async getExtendedItemHandler(
+    @Req()
+    req: FastifyRequest<{
+      Querystring: {
+        itemId: string;
+      };
+    }>,
+    @Res() reply: FastifyReply
+  ) {
+    const { itemId } = req.query;
+    const numberItemId = Number(itemId);
+    const item = await this.itemServiceDB.getExtendedItemById(numberItemId);
+    return reply.send(item);
+  }
+
   @Get('grain')
   async getGrainItemsHandler(
     @Req() req: FastifyRequest,
