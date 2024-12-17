@@ -3,6 +3,7 @@
 * {
   font-family: 'Inter', sans-serif;
   color: rgba(24, 24, 26, 1);
+  letter-spacing: -2.4%;
 }
 
 .embla {
@@ -16,4 +17,8 @@
 .embla__slide {
   flex: 0 0 100%;
   min-width: 0;
+}
+
+.scroll {
+  scrollbar-width: none;
 }
