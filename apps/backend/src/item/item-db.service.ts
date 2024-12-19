@@ -121,7 +121,7 @@ export class ItemServiceDB {
       title: item.title,
       description: item.description,
       descriptors: item.descriptors,
-      region: item.chars.region,
+      region: item.chars.region, 
       country: item.chars.country,
       roasting: item.chars.roasting,
       cultivation: item.chars.cultivation,
