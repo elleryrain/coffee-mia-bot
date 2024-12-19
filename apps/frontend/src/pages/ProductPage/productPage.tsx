@@ -1,9 +1,17 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { products } from '../../mocks/mockProducts';
 import { useCartStore } from '../../store/cartStore';
 import useEmblaCarousel from 'embla-carousel-react';
 import { mainBanners } from '../../mocks/mockItems';
+import {
+  Modal,
+  ModalContent,
+  Radio,
+  RadioGroup,
+  useDisclosure,
+} from '@nextui-org/react';
+import { radioClassNames } from '../../next-ui-styles';
 
 export const ProductPage: FC = () => {
   const params = useParams<{ id: string }>();
@@ -11,6 +19,10 @@ export const ProductPage: FC = () => {
   const [emblaRef] = useEmblaCarousel();
 
   const cartStore = useCartStore();
+
+  const [grinding, setGrinding] = useState('');
+
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const navigate = useNavigate();
 
@@ -43,7 +55,7 @@ export const ProductPage: FC = () => {
         </div>
       </div>
       <div className="container mt-8">
-        <div className="flex items-center justify-between pt-1">
+        <div className="flex items-center justify-between py-1">
           <h1 className="text-[20px] leading-[22px] font-semibold">
             {data.name}
           </h1>
@@ -61,14 +73,109 @@ export const ProductPage: FC = () => {
           </button>
         </div>
       </div>
-      Product {params.id} Page
-      <button
-        onClick={() => {
-          cartStore.addProduct({ ...data, count: 1 });
+      <div className="container mt-4">
+        <div className="grid grid-cols-2 gap-y-2 gap-x-6 mb-6">
+          <p className="text-[14px] leading-[19.6px] text-tetriaryBlack w-[100px]">
+            Страна
+          </p>
+          <p className="text-[14px] leading-[19.6px] text-black">Бургунди</p>
+          <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
+            Регион
+          </p>
+          <p className="text-[14px] leading-[19.6px] text-black">
+            Провинция Каянза
+          </p>
+          <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
+            Обжарка
+          </p>
+          <p className="text-[14px] leading-[19.6px] text-black">Светлая</p>
+          <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
+            Обработка
+          </p>
+          <p className="text-[14px] leading-[19.6px] text-black">Натуральная</p>
+          <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
+            Высота
+          </p>
+          <p className="text-[14px] leading-[19.6px] text-black">1672 м</p>
+          <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
+            Качество
+          </p>
+          <p className="text-[14px] leading-[19.6px] text-black">
+            gr.1 GrainPro
+          </p>
+        </div>
+      </div>
+      <div className="container mb-6">
+        <h2 className="py-1 mb-2 text-[18px] leading-[19.8px] font-semibold">
+          Дескрипторы
+        </h2>
+        <p className="py-1 text-[14px] leading-[19.6px] text-black">
+          Желтая слива, чайное округлое тело, ноты карамели, яблока, цитруса, на
+          послевкусии тростниковый сахар с абрикосом
+        </p>
+      </div>
+      <div className="flex gap-2 outline-none">
+        <button onClick={onOpen}>open</button>
+      </div>
+      <Modal
+        classNames={{
+          base: 'w-full rounded-3xl m-0 rounded-t-[30px] rounded-b-none px-4 pt-[60px]',
+          wrapper: 'w-full',
+          closeButton:
+            'w-8 h-8 bg-gray20 rounded-full top-4 right-4 !ring-0 !ring-transparent',
         }}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="bottom-center"
       >
-        add to cart
-      </button>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <p className="py-1 text-[20px] leading-[22px] font-semibold mb-4">
+                Выберите помол
+              </p>
+              <RadioGroup
+                className="mb-8"
+                onChange={(e) => {
+                  setGrinding(e.target.value);
+                }}
+              >
+                <Radio classNames={radioClassNames} value={'Без помола'}>
+                  Без помола
+                </Radio>
+                <Radio classNames={radioClassNames} value={'Для турки'}>
+                  Для турки
+                </Radio>
+                <Radio classNames={radioClassNames} value={'Для эспрессо'}>
+                  Для эспрессо
+                </Radio>
+                <Radio classNames={radioClassNames} value={'Для гейзера'}>
+                  Для гейзера
+                </Radio>
+                <Radio classNames={radioClassNames} value={'Для воронки'}>
+                  Для воронки
+                </Radio>
+                <Radio classNames={radioClassNames} value={'Для фильтра'}>
+                  Для фильтра
+                </Radio>
+                <Radio classNames={radioClassNames} value={'Для френч-пресс'}>
+                  Для френч-пресс
+                </Radio>
+              </RadioGroup>
+              <button
+                disabled={grinding === ''}
+                className={`flex py-4 mb-8 justify-center bg-orange10 rounded-xl border-1 text-black
+               font-semibold text-[16px] leading-[17.6px] border-[rgba(255,230,208,1)] shadow-light
+             disabled:bg-gray20 disabled:border-gray15 disabled:shadow-none disabled:text-gray50`}
+                onClick={onClose}
+              >
+                Сохранить
+              </button>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+      Product {params.id} Page
     </div>
   );
 };

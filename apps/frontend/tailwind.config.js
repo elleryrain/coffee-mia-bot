@@ -40,7 +40,7 @@ module.exports = {
         gray50: '#ABABAB',
         gray40: '#D3D3D3',
         gray30: '#E6E6E6',
-        gray20: '#F5F5F5',
+        gray20: 'rgba(242,242,247,1)',
         gray15: '#F5F5F5',
       },
       boxShadow: {
