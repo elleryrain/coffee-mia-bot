@@ -1,41 +1,52 @@
 /// <reference types='vitest' />
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import svgr from 'vite-plugin-svgr';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 import basicSsl from '@vitejs/plugin-basic-ssl';
-export default defineConfig({
-  root: __dirname,
-  cacheDir: '../../node_modules/.vite/apps/frontend',
-  server: {
-    port: 4200,
-    host: 'localhost',
-  },
-  preview: {
-    port: 4300,
-    host: 'localhost',
-  },
-  plugins: [
-    react(),
-    nxViteTsPaths(),
-    nxCopyAssetsPlugin(['*.md']),
-    svgr(),
-    // basicSsl(),
-  ],
-  // Uncomment this if you are using workers.
-  // worker: {
-  //  plugins: [ nxViteTsPaths() ],
-  // },
-  build: {
-    outDir: '../../dist/apps/frontend',
-    emptyOutDir: true,
-    reportCompressedSize: true,
-    commonjsOptions: {
-      transformMixedEsModules: true,
+import path from 'node:path';
+import { json } from 'node:stream/consumers';
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, path.join(__dirname, '../', '../.env'));
+  console.log(env);
+  return {
+    root: __dirname,
+    cacheDir: '../../node_modules/.vite/apps/frontend',
+    server: {
+      port: 4200,
+      host: 'localhost',
     },
-  },
-  define: {
-    'import.meta.vitest': undefined,
-  },
+    preview: {
+      port: 4300,
+      host: 'localhost',
+    },
+    plugins: [
+      react(),
+      nxViteTsPaths(),
+      nxCopyAssetsPlugin(['*.md']),
+      svgr(),
+      // basicSsl(),
+    ],
+    // envDir: '../../.env',
+    // Uncomment this if you are using workers.
+    // worker: {
+    //  plugins: [ nxViteTsPaths() ],
+    // },
+    build: {
+      outDir: '../../dist/apps/frontend',
+      emptyOutDir: true,
+      reportCompressedSize: true,
+      commonjsOptions: {
+        transformMixedEsModules: true,
+      },
+    },
+    // define: {
+    //   'import.meta.vitest': undefined,
+    //   __APP_ENV__: JSON.stringify(env.APP_ENV),
+    // },
+    define: {
+      __APP_ENV__: JSON.stringify(env.APP_ENV),
+    },
+  };
 });

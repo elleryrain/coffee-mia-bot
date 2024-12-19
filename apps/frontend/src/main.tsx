@@ -8,7 +8,7 @@ import { router } from './routes/router';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-
+// console.log(`[ENV]:`, import.meta.env);
 root.render(
   <StrictMode>
     <RouterProvider router={router} />
