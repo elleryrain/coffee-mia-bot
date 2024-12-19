@@ -4,8 +4,8 @@ import { integer, pgTable, varchar } from 'drizzle-orm/pg-core';
 export const itemsTable = pgTable('Item', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   title: varchar({ length: 512 }).notNull(),
-  mainImage: varchar({ length: 512 }).notNull(),
-  otherImages: varchar({ length: 512 }).array().notNull(),
+  mainImage: varchar({ length: 1024 }).notNull(),
+  otherImages: varchar({ length: 1024 }).array().notNull(),
   description: varchar({ length: 1024 }),
   descriptors: varchar({ length: 512 }).array().notNull(),
 });
@@ -113,12 +113,27 @@ export const itemsToChapterRelations = relations(
     }),
   })
 );
-export const costToItem = relations(itemsTable, ({ one }) => ({
+export const itemsRelations = relations(itemsTable, ({ one, many }) => ({
   cost: one(itemCostsTable, {
     fields: [itemsTable.id],
     references: [itemCostsTable.itemId],
   }),
+  chars: one(itemCharacteristicsTables, {
+    fields: [itemsTable.id],
+    references: [itemCharacteristicsTables.itemId],
+  }),
+  grainConfigs: many(grainItemCostsTable),
 }));
+
+export const grainItemCostsRelations = relations(
+  grainItemCostsTable,
+  ({ one }) => ({
+    item: one(itemsTable, {
+      fields: [grainItemCostsTable.grainItemId],
+      references: [itemsTable.id],
+    }),
+  })
+);
 // export const itemsToChapterRelations = relations(itemsToChaptersTable, ({one})=>({
 //   itemToChapter
 // }))

@@ -339,14 +339,17 @@
       "ItemConfiguration": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "number"
+          },
           "cost": {
             "type": "number"
           },
           "weight": {
-            "type": "string"
+            "type": "number"
           }
         },
-        "required": ["cost", "weight"]
+        "required": ["id", "cost", "weight"]
       },
       "ItemInfo": {
         "type": "object",
