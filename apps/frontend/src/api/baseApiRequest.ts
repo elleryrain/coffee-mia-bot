@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { envConfig } from '../config/config';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -19,13 +20,18 @@ export const baseApiRequest = async <T>({
 }: BaseApiRequestOptions): Promise<T> => {
   const urlParams = new URLSearchParams(params);
 
-  const apiUrl = `https://dev.do-coffee.ru${url}`;
+  const headers: { [key: string]: string } = {
+    'X-Telegram-Auth': envConfig.telegramAuth,
+  };
+
+  const apiUrl = `${envConfig.apiUrl}${url}`;
   const response = await axios({
     method,
     url: apiUrl,
     params: urlParams,
     data,
     signal,
+    headers,
   });
 
   return response.data;
