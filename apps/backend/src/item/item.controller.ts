@@ -11,13 +11,16 @@ export class ItemController {
     @Req()
     req: FastifyRequest<{
       Querystring: {
-        itemId: string;
+        idItem: string;
       };
     }>,
     @Res() reply: FastifyReply
   ) {
-    const { itemId } = req.query;
-    const numberItemId = Number(itemId);
+    const { idItem } = req.query;
+    if(!idItem) {
+      return reply.code(403).send({message: 'id item not found'})
+    }
+    const numberItemId = Number(idItem);
     const item = await this.itemServiceDB.getExtendedItemById(numberItemId);
     return reply.send(item);
   }
