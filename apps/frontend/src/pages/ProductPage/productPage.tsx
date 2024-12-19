@@ -12,6 +12,7 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 import { radioClassNames } from '../../next-ui-styles';
+import { useGetApiItem } from '../../api/generated/users/default';
 
 export const ProductPage: FC = () => {
   const params = useParams<{ id: string }>();
@@ -23,6 +24,8 @@ export const ProductPage: FC = () => {
   const [grinding, setGrinding] = useState('');
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  const {  } = useGetApiItem({ idItem: params.id ?? '' });
 
   const navigate = useNavigate();
 
