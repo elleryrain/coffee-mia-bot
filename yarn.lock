@@ -3309,6 +3309,7 @@ __metadata:
     "@swc/helpers": "npm:~0.5.11"
     "@swc/jest": "npm:~0.2.36"
     "@tanstack/react-query": "npm:^5.62.7"
+    "@telegram-apps/init-data-node": "npm:^1.2.1"
     "@telegram-apps/sdk-react": "npm:^2.0.19"
     "@testing-library/react": "npm:15.0.6"
     "@twa-dev/sdk": "npm:^8.0.1"
@@ -8576,6 +8577,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@telegram-apps/init-data-node@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@telegram-apps/init-data-node@npm:1.2.1"
+  dependencies:
+    "@telegram-apps/toolkit": "npm:^1.1.0"
+    "@telegram-apps/transformers": "npm:^1.2.1"
+    "@telegram-apps/types": "npm:^1.2.0"
+  checksum: 10c0/aa71fa7ccd9ca671b2211244184466adda84dd07c79b08cd0638aa8667fd13415751a8fbc11dc39849eef05a984e7ad1983ef05c5bebddff0f16db67b00769f8
+  languageName: node
+  linkType: hard
+
 "@telegram-apps/navigation@npm:^1.0.9":
   version: 1.0.9
   resolution: "@telegram-apps/navigation@npm:1.0.9"
@@ -8629,6 +8641,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@telegram-apps/toolkit@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@telegram-apps/toolkit@npm:1.1.0"
+  checksum: 10c0/941a6f58c3846087ba91837d719505ffe38504cce7acaab85a180f91cbd8c7ae174ebff9e38ed096fcb6ed6a1a046bdb8b650ccbf7b34858fbbaa8b3972d6492
+  languageName: node
+  linkType: hard
+
 "@telegram-apps/transformers@npm:^1.2.0":
   version: 1.2.0
   resolution: "@telegram-apps/transformers@npm:1.2.0"
@@ -8636,6 +8655,16 @@ __metadata:
     "@telegram-apps/toolkit": "npm:^1.0.0"
     "@telegram-apps/types": "npm:^1.2.0"
   checksum: 10c0/6fab17ed0d885f0a647dcdefe33b7f648acc2f587837d4eee5974958ec63c2c2ddf75f63e5a6362505373acda9763d321ff9c891e3a648b0c26c728741d577d4
+  languageName: node
+  linkType: hard
+
+"@telegram-apps/transformers@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@telegram-apps/transformers@npm:1.2.1"
+  dependencies:
+    "@telegram-apps/toolkit": "npm:^1.1.0"
+    "@telegram-apps/types": "npm:^1.2.0"
+  checksum: 10c0/a94b485da2b32f18f4cc471731988b590ecb89e575c02843ebe51cb65f7a1487e208f51e1047590f67cafa524deab520f2f82ffa92e89be6320c91a0255436e6
   languageName: node
   linkType: hard
 

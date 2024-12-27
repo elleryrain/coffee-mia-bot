@@ -149,19 +149,59 @@
       },
       "post": {
         "description": "роут для добавления определённого товара в избранное",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "idItem",
-            "schema": {
-              "type": "number"
-            },
-            "required": true
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "itemId": {
+                    "type": "number"
+                  }
+                },
+                "required": ["itemId"]
+              }
+            }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "успешное добавление товара в избранное",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "роут для удаления предмета из избранного",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "itemId": {
+                    "type": "number"
+                  }
+                },
+                "required": ["itemId"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "успешное выполнение роута",
             "content": {
               "application/json": {
                 "schema": {
@@ -238,6 +278,23 @@
                   "items": {
                     "$ref": "#/components/schemas/GrindingType"
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user": {
+      "get": {
+        "description": "получение информации о пользователе (роут нужен для того, чтобы в начале, когда пользователь запускает приложение, то происходит проверка захода в приложение",
+        "responses": {
+          "200": {
+            "description": "успешное получение выполнение захода пользователя или регистрации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProperties"
                 }
               }
             }
@@ -411,6 +468,24 @@
           }
         },
         "required": ["id", "title"]
+      },
+      "UserProperties": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "firstName": {
+            "type": "number"
+          },
+          "lastName": {
+            "type": "number"
+          },
+          "username": {
+            "type": "number"
+          }
+        },
+        "required": ["id", "firstName", "lastName", "username"]
       }
     }
   }

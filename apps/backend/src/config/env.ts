@@ -16,6 +16,7 @@ const configValidator = z.object({
   S3_ACCESS_KEY: z.string(),
   S3_SECRET_KEY: z.string(),
   S3_REGION: z.string(),
+  BOT_TOKEN: z.string(),
 });
 
 const parsedConfig = configValidator.safeParse(env.parsed);
@@ -33,3 +34,4 @@ export const s3Bucket = dataConfig.S3_BUCKET;
 export const s3AccessKey = dataConfig.S3_ACCESS_KEY;
 export const s3SecretKey = dataConfig.S3_SECRET_KEY;
 export const s3Region = dataConfig.S3_REGION;
+export const botToken = dataConfig.BOT_TOKEN;

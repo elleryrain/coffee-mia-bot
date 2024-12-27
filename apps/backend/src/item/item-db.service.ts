@@ -107,6 +107,7 @@ export class ItemServiceDB {
   }
 
   async getExtendedItemById(itemId: number) {
+    console.log(itemId)
     const item = await this.db.query.itemsTable.findFirst({
       where: (itemsTable, { eq }) => eq(itemsTable.id, itemId),
       with: {
@@ -121,12 +122,12 @@ export class ItemServiceDB {
       title: item.title,
       description: item.description,
       descriptors: item.descriptors,
-      region: item.chars.region, 
-      country: item.chars.country,
-      roasting: item.chars.roasting,
-      cultivation: item.chars.cultivation,
-      height: item.chars.height,
-      quality: item.chars.quality,
+      region: item.chars?.region, 
+      country: item.chars?.country,
+      roasting: item.chars?.roasting,
+      cultivation: item.chars?.cultivation,
+      height: item.chars?.height,
+      quality: item.chars?.quality,
       images: [item.mainImage, ...item.otherImages],
       configurations: item.grainConfigs.map((config) => ({
         id: config.id,
