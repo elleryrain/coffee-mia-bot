@@ -5,11 +5,13 @@ import {
   DripsPage,
   GrainPage,
   MainPage,
+  OrderPage,
   OtherPage,
   ProductPage,
 } from '../pages';
 import { App } from '../app/app';
 import { TestPage } from '../pages/test/testPage';
+import { Delivery } from '../components';
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +51,15 @@ export const router = createBrowserRouter([
             iconLink="https://s3.timeweb.cloud/87856c8c-be2455f8-6e00-42be-b141-b3450c1a9de4/icons/other.svg"
           />
         ),
+      },
+      {
+        path: 'make-order',
+        element: <OrderPage />,
+        children: [
+          { path: 'delivery', element: <Delivery /> },
+          { path: 'payment' },
+          { path: 'ready' },
+        ],
       },
       {
         path: 'test',

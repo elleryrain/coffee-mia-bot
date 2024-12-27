@@ -10,7 +10,10 @@ export const CartItem: FC<{ product: CartProduct }> = ({ product }) => {
 
   return (
     <div className="rounded-3xl border-gray20 border-1 p-4">
-      <Link to={`/products/${product.id}`} className="flex gap-3 mb-4">
+      <Link
+        to={`/products/${product.link_id ? product.link_id : product.id}`}
+        className="flex gap-3 mb-4"
+      >
         <img
           src={`${product.image ? product.image : '/empty_img.svg'}`}
           alt="coffee"

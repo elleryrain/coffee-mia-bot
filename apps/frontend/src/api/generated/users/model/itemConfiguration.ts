@@ -8,5 +8,6 @@
 
 export interface ItemConfiguration {
   cost: number;
-  weight: string;
+  id: number;
+  weight: number;
 }

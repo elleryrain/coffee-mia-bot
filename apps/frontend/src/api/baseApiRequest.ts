@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { envConfig } from '../config/config';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 interface BaseApiRequestOptions {
   url: string;
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';

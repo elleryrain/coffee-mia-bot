@@ -1,9 +1,7 @@
 import { FC, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { products } from '../../mocks/mockProducts';
 import { useCartStore } from '../../store/cartStore';
 import useEmblaCarousel from 'embla-carousel-react';
-import { mainBanners } from '../../mocks/mockItems';
 import {
   Modal,
   ModalContent,
@@ -12,20 +10,70 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 import { radioClassNames } from '../../next-ui-styles';
-import { useGetApiItem } from '../../api/generated/users/default';
+import {
+  useGetApiGrindingTypes,
+  useGetApiItem,
+  usePostApiUserFavorite,
+} from '../../api/generated/users/default';
+
+const configurations = [
+  {
+    id: 0,
+    cost: 500,
+    weight: 250,
+  },
+  {
+    id: 1,
+    cost: 981,
+    weight: 500,
+  },
+  {
+    id: 2,
+    cost: 1900,
+    weight: 1000,
+  },
+  {
+    id: 3,
+    cost: 16000,
+    weight: 10000,
+  },
+];
+
+const grindings = [
+  { id: 1, name: 'Без помола' },
+  { id: 2, name: 'Для турки' },
+  { id: 3, name: 'Для эспрессо' },
+  { id: 4, name: 'Для гейзера' },
+  { id: 5, name: 'Для воронки' },
+  { id: 6, name: 'Для фильтра' },
+  { id: 7, name: 'Для френч-пресс' },
+];
 
 export const ProductPage: FC = () => {
   const params = useParams<{ id: string }>();
-  const data = products[Number(params.id)];
   const [emblaRef] = useEmblaCarousel();
 
   const cartStore = useCartStore();
 
   const [grinding, setGrinding] = useState('');
+  const [id, setId] = useState('');
+  const [weight, setWeight] = useState('');
+  const [price, setPrice] = useState(0);
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  const {  } = useGetApiItem({ idItem: params.id ?? '' });
+  const { data } = useGetApiItem({ idItem: params.id ?? '' });
+  const { mutate } = usePostApiUserFavorite();
+  // const {} = useGetApiGrindingTypes();
+
+  const findProduct = (id: string) => {
+    return cartStore.products.find((e) => e.id.startsWith(id));
+  };
+
+  const productsCount = (id: string) => {
+    const producst = cartStore.products.filter((e) => e.id.startsWith(id));
+    return producst.reduce((acc, current) => acc + current.count, 0);
+  };
 
   const navigate = useNavigate();
 
@@ -42,84 +90,193 @@ export const ProductPage: FC = () => {
       </button>
       <div className="embla" ref={emblaRef}>
         <div className="embla__container w-[calc(100vw-16px)] px-4 gap-2">
-          {mainBanners.map((banner) => (
-            <div
-              className={`embla__slide topSlide last:pr-4 flex items-end relative overflow-hidden`}
-              key={banner.id}
-            >
-              <div className="absolute top-0 left-0 w-full h-full z-[5] bg-gradient-to-b from-[rgba(0,0,0,0)] to-[rgba(0,0,0,.5)]"></div>
-              <img
-                src={banner.image}
-                alt="coffee"
-                className="object-cover absolute top-0 left-0 w-full h-full z-0 select-none pointer-events-none"
-              />
-            </div>
-          ))}
+          {data &&
+            data.images?.map((banner, ix) => {
+              if (banner.length > 0)
+                return (
+                  <div
+                    className={`embla__slide topSlide last:pr-4 flex items-end relative overflow-hidden`}
+                    key={ix}
+                  >
+                    <div className="absolute top-0 left-0 w-full h-full z-[5] bg-gradient-to-b from-[rgba(0,0,0,0)] to-[rgba(0,0,0,.5)]"></div>
+                    <img
+                      src={banner}
+                      alt="coffee"
+                      className="object-cover absolute top-0 left-0 w-full h-full z-0 select-none pointer-events-none"
+                    />
+                  </div>
+                );
+            })}
         </div>
       </div>
-      <div className="container mt-8">
-        <div className="flex items-center justify-between py-1">
-          <h1 className="text-[20px] leading-[22px] font-semibold">
-            {data.name}
-          </h1>
-          <button
-            className={`w-8 h-8 rounded-lg ${
+      {data && (
+        <>
+          <div className="container mt-8">
+            <div className="flex items-center justify-between py-1">
+              <h1 className="text-[20px] leading-[22px] font-semibold">
+                {data.title}
+              </h1>
+              <button
+                onClick={() => {
+                  mutate({ params: { idItem: Number(params.id ?? '0') } });
+                }}
+                className={`w-8 h-8 rounded-lg  flex justify-center items-center`}
+              >
+                {/* ${
               data.isFavourite ? 'bg-red10' : 'bg-gray20'
-            } flex justify-center items-center`}
-          >
-            <img
-              src={`${
+            } */}
+                {/* ${
                 data.isFavourite ? '/heart_active.svg' : '/heart-nobg.svg'
-              }`}
-              alt="like"
-            />
-          </button>
-        </div>
-      </div>
-      <div className="container mt-4">
-        <div className="grid grid-cols-2 gap-y-2 gap-x-6 mb-6">
-          <p className="text-[14px] leading-[19.6px] text-tetriaryBlack w-[100px]">
-            Страна
-          </p>
-          <p className="text-[14px] leading-[19.6px] text-black">Бургунди</p>
-          <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
-            Регион
-          </p>
-          <p className="text-[14px] leading-[19.6px] text-black">
-            Провинция Каянза
-          </p>
-          <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
-            Обжарка
-          </p>
-          <p className="text-[14px] leading-[19.6px] text-black">Светлая</p>
-          <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
-            Обработка
-          </p>
-          <p className="text-[14px] leading-[19.6px] text-black">Натуральная</p>
-          <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
-            Высота
-          </p>
-          <p className="text-[14px] leading-[19.6px] text-black">1672 м</p>
-          <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
-            Качество
-          </p>
-          <p className="text-[14px] leading-[19.6px] text-black">
-            gr.1 GrainPro
-          </p>
-        </div>
-      </div>
-      <div className="container mb-6">
-        <h2 className="py-1 mb-2 text-[18px] leading-[19.8px] font-semibold">
-          Дескрипторы
-        </h2>
-        <p className="py-1 text-[14px] leading-[19.6px] text-black">
-          Желтая слива, чайное округлое тело, ноты карамели, яблока, цитруса, на
-          послевкусии тростниковый сахар с абрикосом
-        </p>
-      </div>
-      <div className="flex gap-2 outline-none">
-        <button onClick={onOpen}>open</button>
-      </div>
+              } */}
+                <img src={`/heart-nobg.svg`} alt="like" />
+              </button>
+            </div>
+          </div>
+          <div className="container mt-4">
+            <div className="grid grid-cols-2 gap-y-2 gap-x-6 mb-6">
+              <p className="text-[14px] leading-[19.6px] text-tetriaryBlack w-[100px]">
+                Страна
+              </p>
+              <p className="text-[14px] leading-[19.6px] text-black">
+                {data.country}
+              </p>
+              <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
+                Регион
+              </p>
+              <p className="text-[14px] leading-[19.6px] text-black">
+                {data.region}
+              </p>
+              <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
+                Обжарка
+              </p>
+              <p className="text-[14px] leading-[19.6px] text-black">
+                {data.roasting}
+              </p>
+              <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
+                Обработка
+              </p>
+              <p className="text-[14px] leading-[19.6px] text-black">
+                {data.cultivation}
+              </p>
+              <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
+                Высота
+              </p>
+              <p className="text-[14px] leading-[19.6px] text-black">
+                {data.height} м
+              </p>
+              <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
+                Качество
+              </p>
+              <p className="text-[14px] leading-[19.6px] text-black">
+                {data.quality}
+              </p>
+            </div>
+          </div>
+          <div className="container mb-6">
+            <h2 className="py-1 mb-2 text-[18px] leading-[19.8px] font-semibold">
+              Дескрипторы
+            </h2>
+            <p className="py-1 text-[14px] leading-[19.6px] text-black">
+              {data.descriptors}
+            </p>
+          </div>
+          <div className="container flex gap-2 outline-none mb-7">
+            {configurations.map((config) => (
+              <div
+                key={config.id}
+                className={`p-2 rounded-xl  ${
+                  findProduct(`${data.id}_${config.id}`)
+                    ? 'bg-systemOrange'
+                    : 'bg-gray15'
+                }`}
+              >
+                <p
+                  className={`text-[14px] leading-[16.8px] ${
+                    findProduct(`${data.id}_${config.id}`) ? 'text-white' : ''
+                  }`}
+                >
+                  {config.cost} ₽
+                </p>
+                <p
+                  className={`text-[11px] leading-[14.3px] mb-2 ${
+                    findProduct(`${data.id}_${config.id}`)
+                      ? 'text-orange10'
+                      : 'text-tetriaryBlack'
+                  }`}
+                >
+                  {config.weight >= 1000
+                    ? config.weight / 1000 + ' кг'
+                    : config.weight + ' г'}
+                </p>
+                {findProduct(`${data.id}_${config.id}`) ? (
+                  <div className="py-1 w-[68px] bg-white rounded-2xl flex gap-1 justify-between px-[6px]">
+                    <button
+                      onClick={() => {
+                        cartStore.changeCount(
+                          findProduct(`${data.id}_${config.id}`)?.id ?? '',
+                          -1
+                        );
+                      }}
+                    >
+                      <img
+                        className="w-4 h-4"
+                        src="/minus-icon.svg"
+                        alt="minus"
+                      />
+                    </button>
+                    <p className="text-[11px] leading-[14.3px] w-4 h-4 justify-center flex items-center">
+                      {productsCount(`${data.id}_${config.id}`)}
+                    </p>
+                    <button
+                      onClick={() => {
+                        setGrinding(
+                          findProduct(`${data.id}_${config.id}`)?.description ??
+                            ''
+                        );
+                        setId(`${data.id}_${config.id}`);
+                        setPrice(config.cost);
+                        setWeight(
+                          config.weight >= 1000
+                            ? config.weight / 1000 + ' кг'
+                            : config.weight + ' г'
+                        );
+                        onOpenChange();
+                      }}
+                    >
+                      <img
+                        className="w-4 h-4"
+                        src="/plus-icon-gray.svg"
+                        alt="plus"
+                      />
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => {
+                      setId(`${data.id}_${config.id}`);
+                      setPrice(config.cost);
+                      setWeight(
+                        config.weight >= 1000
+                          ? config.weight / 1000 + ' кг'
+                          : config.weight + ' г'
+                      );
+                      setGrinding('');
+                      onOpen();
+                    }}
+                    className="py-1 w-[68px] bg-gray30 rounded-2xl flex justify-center"
+                  >
+                    <img
+                      className="w-4 h-4"
+                      src="/plus-icon-gray.svg"
+                      alt="plus"
+                    />
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
       <Modal
         classNames={{
           base: 'w-full rounded-3xl m-0 rounded-t-[30px] rounded-b-none px-4 pt-[60px]',
@@ -142,35 +299,53 @@ export const ProductPage: FC = () => {
                 onChange={(e) => {
                   setGrinding(e.target.value);
                 }}
+                value={grinding}
               >
-                <Radio classNames={radioClassNames} value={'Без помола'}>
-                  Без помола
-                </Radio>
-                <Radio classNames={radioClassNames} value={'Для турки'}>
-                  Для турки
-                </Radio>
-                <Radio classNames={radioClassNames} value={'Для эспрессо'}>
-                  Для эспрессо
-                </Radio>
-                <Radio classNames={radioClassNames} value={'Для гейзера'}>
-                  Для гейзера
-                </Radio>
-                <Radio classNames={radioClassNames} value={'Для воронки'}>
-                  Для воронки
-                </Radio>
-                <Radio classNames={radioClassNames} value={'Для фильтра'}>
-                  Для фильтра
-                </Radio>
-                <Radio classNames={radioClassNames} value={'Для френч-пресс'}>
-                  Для френч-пресс
-                </Radio>
+                {grindings.map((grinding) => (
+                  <Radio classNames={radioClassNames} value={grinding.name}>
+                    {grinding.name}
+                  </Radio>
+                ))}
               </RadioGroup>
               <button
                 disabled={grinding === ''}
                 className={`flex py-4 mb-8 justify-center bg-orange10 rounded-xl border-1 text-black
                font-semibold text-[16px] leading-[17.6px] border-[rgba(255,230,208,1)] shadow-light
              disabled:bg-gray20 disabled:border-gray15 disabled:shadow-none disabled:text-gray50`}
-                onClick={onClose}
+                onClick={() => {
+                  if (findProduct(id)) {
+                    if (findProduct(id)?.description === grinding) {
+                      cartStore.changeCount(id, 1);
+                    } else {
+                      cartStore.addProduct({
+                        id: `${id}_${
+                          grindings.find((g) => g.name === grinding)?.id
+                        }`,
+                        link_id: data?.id ?? '',
+                        description: grinding,
+                        quantity: weight,
+                        count: 1,
+                        image: undefined,
+                        isFavourite: false,
+                        price: price,
+                        name: data?.title ?? '',
+                      });
+                    }
+                  } else {
+                    cartStore.addProduct({
+                      id: id,
+                      link_id: data?.id ?? '',
+                      description: grinding,
+                      quantity: weight,
+                      count: 1,
+                      image: undefined,
+                      isFavourite: false,
+                      price: price,
+                      name: data?.title ?? '',
+                    });
+                  }
+                  onClose();
+                }}
               >
                 Сохранить
               </button>
@@ -178,7 +353,6 @@ export const ProductPage: FC = () => {
           )}
         </ModalContent>
       </Modal>
-      Product {params.id} Page
     </div>
   );
 };

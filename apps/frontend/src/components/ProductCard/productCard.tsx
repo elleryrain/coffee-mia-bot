@@ -29,7 +29,7 @@ export const ProductCard: FC<{
             alt="coffee"
           />
         </div>
-        <p className="mt-3 text-[16px] leading-[20.8px] font-normal w-[168px]">
+        <p className="text-[16px] leading-[20.8px] font-normal w-[168px]">
           {product.title}
         </p>
       </Link>
@@ -42,7 +42,7 @@ export const ProductCard: FC<{
               count: 1,
               image: product.image ?? undefined,
               isFavourite: product.favorite,
-              id: product.id,
+              id: String(product.id),
               price: product.cost,
             });
           }}

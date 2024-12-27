@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { useCartStore } from '../../store/cartStore';
 import { CartItem } from '../../components';
+import { Link } from 'react-router-dom';
 
 export const CartPage: FC = () => {
   const cartState = useCartStore();
@@ -29,6 +30,15 @@ export const CartPage: FC = () => {
             />
             <p className="text-[14px] leading-[16.8px]">Здесь пока пусто</p>
           </div>
+        )}
+        {cartState.totalPrice > 0 && (
+          <Link
+            to="/make-order/delivery"
+            className="text-[16px] font-semibold leading-[17.6px] justify-center fixed bottom-[92px] flex w-[calc(100vw-20px)] left-[10px] bg-orange10 gap-2 py-4 px-8 rounded-xl shadow-light"
+          >
+            <p>{cartState.totalPrice} ₽</p>
+            <p>Заказать</p>
+          </Link>
         )}
       </div>
     </>

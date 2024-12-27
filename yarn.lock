@@ -1527,6 +1527,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime-corejs3@npm:^7.24.4":
+  version: 7.26.0
+  resolution: "@babel/runtime-corejs3@npm:7.26.0"
+  dependencies:
+    core-js-pure: "npm:^3.30.2"
+    regenerator-runtime: "npm:^0.14.0"
+  checksum: 10c0/921fa27c004cf2b92f0d49efc2006cfc1a72d2a35c7374da8ec88d8b63543963e6ef29d4820e068a7892a7d553dc2bac7208aef8fef30642bc843b63255b650b
+  languageName: node
+  linkType: hard
+
 "@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.20.13, @babel/runtime@npm:^7.22.6, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4":
   version: 7.26.0
   resolution: "@babel/runtime@npm:7.26.0"
@@ -3338,6 +3348,7 @@ __metadata:
     prettier: "npm:^2.6.2"
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
+    react-imask: "npm:^7.6.1"
     react-router-dom: "npm:6.11.2"
     reflect-metadata: "npm:^0.1.13"
     rxjs: "npm:^7.8.0"
@@ -11404,6 +11415,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"core-js-pure@npm:^3.30.2":
+  version: 3.39.0
+  resolution: "core-js-pure@npm:3.39.0"
+  checksum: 10c0/5d954e467703ea1e860eb070bd72cf9dc5bfddd7037c09d750f0eba3ffc4066db741a595af86dc833a709929e161a909e48da3cbdd2d9bee7795cb516dc9f7d4
+  languageName: node
+  linkType: hard
+
 "core-util-is@npm:^1.0.3, core-util-is@npm:~1.0.0":
   version: 1.0.3
   resolution: "core-util-is@npm:1.0.3"
@@ -14990,6 +15008,15 @@ __metadata:
   bin:
     image-size: bin/image-size.js
   checksum: 10c0/655204163af06732f483a9fe7cce9dff4a29b7b2e88f5c957a5852e8143fa750f5e54b1955a2ca83de99c5220dbd680002d0d4e09140b01433520f4d5a0b1f4c
+  languageName: node
+  linkType: hard
+
+"imask@npm:^7.6.1":
+  version: 7.6.1
+  resolution: "imask@npm:7.6.1"
+  dependencies:
+    "@babel/runtime-corejs3": "npm:^7.24.4"
+  checksum: 10c0/cda75bb5036bf65b1028a39ee5fe7bb1a654838213e8f85288c5899a9e5eb84ce7d2b37ae2d9d600f553b7b0e9fd2f4ba2cbdb03a2c46cf0fa60075bc0c21f0c
   languageName: node
   linkType: hard
 
@@ -19650,6 +19677,18 @@ __metadata:
   peerDependencies:
     react: ^18.3.1
   checksum: 10c0/a752496c1941f958f2e8ac56239172296fcddce1365ce45222d04a1947e0cc5547df3e8447f855a81d6d39f008d7c32eab43db3712077f09e3f67c4874973e85
+  languageName: node
+  linkType: hard
+
+"react-imask@npm:^7.6.1":
+  version: 7.6.1
+  resolution: "react-imask@npm:7.6.1"
+  dependencies:
+    imask: "npm:^7.6.1"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    react: ">=0.14.0"
+  checksum: 10c0/48b8c234fb77e4d8b8446712695c63f2b0351a896b17623510a648408dd1b7ab506496124453a821528781b05fe2f5b04514f902e260f8b7f4486c972061da88
   languageName: node
   linkType: hard
 
