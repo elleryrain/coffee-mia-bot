@@ -17,8 +17,9 @@ export class ItemController {
     @Res() reply: FastifyReply
   ) {
     const { idItem } = req.query;
-    if(!idItem) {
-      return reply.code(403).send({message: 'id item not found'})
+    console.log(req.raw.user);
+    if (!idItem) {
+      return reply.code(204).send();
     }
     const numberItemId = Number(idItem);
     const item = await this.itemServiceDB.getExtendedItemById(numberItemId);

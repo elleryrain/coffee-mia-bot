@@ -61,6 +61,7 @@ export const usersTable = pgTable('User', {
   id: integer().primaryKey(),
   firstName: varchar('first_name', { length: 512 }),
   lastName: varchar('last_name', { length: 512 }),
+  username: varchar('username', { length: 512 }),
 });
 
 export const userFavoriteItemsTable = pgTable('User_Favorite_Item', {
@@ -134,6 +135,16 @@ export const grainItemCostsRelations = relations(
     }),
   })
 );
-// export const itemsToChapterRelations = relations(itemsToChaptersTable, ({one})=>({
-//   itemToChapter
-// }))
+export const userRelations = relations(usersTable, ({ one, many }) => ({
+  items: many(userFavoriteItemsTable),
+}));
+
+export const favoriteUserItemRelations = relations(
+  userFavoriteItemsTable,
+  ({ one }) => ({
+    item: one(itemsTable, {
+      fields: [userFavoriteItemsTable.itemId],
+      references: [itemsTable.id],
+    }),
+  })
+);
