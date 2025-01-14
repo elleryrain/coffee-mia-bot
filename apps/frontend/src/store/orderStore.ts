@@ -1,3 +1,4 @@
+import { DateValue, TimeInputValue } from '@nextui-org/react';
 import { create } from 'zustand';
 
 export interface courierDelivery {
@@ -5,8 +6,8 @@ export interface courierDelivery {
   telegram_nickname: string;
   phone: string;
   address: string;
-  date: string;
-  time: string;
+  date: DateValue | null;
+  time: TimeInputValue | null;
   comment?: string;
 }
 
@@ -20,25 +21,88 @@ export interface cdekDelivery {
 
 interface orderState {
   step: 1 | 2 | 3;
-  deliveryInfo: courierDelivery | cdekDelivery;
+  cdekDeliveryInfo: cdekDelivery;
+  courierDeliveryInfo: courierDelivery;
+  deliveyType: 'CDEK' | 'courier' | null;
+  paymentType: 'number' | 'juridical' | null;
   havePayed: boolean;
   paymentStatus: string;
   setDeliveryInfo: (info: courierDelivery | cdekDelivery) => void;
+  setStep: (step: 1 | 2 | 3) => void;
+  setDeliveryType: (type: 'CDEK' | 'courier') => void;
+  setPaymentType: (type: 'number' | 'juridical') => void;
+  clearAll: () => void;
 }
 
 export const useOrderStore = create<orderState>()((set) => ({
   step: 1,
-  deliveryInfo: {
+  cdekDeliveryInfo: {
+    first_name: '',
+    last_name: '',
+    middle_name: '',
+    phone: '',
+    cdek_adress: '',
+  },
+  courierDeliveryInfo: {
     first_name: '',
     telegram_nickname: '',
     phone: '',
     address: '',
-    date: '',
-    time: '',
+    date: null,
+    time: null,
   },
+  deliveyType: null,
   havePayed: false,
   paymentStatus: 'checking',
-  setDeliveryInfo: (info: courierDelivery | cdekDelivery) => set(() => ({
-    deliveryInfo: info,
-  })),
+  paymentType: null,
+  setDeliveryInfo: (info: courierDelivery | cdekDelivery) => {
+    if ('last_name' in info) {
+      set(() => ({
+        cdekDeliveryInfo: info,
+      }));
+    } else {
+      set(() => ({
+        courierDeliveryInfo: info,
+      }));
+    }
+  },
+  setStep: (step: 1 | 2 | 3) => {
+    set(() => ({
+      step,
+    }));
+  },
+  setDeliveryType: (type: 'CDEK' | 'courier') => {
+    set(() => ({
+      deliveyType: type,
+    }));
+  },
+  setPaymentType: (type: 'number' | 'juridical') => {
+    set(() => ({
+      paymentType: type,
+    }));
+  },
+  clearAll() {
+    set(() => ({
+      step: 1,
+      cdekDeliveryInfo: {
+        first_name: '',
+        last_name: '',
+        middle_name: '',
+        phone: '',
+        cdek_adress: '',
+      },
+      courierDeliveryInfo: {
+        first_name: '',
+        telegram_nickname: '',
+        phone: '',
+        address: '',
+        date: null,
+        time: null,
+      },
+      deliveyType: null,
+      havePayed: false,
+      paymentStatus: 'checking',
+      paymentType: null,
+    }));
+  },
 }));

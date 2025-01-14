@@ -7,3 +7,8 @@ export { ProductCard } from './ProductCard/productCard';
 export { SubCategory } from './subCategoryCompponents/subCategory';
 export { CartItem } from './CartItem/cartItem';
 export { Delivery } from './makeOrderComponents/delivery';
+export { UserInfo } from './profilePageComponents/userInfo';
+export { UserContacts } from './profilePageComponents/userContacts';
+export { ChangeData } from './profilePageComponents/changeData';
+export { Payment } from './makeOrderComponents/payment';
+export { Ready } from './makeOrderComponents/ready';

@@ -7,6 +7,8 @@
  */
 
 export * from './category';
+export * from './deleteApiUserFavorite200';
+export * from './deleteApiUserFavoriteBody';
 export * from './getApiItemDripPacks200Item';
 export * from './getApiItemGrain200Item';
 export * from './getApiItemOther200Item';
@@ -18,7 +20,9 @@ export * from './itemChars';
 export * from './itemConfiguration';
 export * from './itemInfo';
 export * from './postApiUserFavorite200';
+export * from './postApiUserFavoriteBody';
 export * from './postApiUserFavoriteParams';
 export * from './shortItem';
 export * from './shortItemWithCost';
 export * from './shortItemWithCostAllOf';
+export * from './userProperties';

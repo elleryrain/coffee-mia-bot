@@ -7,6 +7,7 @@ interface BaseApiRequestOptions {
   data?: object;
   signal?: AbortSignal;
   params?: string[][] | Record<string, string> | string | URLSearchParams;
+  headers?: Record<string, string>;
 }
 
 export const baseApiRequest = async <T>({
@@ -15,11 +16,14 @@ export const baseApiRequest = async <T>({
   data,
   signal,
   params,
+  headers,
 }: BaseApiRequestOptions): Promise<T> => {
   const urlParams = new URLSearchParams(params);
 
-  const headers: { [key: string]: string } = {
-    'X-Telegram-Auth': envConfig.telegramAuth,
+  const allHeaders: { [key: string]: string } = {
+    ...headers,
+    'X-Telegram-Auth': `tma ${envConfig.telegramAuth}`,
+    'ngrok-skip-browser-warning': 'true',
   };
 
   const apiUrl = `${envConfig.apiUrl}${url}`;
@@ -29,7 +33,7 @@ export const baseApiRequest = async <T>({
     params: urlParams,
     data,
     signal,
-    headers,
+    headers: allHeaders,
   });
 
   return response.data;

@@ -20,6 +20,8 @@ import type {
   UseQueryResult,
 } from '@tanstack/react-query';
 import type {
+  DeleteApiUserFavorite200,
+  DeleteApiUserFavoriteBody,
   GetApiItemDripPacks200Item,
   GetApiItemGrain200Item,
   GetApiItemOther200Item,
@@ -27,8 +29,9 @@ import type {
   GrindingType,
   Item,
   PostApiUserFavorite200,
-  PostApiUserFavoriteParams,
+  PostApiUserFavoriteBody,
   ShortItem,
+  UserProperties,
 } from './model';
 import { baseApiRequest } from '../../baseApiRequest';
 
@@ -601,13 +604,14 @@ export function useGetApiUserFavorite<
  * роут для добавления определённого товара в избранное
  */
 export const postApiUserFavorite = (
-  params: PostApiUserFavoriteParams,
+  postApiUserFavoriteBody: PostApiUserFavoriteBody,
   signal?: AbortSignal
 ) => {
   return baseApiRequest<PostApiUserFavorite200>({
-    url: `/api/user/favorite?idItem=${params.idItem}`,
+    url: `/api/user/favorite`,
     method: 'POST',
-    // params,
+    headers: { 'Content-Type': 'application/json' },
+    data: postApiUserFavoriteBody,
     signal,
   });
 };
@@ -619,24 +623,24 @@ export const getPostApiUserFavoriteMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postApiUserFavorite>>,
     TError,
-    { params: PostApiUserFavoriteParams },
+    { data: PostApiUserFavoriteBody },
     TContext
   >;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof postApiUserFavorite>>,
   TError,
-  { params: PostApiUserFavoriteParams },
+  { data: PostApiUserFavoriteBody },
   TContext
 > => {
   const { mutation: mutationOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof postApiUserFavorite>>,
-    { params: PostApiUserFavoriteParams }
+    { data: PostApiUserFavoriteBody }
   > = (props) => {
-    const { params } = props ?? {};
+    const { data } = props ?? {};
 
-    return postApiUserFavorite(params);
+    return postApiUserFavorite(data);
   };
 
   return { mutationFn, ...mutationOptions };
@@ -645,7 +649,7 @@ export const getPostApiUserFavoriteMutationOptions = <
 export type PostApiUserFavoriteMutationResult = NonNullable<
   Awaited<ReturnType<typeof postApiUserFavorite>>
 >;
-
+export type PostApiUserFavoriteMutationBody = PostApiUserFavoriteBody;
 export type PostApiUserFavoriteMutationError = unknown;
 
 export const usePostApiUserFavorite = <
@@ -655,16 +659,86 @@ export const usePostApiUserFavorite = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postApiUserFavorite>>,
     TError,
-    { params: PostApiUserFavoriteParams },
+    { data: PostApiUserFavoriteBody },
     TContext
   >;
 }): UseMutationResult<
   Awaited<ReturnType<typeof postApiUserFavorite>>,
   TError,
-  { params: PostApiUserFavoriteParams },
+  { data: PostApiUserFavoriteBody },
   TContext
 > => {
   const mutationOptions = getPostApiUserFavoriteMutationOptions(options);
+
+  return useMutation(mutationOptions);
+};
+/**
+ * роут для удаления предмета из избранного
+ */
+export const deleteApiUserFavorite = (
+  deleteApiUserFavoriteBody: DeleteApiUserFavoriteBody
+) => {
+  return baseApiRequest<DeleteApiUserFavorite200>({
+    url: `/api/user/favorite`,
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    data: deleteApiUserFavoriteBody,
+  });
+};
+
+export const getDeleteApiUserFavoriteMutationOptions = <
+  TError = unknown,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteApiUserFavorite>>,
+    TError,
+    { data: DeleteApiUserFavoriteBody },
+    TContext
+  >;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof deleteApiUserFavorite>>,
+  TError,
+  { data: DeleteApiUserFavoriteBody },
+  TContext
+> => {
+  const { mutation: mutationOptions } = options ?? {};
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof deleteApiUserFavorite>>,
+    { data: DeleteApiUserFavoriteBody }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return deleteApiUserFavorite(data);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type DeleteApiUserFavoriteMutationResult = NonNullable<
+  Awaited<ReturnType<typeof deleteApiUserFavorite>>
+>;
+export type DeleteApiUserFavoriteMutationBody = DeleteApiUserFavoriteBody;
+export type DeleteApiUserFavoriteMutationError = unknown;
+
+export const useDeleteApiUserFavorite = <
+  TError = unknown,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteApiUserFavorite>>,
+    TError,
+    { data: DeleteApiUserFavoriteBody },
+    TContext
+  >;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof deleteApiUserFavorite>>,
+  TError,
+  { data: DeleteApiUserFavoriteBody },
+  TContext
+> => {
+  const mutationOptions = getDeleteApiUserFavoriteMutationOptions(options);
 
   return useMutation(mutationOptions);
 };
@@ -1029,6 +1103,111 @@ export function useGetApiGrindingTypes<
   >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
   const queryOptions = getGetApiGrindingTypesQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData>;
+  };
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
+}
+
+/**
+ * получение информации о пользователе (роут нужен для того, чтобы в начале, когда пользователь запускает приложение, то происходит проверка захода в приложение
+ */
+export const getApiUser = (signal?: AbortSignal) => {
+  return baseApiRequest<UserProperties>({
+    url: `/api/user`,
+    method: 'GET',
+    signal,
+  });
+};
+
+export const getGetApiUserQueryKey = () => {
+  return [`/api/user`] as const;
+};
+
+export const getGetApiUserQueryOptions = <
+  TData = Awaited<ReturnType<typeof getApiUser>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getApiUser>>, TError, TData>
+  >;
+}) => {
+  const { query: queryOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetApiUserQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getApiUser>>> = ({
+    signal,
+  }) => getApiUser(signal);
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getApiUser>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData> };
+};
+
+export type GetApiUserQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getApiUser>>
+>;
+export type GetApiUserQueryError = unknown;
+
+export function useGetApiUser<
+  TData = Awaited<ReturnType<typeof getApiUser>>,
+  TError = unknown
+>(options: {
+  query: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getApiUser>>, TError, TData>
+  > &
+    Pick<
+      DefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getApiUser>>,
+        TError,
+        TData
+      >,
+      'initialData'
+    >;
+}): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+};
+export function useGetApiUser<
+  TData = Awaited<ReturnType<typeof getApiUser>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getApiUser>>, TError, TData>
+  > &
+    Pick<
+      UndefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getApiUser>>,
+        TError,
+        TData
+      >,
+      'initialData'
+    >;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useGetApiUser<
+  TData = Awaited<ReturnType<typeof getApiUser>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getApiUser>>, TError, TData>
+  >;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+export function useGetApiUser<
+  TData = Awaited<ReturnType<typeof getApiUser>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getApiUser>>, TError, TData>
+  >;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+  const queryOptions = getGetApiUserQueryOptions(options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData>;

@@ -11,6 +11,7 @@ import {
 } from '@nextui-org/react';
 import { radioClassNames } from '../../next-ui-styles';
 import {
+  useDeleteApiUserFavorite,
   useGetApiGrindingTypes,
   useGetApiItem,
   usePostApiUserFavorite,
@@ -63,7 +64,8 @@ export const ProductPage: FC = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const { data } = useGetApiItem({ idItem: params.id ?? '' });
-  const { mutate } = usePostApiUserFavorite();
+  const addToFavourite = usePostApiUserFavorite();
+  const deleteFromFavourite = useDeleteApiUserFavorite();
   // const {} = useGetApiGrindingTypes();
 
   const findProduct = (id: string) => {
@@ -118,7 +120,9 @@ export const ProductPage: FC = () => {
               </h1>
               <button
                 onClick={() => {
-                  mutate({ params: { idItem: Number(params.id ?? '0') } });
+                  addToFavourite.mutate({
+                    data: { itemId: Number(params.id ?? '0') },
+                  });
                 }}
                 className={`w-8 h-8 rounded-lg  flex justify-center items-center`}
               >

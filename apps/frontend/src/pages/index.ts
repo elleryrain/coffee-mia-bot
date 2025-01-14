@@ -6,3 +6,5 @@ export { DripsPage } from './dripsPage/dripsPage';
 export { GrainPage } from './grainPage/grainPage';
 export { OtherPage } from './otherPage/otherPage';
 export { OrderPage } from './orderPage/orderPage';
+export { FavouritePage } from './favouritePage/favouritePage';
+export { ProfilePage } from './profilePage/profilePage';

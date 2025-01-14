@@ -1,18 +1,33 @@
 import { FC } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useOrderStore } from '../../store/orderStore';
 
 export const OrderPage: FC = () => {
   const location = useLocation();
+  const orderStore = useOrderStore();
+  const navigate = useNavigate();
 
   return (
     <>
-      <Link to="/cart" className="ml-2 flex items-center gap-1 mb-3 py-3">
-        <img src="/arrow-left-black.svg" alt="back" />
-        <p className="text-[17px] leading-[20.29px] font-normal">Назад</p>
-      </Link>
+      {orderStore.step !== 3 && (
+        <Link to="/cart" className="ml-2 flex items-center gap-1 mb-3 py-3">
+          <img src="/arrow-left-black.svg" alt="back" />
+          <p
+            className="text-[17px] leading-[20.29px] font-normal"
+            onClick={() => navigate(-1)}
+          >
+            Назад
+          </p>
+        </Link>
+      )}
+      {orderStore.step === 3 && <div className="h-11"></div>}
       <div className="mt-2 gap-12 flex justify-center pb-2">
         <div className="flex flex-col items-center w-[57px]">
-          <p
+          <button
+            onClick={() => {
+              navigate('/make-order/delivery');
+            }}
+            disabled={orderStore.step === 3}
             className={`text-[24px] leading-[28.8px] w-[50px] h-[50px] rounded-full flex items-center justify-center mb-1 ${
               location.pathname.includes('delivery')
                 ? 'bg-systemOrange text-white'
@@ -20,7 +35,7 @@ export const OrderPage: FC = () => {
             }`}
           >
             1
-          </p>
+          </button>
           <p
             className={`${
               location.pathname.includes('delivery')
@@ -32,7 +47,11 @@ export const OrderPage: FC = () => {
           </p>
         </div>
         <div className="flex flex-col items-center w-[57px]">
-          <p
+          <button
+            onClick={() => {
+              navigate('/make-order/payment');
+            }}
+            disabled={orderStore.step === 1 || orderStore.step === 3}
             className={`text-[24px] leading-[28.8px] w-[50px] h-[50px] rounded-full flex items-center justify-center mb-1 ${
               location.pathname.includes('payment')
                 ? 'bg-systemOrange text-white'
@@ -40,7 +59,7 @@ export const OrderPage: FC = () => {
             }`}
           >
             2
-          </p>
+          </button>
           <p
             className={`${
               location.pathname.includes('payment')

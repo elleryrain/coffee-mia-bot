@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export const MainPage: FC = () => {
   return (
     <div>
-      <Link to="test">test</Link>
+      <Link to="make-order">test</Link>
       <TopCarousel />
       <CatrgoriesList />
       <Popular />

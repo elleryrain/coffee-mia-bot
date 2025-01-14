@@ -3,15 +3,17 @@ import { createBrowserRouter } from 'react-router-dom';
 import {
   CartPage,
   DripsPage,
+  FavouritePage,
   GrainPage,
   MainPage,
   OrderPage,
   OtherPage,
   ProductPage,
+  ProfilePage,
 } from '../pages';
 import { App } from '../app/app';
 import { TestPage } from '../pages/test/testPage';
-import { Delivery } from '../components';
+import { Delivery, Payment, Ready } from '../components';
 
 export const router = createBrowserRouter([
   {
@@ -20,8 +22,8 @@ export const router = createBrowserRouter([
     children: [
       { path: '', element: <MainPage /> },
       { path: '/cart', element: <CartPage /> },
-      { path: '/favourites' },
-      { path: 'profile' },
+      { path: '/favourites', element: <FavouritePage /> },
+      { path: 'profile', element: <ProfilePage /> },
       {
         path: 'grain',
         element: (
@@ -57,8 +59,8 @@ export const router = createBrowserRouter([
         element: <OrderPage />,
         children: [
           { path: 'delivery', element: <Delivery /> },
-          { path: 'payment' },
-          { path: 'ready' },
+          { path: 'payment', element: <Payment /> },
+          { path: 'ready', element: <Ready /> },
         ],
       },
       {
