@@ -11,14 +11,19 @@ import { image } from '@nextui-org/react';
 @Injectable()
 export class ItemServiceDB {
   constructor(@Inject('DB') private db: DrizzlePg) {}
-  async getGrainItem() {
+  async getGrainItem(userId: number) {
     const items = await this.db.query.chaptersTables.findMany({
       where: (chaptersTables, { eq }) =>
         eq(chaptersTables.categoryType, 'grain'),
+
       with: {
         itemsToChapters: {
           with: {
-            item: true,
+            item: {
+              with: {
+                favoriteItems: true,
+              },
+            },
           },
           columns: {},
         },
@@ -31,7 +36,7 @@ export class ItemServiceDB {
         id: item.item.id,
         title: item.item.title,
         image: item.item.mainImage,
-        favorite: false,
+        favorite: item.item.favoriteItems.some((fav) => fav.userId === userId),
       })),
     }));
     return transformedItems;
@@ -107,7 +112,7 @@ export class ItemServiceDB {
   }
 
   async getExtendedItemById(itemId: number) {
-    console.log(itemId)
+    console.log(itemId);
     const item = await this.db.query.itemsTable.findFirst({
       where: (itemsTable, { eq }) => eq(itemsTable.id, itemId),
       with: {
@@ -122,7 +127,7 @@ export class ItemServiceDB {
       title: item.title,
       description: item.description,
       descriptors: item.descriptors,
-      region: item.chars?.region, 
+      region: item.chars?.region,
       country: item.chars?.country,
       roasting: item.chars?.roasting,
       cultivation: item.chars?.cultivation,

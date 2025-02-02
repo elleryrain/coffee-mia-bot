@@ -31,7 +31,8 @@ export class ItemController {
     @Req() req: FastifyRequest,
     @Res() reply: FastifyReply
   ) {
-    const items = await this.itemServiceDB.getGrainItem();
+    const userId = req['raw'].user.id;
+    const items = await this.itemServiceDB.getGrainItem(userId);
     return reply.send(items);
   }
 
