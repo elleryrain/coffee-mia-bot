@@ -224,7 +224,8 @@ export const Delivery: FC = () => {
               disabled={courierDisabled}
               className={`w-full bg-orange10 border-[rgba(255,230,208,1)] border text-primaryBlack flex items-center
                           justify-center py-4 mt-8 mb-8 font-semibold text-[16px] leading-[17.6px] rounded-xl shadow-light 
-                          disabled:shadow-none disabled:bg-gray20 disabled:text-gray50 disabled:border-gray15`}
+                          disabled:shadow-none disabled:bg-gray20 disabled:text-gray50 disabled:border-gray15
+                          active:bg-orange60 active:border-systemOrange active:text-white`}
             >
               Далее
             </button>
