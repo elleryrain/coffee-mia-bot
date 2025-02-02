@@ -124,6 +124,7 @@ export const itemsRelations = relations(itemsTable, ({ one, many }) => ({
     references: [itemCharacteristicsTables.itemId],
   }),
   grainConfigs: many(grainItemCostsTable),
+  favoriteItems: many(userFavoriteItemsTable),
 }));
 
 export const grainItemCostsRelations = relations(
