@@ -6,11 +6,9 @@
  * OpenAPI spec version: 4.2.8
  */
 
-export interface ItemChars {
-  country: string;
-  cultivation: string;
-  height: number;
-  quality: string;
-  region: string;
-  roasting: string;
+export interface UserProperties {
+  firstName: string;
+  id: number;
+  lastName: string;
+  username: string;
 }

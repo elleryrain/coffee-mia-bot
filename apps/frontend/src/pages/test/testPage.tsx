@@ -1,12 +1,12 @@
 import { retrieveLaunchParams } from '@telegram-apps/sdk-react';
 import { FC } from 'react';
-import { useGetApiItemGrain } from '../../api/generated/users/default';
+import { useGetGrains } from '../../api/generated/users/default';
 import { items } from '../../mocks/mockItems';
 
 export const TestPage: FC = () => {
   const { initData } = retrieveLaunchParams();
 
-  const { isLoading, isError, data } = useGetApiItemGrain();
+  const { isLoading, isError, data } = useGetGrains();
   console.log(isLoading, isError, data);
 
   return (

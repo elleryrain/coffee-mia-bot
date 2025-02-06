@@ -1,12 +1,11 @@
 import axios from 'axios';
 import { envConfig } from '../config/config';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 interface BaseApiRequestOptions {
   url: string;
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
   data?: object;
+  headers?: Record<string, string>;
   signal?: AbortSignal;
   params?: string[][] | Record<string, string> | string | URLSearchParams;
 }
@@ -15,12 +14,14 @@ export const baseApiRequest = async <T>({
   url,
   method,
   data,
+  headers,
   signal,
   params,
 }: BaseApiRequestOptions): Promise<T> => {
   const urlParams = new URLSearchParams(params);
 
-  const headers: { [key: string]: string } = {
+  const allHeaders: { [key: string]: string } = {
+    ...headers,
     'X-Telegram-Auth': envConfig.telegramAuth,
   };
 
@@ -31,7 +32,7 @@ export const baseApiRequest = async <T>({
     params: urlParams,
     data,
     signal,
-    headers,
+    headers: allHeaders,
   });
 
   return response.data;

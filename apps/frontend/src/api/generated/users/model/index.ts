@@ -3,14 +3,20 @@
  * Do not edit manually.
  * документация для api для mia coffee bot
  * Описание api для демонстрации документации в формате JSON
- * OpenAPI spec version: 1.0.0
+ * OpenAPI spec version: 4.2.8
  */
 
+export * from './addFavoriteItem200';
+export * from './addFavoriteItemBody';
 export * from './category';
 export * from './getApiItemDripPacks200Item';
 export * from './getApiItemGrain200Item';
 export * from './getApiItemOther200Item';
 export * from './getApiItemParams';
+export * from './getDripPacks200Item';
+export * from './getGrains200Item';
+export * from './getItemByIdParams';
+export * from './getOtherItems200Item';
 export * from './grindingType';
 export * from './item';
 export * from './itemAllOf';
@@ -19,6 +25,9 @@ export * from './itemConfiguration';
 export * from './itemInfo';
 export * from './postApiUserFavorite200';
 export * from './postApiUserFavoriteParams';
+export * from './removeFavoriteItem200';
+export * from './removeFavoriteItemBody';
 export * from './shortItem';
 export * from './shortItemWithCost';
 export * from './shortItemWithCostAllOf';
+export * from './userProperties';

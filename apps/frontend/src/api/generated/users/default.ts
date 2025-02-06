@@ -3,7 +3,7 @@
  * Do not edit manually.
  * документация для api для mia coffee bot
  * Описание api для демонстрации документации в формате JSON
- * OpenAPI spec version: 1.0.0
+ * OpenAPI spec version: 4.2.8
  */
 import { useMutation, useQuery } from '@tanstack/react-query';
 import type {
@@ -20,71 +20,75 @@ import type {
   UseQueryResult,
 } from '@tanstack/react-query';
 import type {
-  GetApiItemDripPacks200Item,
-  GetApiItemGrain200Item,
-  GetApiItemOther200Item,
-  GetApiItemParams,
+  AddFavoriteItem200,
+  AddFavoriteItemBody,
+  GetDripPacks200Item,
+  GetGrains200Item,
+  GetItemByIdParams,
+  GetOtherItems200Item,
   GrindingType,
   Item,
-  PostApiUserFavorite200,
-  PostApiUserFavoriteParams,
+  RemoveFavoriteItem200,
+  RemoveFavoriteItemBody,
   ShortItem,
+  UserProperties,
 } from './model';
 import { baseApiRequest } from '../../baseApiRequest';
 
 /**
  * роут для получения всех зёрен
+ * @summary Получение всех зёрен
  */
-export const getApiItemGrain = (signal?: AbortSignal) => {
-  return baseApiRequest<GetApiItemGrain200Item[]>({
+export const getGrains = (signal?: AbortSignal) => {
+  return baseApiRequest<GetGrains200Item[]>({
     url: `/api/item/grain`,
     method: 'GET',
     signal,
   });
 };
 
-export const getGetApiItemGrainQueryKey = () => {
+export const getGetGrainsQueryKey = () => {
   return [`/api/item/grain`] as const;
 };
 
-export const getGetApiItemGrainQueryOptions = <
-  TData = Awaited<ReturnType<typeof getApiItemGrain>>,
+export const getGetGrainsQueryOptions = <
+  TData = Awaited<ReturnType<typeof getGrains>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getApiItemGrain>>, TError, TData>
+    UseQueryOptions<Awaited<ReturnType<typeof getGrains>>, TError, TData>
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetApiItemGrainQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetGrainsQueryKey();
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getApiItemGrain>>> = ({
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getGrains>>> = ({
     signal,
-  }) => getApiItemGrain(signal);
+  }) => getGrains(signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getApiItemGrain>>,
+    Awaited<ReturnType<typeof getGrains>>,
     TError,
     TData
   > & { queryKey: DataTag<QueryKey, TData> };
 };
 
-export type GetApiItemGrainQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getApiItemGrain>>
+export type GetGrainsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getGrains>>
 >;
-export type GetApiItemGrainQueryError = unknown;
+export type GetGrainsQueryError = unknown;
 
-export function useGetApiItemGrain<
-  TData = Awaited<ReturnType<typeof getApiItemGrain>>,
+export function useGetGrains<
+  TData = Awaited<ReturnType<typeof getGrains>>,
   TError = unknown
 >(options: {
   query: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getApiItemGrain>>, TError, TData>
+    UseQueryOptions<Awaited<ReturnType<typeof getGrains>>, TError, TData>
   > &
     Pick<
       DefinedInitialDataOptions<
-        Awaited<ReturnType<typeof getApiItemGrain>>,
+        Awaited<ReturnType<typeof getGrains>>,
         TError,
         TData
       >,
@@ -93,40 +97,43 @@ export function useGetApiItemGrain<
 }): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData>;
 };
-export function useGetApiItemGrain<
-  TData = Awaited<ReturnType<typeof getApiItemGrain>>,
+export function useGetGrains<
+  TData = Awaited<ReturnType<typeof getGrains>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getApiItemGrain>>, TError, TData>
+    UseQueryOptions<Awaited<ReturnType<typeof getGrains>>, TError, TData>
   > &
     Pick<
       UndefinedInitialDataOptions<
-        Awaited<ReturnType<typeof getApiItemGrain>>,
+        Awaited<ReturnType<typeof getGrains>>,
         TError,
         TData
       >,
       'initialData'
     >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-export function useGetApiItemGrain<
-  TData = Awaited<ReturnType<typeof getApiItemGrain>>,
+export function useGetGrains<
+  TData = Awaited<ReturnType<typeof getGrains>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getApiItemGrain>>, TError, TData>
+    UseQueryOptions<Awaited<ReturnType<typeof getGrains>>, TError, TData>
   >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+/**
+ * @summary Получение всех зёрен
+ */
 
-export function useGetApiItemGrain<
-  TData = Awaited<ReturnType<typeof getApiItemGrain>>,
+export function useGetGrains<
+  TData = Awaited<ReturnType<typeof getGrains>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getApiItemGrain>>, TError, TData>
+    UseQueryOptions<Awaited<ReturnType<typeof getGrains>>, TError, TData>
   >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
-  const queryOptions = getGetApiItemGrainQueryOptions(options);
+  const queryOptions = getGetGrainsQueryOptions(options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData>;
@@ -139,65 +146,58 @@ export function useGetApiItemGrain<
 
 /**
  * роут для получения всех дрип пакетов
+ * @summary Получение всех дрип пакетов
  */
-export const getApiItemDripPacks = (signal?: AbortSignal) => {
-  return baseApiRequest<GetApiItemDripPacks200Item[]>({
+export const getDripPacks = (signal?: AbortSignal) => {
+  return baseApiRequest<GetDripPacks200Item[]>({
     url: `/api/item/dripPacks`,
     method: 'GET',
     signal,
   });
 };
 
-export const getGetApiItemDripPacksQueryKey = () => {
+export const getGetDripPacksQueryKey = () => {
   return [`/api/item/dripPacks`] as const;
 };
 
-export const getGetApiItemDripPacksQueryOptions = <
-  TData = Awaited<ReturnType<typeof getApiItemDripPacks>>,
+export const getGetDripPacksQueryOptions = <
+  TData = Awaited<ReturnType<typeof getDripPacks>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiItemDripPacks>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getDripPacks>>, TError, TData>
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetApiItemDripPacksQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetDripPacksQueryKey();
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof getApiItemDripPacks>>
-  > = ({ signal }) => getApiItemDripPacks(signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getDripPacks>>> = ({
+    signal,
+  }) => getDripPacks(signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getApiItemDripPacks>>,
+    Awaited<ReturnType<typeof getDripPacks>>,
     TError,
     TData
   > & { queryKey: DataTag<QueryKey, TData> };
 };
 
-export type GetApiItemDripPacksQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getApiItemDripPacks>>
+export type GetDripPacksQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getDripPacks>>
 >;
-export type GetApiItemDripPacksQueryError = unknown;
+export type GetDripPacksQueryError = unknown;
 
-export function useGetApiItemDripPacks<
-  TData = Awaited<ReturnType<typeof getApiItemDripPacks>>,
+export function useGetDripPacks<
+  TData = Awaited<ReturnType<typeof getDripPacks>>,
   TError = unknown
 >(options: {
   query: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiItemDripPacks>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getDripPacks>>, TError, TData>
   > &
     Pick<
       DefinedInitialDataOptions<
-        Awaited<ReturnType<typeof getApiItemDripPacks>>,
+        Awaited<ReturnType<typeof getDripPacks>>,
         TError,
         TData
       >,
@@ -206,52 +206,43 @@ export function useGetApiItemDripPacks<
 }): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData>;
 };
-export function useGetApiItemDripPacks<
-  TData = Awaited<ReturnType<typeof getApiItemDripPacks>>,
+export function useGetDripPacks<
+  TData = Awaited<ReturnType<typeof getDripPacks>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiItemDripPacks>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getDripPacks>>, TError, TData>
   > &
     Pick<
       UndefinedInitialDataOptions<
-        Awaited<ReturnType<typeof getApiItemDripPacks>>,
+        Awaited<ReturnType<typeof getDripPacks>>,
         TError,
         TData
       >,
       'initialData'
     >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-export function useGetApiItemDripPacks<
-  TData = Awaited<ReturnType<typeof getApiItemDripPacks>>,
+export function useGetDripPacks<
+  TData = Awaited<ReturnType<typeof getDripPacks>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiItemDripPacks>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getDripPacks>>, TError, TData>
   >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+/**
+ * @summary Получение всех дрип пакетов
+ */
 
-export function useGetApiItemDripPacks<
-  TData = Awaited<ReturnType<typeof getApiItemDripPacks>>,
+export function useGetDripPacks<
+  TData = Awaited<ReturnType<typeof getDripPacks>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiItemDripPacks>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getDripPacks>>, TError, TData>
   >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
-  const queryOptions = getGetApiItemDripPacksQueryOptions(options);
+  const queryOptions = getGetDripPacksQueryOptions(options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData>;
@@ -264,57 +255,58 @@ export function useGetApiItemDripPacks<
 
 /**
  * роут для получения разных вещей
+ * @summary Получение разных вещей
  */
-export const getApiItemOther = (signal?: AbortSignal) => {
-  return baseApiRequest<GetApiItemOther200Item[]>({
+export const getOtherItems = (signal?: AbortSignal) => {
+  return baseApiRequest<GetOtherItems200Item[]>({
     url: `/api/item/other`,
     method: 'GET',
     signal,
   });
 };
 
-export const getGetApiItemOtherQueryKey = () => {
+export const getGetOtherItemsQueryKey = () => {
   return [`/api/item/other`] as const;
 };
 
-export const getGetApiItemOtherQueryOptions = <
-  TData = Awaited<ReturnType<typeof getApiItemOther>>,
+export const getGetOtherItemsQueryOptions = <
+  TData = Awaited<ReturnType<typeof getOtherItems>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getApiItemOther>>, TError, TData>
+    UseQueryOptions<Awaited<ReturnType<typeof getOtherItems>>, TError, TData>
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetApiItemOtherQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetOtherItemsQueryKey();
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getApiItemOther>>> = ({
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getOtherItems>>> = ({
     signal,
-  }) => getApiItemOther(signal);
+  }) => getOtherItems(signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getApiItemOther>>,
+    Awaited<ReturnType<typeof getOtherItems>>,
     TError,
     TData
   > & { queryKey: DataTag<QueryKey, TData> };
 };
 
-export type GetApiItemOtherQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getApiItemOther>>
+export type GetOtherItemsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getOtherItems>>
 >;
-export type GetApiItemOtherQueryError = unknown;
+export type GetOtherItemsQueryError = unknown;
 
-export function useGetApiItemOther<
-  TData = Awaited<ReturnType<typeof getApiItemOther>>,
+export function useGetOtherItems<
+  TData = Awaited<ReturnType<typeof getOtherItems>>,
   TError = unknown
 >(options: {
   query: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getApiItemOther>>, TError, TData>
+    UseQueryOptions<Awaited<ReturnType<typeof getOtherItems>>, TError, TData>
   > &
     Pick<
       DefinedInitialDataOptions<
-        Awaited<ReturnType<typeof getApiItemOther>>,
+        Awaited<ReturnType<typeof getOtherItems>>,
         TError,
         TData
       >,
@@ -323,40 +315,43 @@ export function useGetApiItemOther<
 }): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData>;
 };
-export function useGetApiItemOther<
-  TData = Awaited<ReturnType<typeof getApiItemOther>>,
+export function useGetOtherItems<
+  TData = Awaited<ReturnType<typeof getOtherItems>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getApiItemOther>>, TError, TData>
+    UseQueryOptions<Awaited<ReturnType<typeof getOtherItems>>, TError, TData>
   > &
     Pick<
       UndefinedInitialDataOptions<
-        Awaited<ReturnType<typeof getApiItemOther>>,
+        Awaited<ReturnType<typeof getOtherItems>>,
         TError,
         TData
       >,
       'initialData'
     >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-export function useGetApiItemOther<
-  TData = Awaited<ReturnType<typeof getApiItemOther>>,
+export function useGetOtherItems<
+  TData = Awaited<ReturnType<typeof getOtherItems>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getApiItemOther>>, TError, TData>
+    UseQueryOptions<Awaited<ReturnType<typeof getOtherItems>>, TError, TData>
   >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+/**
+ * @summary Получение разных вещей
+ */
 
-export function useGetApiItemOther<
-  TData = Awaited<ReturnType<typeof getApiItemOther>>,
+export function useGetOtherItems<
+  TData = Awaited<ReturnType<typeof getOtherItems>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getApiItemOther>>, TError, TData>
+    UseQueryOptions<Awaited<ReturnType<typeof getOtherItems>>, TError, TData>
   >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
-  const queryOptions = getGetApiItemOtherQueryOptions(options);
+  const queryOptions = getGetOtherItemsQueryOptions(options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData>;
@@ -369,8 +364,9 @@ export function useGetApiItemOther<
 
 /**
  * роут для получения всех новинок
+ * @summary Получение всех новинок
  */
-export const getApiItemNew = (signal?: AbortSignal) => {
+export const getNewItems = (signal?: AbortSignal) => {
   return baseApiRequest<ShortItem[]>({
     url: `/api/item/new`,
     method: 'GET',
@@ -378,48 +374,48 @@ export const getApiItemNew = (signal?: AbortSignal) => {
   });
 };
 
-export const getGetApiItemNewQueryKey = () => {
+export const getGetNewItemsQueryKey = () => {
   return [`/api/item/new`] as const;
 };
 
-export const getGetApiItemNewQueryOptions = <
-  TData = Awaited<ReturnType<typeof getApiItemNew>>,
+export const getGetNewItemsQueryOptions = <
+  TData = Awaited<ReturnType<typeof getNewItems>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getApiItemNew>>, TError, TData>
+    UseQueryOptions<Awaited<ReturnType<typeof getNewItems>>, TError, TData>
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetApiItemNewQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetNewItemsQueryKey();
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getApiItemNew>>> = ({
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getNewItems>>> = ({
     signal,
-  }) => getApiItemNew(signal);
+  }) => getNewItems(signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getApiItemNew>>,
+    Awaited<ReturnType<typeof getNewItems>>,
     TError,
     TData
   > & { queryKey: DataTag<QueryKey, TData> };
 };
 
-export type GetApiItemNewQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getApiItemNew>>
+export type GetNewItemsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getNewItems>>
 >;
-export type GetApiItemNewQueryError = unknown;
+export type GetNewItemsQueryError = unknown;
 
-export function useGetApiItemNew<
-  TData = Awaited<ReturnType<typeof getApiItemNew>>,
+export function useGetNewItems<
+  TData = Awaited<ReturnType<typeof getNewItems>>,
   TError = unknown
 >(options: {
   query: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getApiItemNew>>, TError, TData>
+    UseQueryOptions<Awaited<ReturnType<typeof getNewItems>>, TError, TData>
   > &
     Pick<
       DefinedInitialDataOptions<
-        Awaited<ReturnType<typeof getApiItemNew>>,
+        Awaited<ReturnType<typeof getNewItems>>,
         TError,
         TData
       >,
@@ -428,40 +424,43 @@ export function useGetApiItemNew<
 }): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData>;
 };
-export function useGetApiItemNew<
-  TData = Awaited<ReturnType<typeof getApiItemNew>>,
+export function useGetNewItems<
+  TData = Awaited<ReturnType<typeof getNewItems>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getApiItemNew>>, TError, TData>
+    UseQueryOptions<Awaited<ReturnType<typeof getNewItems>>, TError, TData>
   > &
     Pick<
       UndefinedInitialDataOptions<
-        Awaited<ReturnType<typeof getApiItemNew>>,
+        Awaited<ReturnType<typeof getNewItems>>,
         TError,
         TData
       >,
       'initialData'
     >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-export function useGetApiItemNew<
-  TData = Awaited<ReturnType<typeof getApiItemNew>>,
+export function useGetNewItems<
+  TData = Awaited<ReturnType<typeof getNewItems>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getApiItemNew>>, TError, TData>
+    UseQueryOptions<Awaited<ReturnType<typeof getNewItems>>, TError, TData>
   >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+/**
+ * @summary Получение всех новинок
+ */
 
-export function useGetApiItemNew<
-  TData = Awaited<ReturnType<typeof getApiItemNew>>,
+export function useGetNewItems<
+  TData = Awaited<ReturnType<typeof getNewItems>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getApiItemNew>>, TError, TData>
+    UseQueryOptions<Awaited<ReturnType<typeof getNewItems>>, TError, TData>
   >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
-  const queryOptions = getGetApiItemNewQueryOptions(options);
+  const queryOptions = getGetNewItemsQueryOptions(options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData>;
@@ -474,8 +473,9 @@ export function useGetApiItemNew<
 
 /**
  * роут для получения всей продукции, которую пользователь добавил в избранное
+ * @summary Получение избранных товаров пользователя
  */
-export const getApiUserFavorite = (signal?: AbortSignal) => {
+export const getFavoriteItems = (signal?: AbortSignal) => {
   return baseApiRequest<ShortItem[]>({
     url: `/api/user/favorite`,
     method: 'GET',
@@ -483,56 +483,48 @@ export const getApiUserFavorite = (signal?: AbortSignal) => {
   });
 };
 
-export const getGetApiUserFavoriteQueryKey = () => {
+export const getGetFavoriteItemsQueryKey = () => {
   return [`/api/user/favorite`] as const;
 };
 
-export const getGetApiUserFavoriteQueryOptions = <
-  TData = Awaited<ReturnType<typeof getApiUserFavorite>>,
+export const getGetFavoriteItemsQueryOptions = <
+  TData = Awaited<ReturnType<typeof getFavoriteItems>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiUserFavorite>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getFavoriteItems>>, TError, TData>
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetApiUserFavoriteQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetFavoriteItemsQueryKey();
 
   const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof getApiUserFavorite>>
-  > = ({ signal }) => getApiUserFavorite(signal);
+    Awaited<ReturnType<typeof getFavoriteItems>>
+  > = ({ signal }) => getFavoriteItems(signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getApiUserFavorite>>,
+    Awaited<ReturnType<typeof getFavoriteItems>>,
     TError,
     TData
   > & { queryKey: DataTag<QueryKey, TData> };
 };
 
-export type GetApiUserFavoriteQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getApiUserFavorite>>
+export type GetFavoriteItemsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getFavoriteItems>>
 >;
-export type GetApiUserFavoriteQueryError = unknown;
+export type GetFavoriteItemsQueryError = unknown;
 
-export function useGetApiUserFavorite<
-  TData = Awaited<ReturnType<typeof getApiUserFavorite>>,
+export function useGetFavoriteItems<
+  TData = Awaited<ReturnType<typeof getFavoriteItems>>,
   TError = unknown
 >(options: {
   query: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiUserFavorite>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getFavoriteItems>>, TError, TData>
   > &
     Pick<
       DefinedInitialDataOptions<
-        Awaited<ReturnType<typeof getApiUserFavorite>>,
+        Awaited<ReturnType<typeof getFavoriteItems>>,
         TError,
         TData
       >,
@@ -541,52 +533,43 @@ export function useGetApiUserFavorite<
 }): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData>;
 };
-export function useGetApiUserFavorite<
-  TData = Awaited<ReturnType<typeof getApiUserFavorite>>,
+export function useGetFavoriteItems<
+  TData = Awaited<ReturnType<typeof getFavoriteItems>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiUserFavorite>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getFavoriteItems>>, TError, TData>
   > &
     Pick<
       UndefinedInitialDataOptions<
-        Awaited<ReturnType<typeof getApiUserFavorite>>,
+        Awaited<ReturnType<typeof getFavoriteItems>>,
         TError,
         TData
       >,
       'initialData'
     >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-export function useGetApiUserFavorite<
-  TData = Awaited<ReturnType<typeof getApiUserFavorite>>,
+export function useGetFavoriteItems<
+  TData = Awaited<ReturnType<typeof getFavoriteItems>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiUserFavorite>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getFavoriteItems>>, TError, TData>
   >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+/**
+ * @summary Получение избранных товаров пользователя
+ */
 
-export function useGetApiUserFavorite<
-  TData = Awaited<ReturnType<typeof getApiUserFavorite>>,
+export function useGetFavoriteItems<
+  TData = Awaited<ReturnType<typeof getFavoriteItems>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiUserFavorite>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getFavoriteItems>>, TError, TData>
   >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
-  const queryOptions = getGetApiUserFavoriteQueryOptions(options);
+  const queryOptions = getGetFavoriteItemsQueryOptions(options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData>;
@@ -599,79 +582,162 @@ export function useGetApiUserFavorite<
 
 /**
  * роут для добавления определённого товара в избранное
+ * @summary Добавление товара в избранное
  */
-export const postApiUserFavorite = (
-  params: PostApiUserFavoriteParams,
+export const addFavoriteItem = (
+  addFavoriteItemBody: AddFavoriteItemBody,
   signal?: AbortSignal
 ) => {
-  return baseApiRequest<PostApiUserFavorite200>({
-    url: `/api/user/favorite?idItem=${params.idItem}`,
+  return baseApiRequest<AddFavoriteItem200>({
+    url: `/api/user/favorite`,
     method: 'POST',
-    // params,
+    headers: { 'Content-Type': 'application/json' },
+    data: addFavoriteItemBody,
     signal,
   });
 };
 
-export const getPostApiUserFavoriteMutationOptions = <
+export const getAddFavoriteItemMutationOptions = <
   TError = unknown,
   TContext = unknown
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof postApiUserFavorite>>,
+    Awaited<ReturnType<typeof addFavoriteItem>>,
     TError,
-    { params: PostApiUserFavoriteParams },
+    { data: AddFavoriteItemBody },
     TContext
   >;
 }): UseMutationOptions<
-  Awaited<ReturnType<typeof postApiUserFavorite>>,
+  Awaited<ReturnType<typeof addFavoriteItem>>,
   TError,
-  { params: PostApiUserFavoriteParams },
+  { data: AddFavoriteItemBody },
   TContext
 > => {
   const { mutation: mutationOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof postApiUserFavorite>>,
-    { params: PostApiUserFavoriteParams }
+    Awaited<ReturnType<typeof addFavoriteItem>>,
+    { data: AddFavoriteItemBody }
   > = (props) => {
-    const { params } = props ?? {};
+    const { data } = props ?? {};
 
-    return postApiUserFavorite(params);
+    return addFavoriteItem(data);
   };
 
   return { mutationFn, ...mutationOptions };
 };
 
-export type PostApiUserFavoriteMutationResult = NonNullable<
-  Awaited<ReturnType<typeof postApiUserFavorite>>
+export type AddFavoriteItemMutationResult = NonNullable<
+  Awaited<ReturnType<typeof addFavoriteItem>>
 >;
+export type AddFavoriteItemMutationBody = AddFavoriteItemBody;
+export type AddFavoriteItemMutationError = unknown;
 
-export type PostApiUserFavoriteMutationError = unknown;
-
-export const usePostApiUserFavorite = <
+/**
+ * @summary Добавление товара в избранное
+ */
+export const useAddFavoriteItem = <
   TError = unknown,
   TContext = unknown
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof postApiUserFavorite>>,
+    Awaited<ReturnType<typeof addFavoriteItem>>,
     TError,
-    { params: PostApiUserFavoriteParams },
+    { data: AddFavoriteItemBody },
     TContext
   >;
 }): UseMutationResult<
-  Awaited<ReturnType<typeof postApiUserFavorite>>,
+  Awaited<ReturnType<typeof addFavoriteItem>>,
   TError,
-  { params: PostApiUserFavoriteParams },
+  { data: AddFavoriteItemBody },
   TContext
 > => {
-  const mutationOptions = getPostApiUserFavoriteMutationOptions(options);
+  const mutationOptions = getAddFavoriteItemMutationOptions(options);
+
+  return useMutation(mutationOptions);
+};
+/**
+ * роут для удаления предмета из избранного
+ * @summary Удаление товара из избранного
+ */
+export const removeFavoriteItem = (
+  removeFavoriteItemBody: RemoveFavoriteItemBody
+) => {
+  return baseApiRequest<RemoveFavoriteItem200>({
+    url: `/api/user/favorite`,
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    data: removeFavoriteItemBody,
+  });
+};
+
+export const getRemoveFavoriteItemMutationOptions = <
+  TError = unknown,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof removeFavoriteItem>>,
+    TError,
+    { data: RemoveFavoriteItemBody },
+    TContext
+  >;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof removeFavoriteItem>>,
+  TError,
+  { data: RemoveFavoriteItemBody },
+  TContext
+> => {
+  const { mutation: mutationOptions } = options ?? {};
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof removeFavoriteItem>>,
+    { data: RemoveFavoriteItemBody }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return removeFavoriteItem(data);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type RemoveFavoriteItemMutationResult = NonNullable<
+  Awaited<ReturnType<typeof removeFavoriteItem>>
+>;
+export type RemoveFavoriteItemMutationBody = RemoveFavoriteItemBody;
+export type RemoveFavoriteItemMutationError = unknown;
+
+/**
+ * @summary Удаление товара из избранного
+ */
+export const useRemoveFavoriteItem = <
+  TError = unknown,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof removeFavoriteItem>>,
+    TError,
+    { data: RemoveFavoriteItemBody },
+    TContext
+  >;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof removeFavoriteItem>>,
+  TError,
+  { data: RemoveFavoriteItemBody },
+  TContext
+> => {
+  const mutationOptions = getRemoveFavoriteItemMutationOptions(options);
 
   return useMutation(mutationOptions);
 };
 /**
  * получение информации о товаре по id
+ * @summary Получение информации о товаре по ID
  */
-export const getApiItem = (params: GetApiItemParams, signal?: AbortSignal) => {
+export const getItemById = (
+  params: GetItemByIdParams,
+  signal?: AbortSignal
+) => {
   return baseApiRequest<Item>({
     url: `/api/item`,
     method: 'GET',
@@ -680,53 +746,53 @@ export const getApiItem = (params: GetApiItemParams, signal?: AbortSignal) => {
   });
 };
 
-export const getGetApiItemQueryKey = (params: GetApiItemParams) => {
+export const getGetItemByIdQueryKey = (params: GetItemByIdParams) => {
   return [`/api/item`, ...(params ? [params] : [])] as const;
 };
 
-export const getGetApiItemQueryOptions = <
-  TData = Awaited<ReturnType<typeof getApiItem>>,
+export const getGetItemByIdQueryOptions = <
+  TData = Awaited<ReturnType<typeof getItemById>>,
   TError = unknown
 >(
-  params: GetApiItemParams,
+  params: GetItemByIdParams,
   options?: {
     query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiItem>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getItemById>>, TError, TData>
     >;
   }
 ) => {
   const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetApiItemQueryKey(params);
+  const queryKey = queryOptions?.queryKey ?? getGetItemByIdQueryKey(params);
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getApiItem>>> = ({
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getItemById>>> = ({
     signal,
-  }) => getApiItem(params, signal);
+  }) => getItemById(params, signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getApiItem>>,
+    Awaited<ReturnType<typeof getItemById>>,
     TError,
     TData
   > & { queryKey: DataTag<QueryKey, TData> };
 };
 
-export type GetApiItemQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getApiItem>>
+export type GetItemByIdQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getItemById>>
 >;
-export type GetApiItemQueryError = unknown;
+export type GetItemByIdQueryError = unknown;
 
-export function useGetApiItem<
-  TData = Awaited<ReturnType<typeof getApiItem>>,
+export function useGetItemById<
+  TData = Awaited<ReturnType<typeof getItemById>>,
   TError = unknown
 >(
-  params: GetApiItemParams,
+  params: GetItemByIdParams,
   options: {
     query: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiItem>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getItemById>>, TError, TData>
     > &
       Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiItem>>,
+          Awaited<ReturnType<typeof getItemById>>,
           TError,
           TData
         >,
@@ -736,18 +802,18 @@ export function useGetApiItem<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData>;
 };
-export function useGetApiItem<
-  TData = Awaited<ReturnType<typeof getApiItem>>,
+export function useGetItemById<
+  TData = Awaited<ReturnType<typeof getItemById>>,
   TError = unknown
 >(
-  params: GetApiItemParams,
+  params: GetItemByIdParams,
   options?: {
     query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiItem>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getItemById>>, TError, TData>
     > &
       Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiItem>>,
+          Awaited<ReturnType<typeof getItemById>>,
           TError,
           TData
         >,
@@ -755,30 +821,33 @@ export function useGetApiItem<
       >;
   }
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-export function useGetApiItem<
-  TData = Awaited<ReturnType<typeof getApiItem>>,
+export function useGetItemById<
+  TData = Awaited<ReturnType<typeof getItemById>>,
   TError = unknown
 >(
-  params: GetApiItemParams,
+  params: GetItemByIdParams,
   options?: {
     query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiItem>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getItemById>>, TError, TData>
     >;
   }
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+/**
+ * @summary Получение информации о товаре по ID
+ */
 
-export function useGetApiItem<
-  TData = Awaited<ReturnType<typeof getApiItem>>,
+export function useGetItemById<
+  TData = Awaited<ReturnType<typeof getItemById>>,
   TError = unknown
 >(
-  params: GetApiItemParams,
+  params: GetItemByIdParams,
   options?: {
     query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiItem>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getItemById>>, TError, TData>
     >;
   }
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
-  const queryOptions = getGetApiItemQueryOptions(params, options);
+  const queryOptions = getGetItemByIdQueryOptions(params, options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData>;
@@ -791,8 +860,9 @@ export function useGetApiItem<
 
 /**
  * Получение часто покупаемых товаров
+ * @summary Получение часто покупаемых товаров
  */
-export const getApiItemPopular = (signal?: AbortSignal) => {
+export const getPopularItems = (signal?: AbortSignal) => {
   return baseApiRequest<ShortItem[]>({
     url: `/api/item/popular`,
     method: 'GET',
@@ -800,56 +870,48 @@ export const getApiItemPopular = (signal?: AbortSignal) => {
   });
 };
 
-export const getGetApiItemPopularQueryKey = () => {
+export const getGetPopularItemsQueryKey = () => {
   return [`/api/item/popular`] as const;
 };
 
-export const getGetApiItemPopularQueryOptions = <
-  TData = Awaited<ReturnType<typeof getApiItemPopular>>,
+export const getGetPopularItemsQueryOptions = <
+  TData = Awaited<ReturnType<typeof getPopularItems>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiItemPopular>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getPopularItems>>, TError, TData>
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetApiItemPopularQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetPopularItemsQueryKey();
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof getApiItemPopular>>
-  > = ({ signal }) => getApiItemPopular(signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getPopularItems>>> = ({
+    signal,
+  }) => getPopularItems(signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getApiItemPopular>>,
+    Awaited<ReturnType<typeof getPopularItems>>,
     TError,
     TData
   > & { queryKey: DataTag<QueryKey, TData> };
 };
 
-export type GetApiItemPopularQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getApiItemPopular>>
+export type GetPopularItemsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getPopularItems>>
 >;
-export type GetApiItemPopularQueryError = unknown;
+export type GetPopularItemsQueryError = unknown;
 
-export function useGetApiItemPopular<
-  TData = Awaited<ReturnType<typeof getApiItemPopular>>,
+export function useGetPopularItems<
+  TData = Awaited<ReturnType<typeof getPopularItems>>,
   TError = unknown
 >(options: {
   query: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiItemPopular>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getPopularItems>>, TError, TData>
   > &
     Pick<
       DefinedInitialDataOptions<
-        Awaited<ReturnType<typeof getApiItemPopular>>,
+        Awaited<ReturnType<typeof getPopularItems>>,
         TError,
         TData
       >,
@@ -858,52 +920,43 @@ export function useGetApiItemPopular<
 }): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData>;
 };
-export function useGetApiItemPopular<
-  TData = Awaited<ReturnType<typeof getApiItemPopular>>,
+export function useGetPopularItems<
+  TData = Awaited<ReturnType<typeof getPopularItems>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiItemPopular>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getPopularItems>>, TError, TData>
   > &
     Pick<
       UndefinedInitialDataOptions<
-        Awaited<ReturnType<typeof getApiItemPopular>>,
+        Awaited<ReturnType<typeof getPopularItems>>,
         TError,
         TData
       >,
       'initialData'
     >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-export function useGetApiItemPopular<
-  TData = Awaited<ReturnType<typeof getApiItemPopular>>,
+export function useGetPopularItems<
+  TData = Awaited<ReturnType<typeof getPopularItems>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiItemPopular>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getPopularItems>>, TError, TData>
   >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+/**
+ * @summary Получение часто покупаемых товаров
+ */
 
-export function useGetApiItemPopular<
-  TData = Awaited<ReturnType<typeof getApiItemPopular>>,
+export function useGetPopularItems<
+  TData = Awaited<ReturnType<typeof getPopularItems>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiItemPopular>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getPopularItems>>, TError, TData>
   >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
-  const queryOptions = getGetApiItemPopularQueryOptions(options);
+  const queryOptions = getGetPopularItemsQueryOptions(options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData>;
@@ -916,8 +969,9 @@ export function useGetApiItemPopular<
 
 /**
  * Получение всех типов помола для кофе
+ * @summary Получение всех типов помола для кофе
  */
-export const getApiGrindingTypes = (signal?: AbortSignal) => {
+export const getGrindingTypes = (signal?: AbortSignal) => {
   return baseApiRequest<GrindingType[]>({
     url: `/api/grindingTypes`,
     method: 'GET',
@@ -925,56 +979,48 @@ export const getApiGrindingTypes = (signal?: AbortSignal) => {
   });
 };
 
-export const getGetApiGrindingTypesQueryKey = () => {
+export const getGetGrindingTypesQueryKey = () => {
   return [`/api/grindingTypes`] as const;
 };
 
-export const getGetApiGrindingTypesQueryOptions = <
-  TData = Awaited<ReturnType<typeof getApiGrindingTypes>>,
+export const getGetGrindingTypesQueryOptions = <
+  TData = Awaited<ReturnType<typeof getGrindingTypes>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiGrindingTypes>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getGrindingTypes>>, TError, TData>
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetApiGrindingTypesQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetGrindingTypesQueryKey();
 
   const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof getApiGrindingTypes>>
-  > = ({ signal }) => getApiGrindingTypes(signal);
+    Awaited<ReturnType<typeof getGrindingTypes>>
+  > = ({ signal }) => getGrindingTypes(signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getApiGrindingTypes>>,
+    Awaited<ReturnType<typeof getGrindingTypes>>,
     TError,
     TData
   > & { queryKey: DataTag<QueryKey, TData> };
 };
 
-export type GetApiGrindingTypesQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getApiGrindingTypes>>
+export type GetGrindingTypesQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getGrindingTypes>>
 >;
-export type GetApiGrindingTypesQueryError = unknown;
+export type GetGrindingTypesQueryError = unknown;
 
-export function useGetApiGrindingTypes<
-  TData = Awaited<ReturnType<typeof getApiGrindingTypes>>,
+export function useGetGrindingTypes<
+  TData = Awaited<ReturnType<typeof getGrindingTypes>>,
   TError = unknown
 >(options: {
   query: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiGrindingTypes>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getGrindingTypes>>, TError, TData>
   > &
     Pick<
       DefinedInitialDataOptions<
-        Awaited<ReturnType<typeof getApiGrindingTypes>>,
+        Awaited<ReturnType<typeof getGrindingTypes>>,
         TError,
         TData
       >,
@@ -983,52 +1029,152 @@ export function useGetApiGrindingTypes<
 }): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData>;
 };
-export function useGetApiGrindingTypes<
-  TData = Awaited<ReturnType<typeof getApiGrindingTypes>>,
+export function useGetGrindingTypes<
+  TData = Awaited<ReturnType<typeof getGrindingTypes>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiGrindingTypes>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getGrindingTypes>>, TError, TData>
   > &
     Pick<
       UndefinedInitialDataOptions<
-        Awaited<ReturnType<typeof getApiGrindingTypes>>,
+        Awaited<ReturnType<typeof getGrindingTypes>>,
         TError,
         TData
       >,
       'initialData'
     >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-export function useGetApiGrindingTypes<
-  TData = Awaited<ReturnType<typeof getApiGrindingTypes>>,
+export function useGetGrindingTypes<
+  TData = Awaited<ReturnType<typeof getGrindingTypes>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiGrindingTypes>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getGrindingTypes>>, TError, TData>
   >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+/**
+ * @summary Получение всех типов помола для кофе
+ */
 
-export function useGetApiGrindingTypes<
-  TData = Awaited<ReturnType<typeof getApiGrindingTypes>>,
+export function useGetGrindingTypes<
+  TData = Awaited<ReturnType<typeof getGrindingTypes>>,
   TError = unknown
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiGrindingTypes>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getGrindingTypes>>, TError, TData>
   >;
 }): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
-  const queryOptions = getGetApiGrindingTypesQueryOptions(options);
+  const queryOptions = getGetGrindingTypesQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData>;
+  };
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
+}
+
+/**
+ * получение информации о пользователе (роут нужен для того, чтобы в начале, когда пользователь запускает приложение, то происходит проверка захода в приложение
+ * @summary Получение информации о пользователе
+ */
+export const getUserInfo = (signal?: AbortSignal) => {
+  return baseApiRequest<UserProperties>({
+    url: `/api/user`,
+    method: 'GET',
+    signal,
+  });
+};
+
+export const getGetUserInfoQueryKey = () => {
+  return [`/api/user`] as const;
+};
+
+export const getGetUserInfoQueryOptions = <
+  TData = Awaited<ReturnType<typeof getUserInfo>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>
+  >;
+}) => {
+  const { query: queryOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetUserInfoQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserInfo>>> = ({
+    signal,
+  }) => getUserInfo(signal);
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getUserInfo>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData> };
+};
+
+export type GetUserInfoQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getUserInfo>>
+>;
+export type GetUserInfoQueryError = unknown;
+
+export function useGetUserInfo<
+  TData = Awaited<ReturnType<typeof getUserInfo>>,
+  TError = unknown
+>(options: {
+  query: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>
+  > &
+    Pick<
+      DefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getUserInfo>>,
+        TError,
+        TData
+      >,
+      'initialData'
+    >;
+}): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+};
+export function useGetUserInfo<
+  TData = Awaited<ReturnType<typeof getUserInfo>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>
+  > &
+    Pick<
+      UndefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getUserInfo>>,
+        TError,
+        TData
+      >,
+      'initialData'
+    >;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useGetUserInfo<
+  TData = Awaited<ReturnType<typeof getUserInfo>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>
+  >;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+/**
+ * @summary Получение информации о пользователе
+ */
+
+export function useGetUserInfo<
+  TData = Awaited<ReturnType<typeof getUserInfo>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>
+  >;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+  const queryOptions = getGetUserInfoQueryOptions(options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData>;
