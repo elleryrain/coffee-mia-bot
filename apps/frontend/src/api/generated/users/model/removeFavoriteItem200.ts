@@ -6,11 +6,6 @@
  * OpenAPI spec version: 4.2.8
  */
 
-export interface ItemChars {
-  country: string;
-  cultivation: string;
-  height: number;
-  quality: string;
-  region: string;
-  roasting: string;
-}
+export type RemoveFavoriteItem200 = {
+  message?: string;
+};

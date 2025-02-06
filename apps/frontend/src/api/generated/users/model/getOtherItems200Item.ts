@@ -5,12 +5,10 @@
  * Описание api для демонстрации документации в формате JSON
  * OpenAPI spec version: 4.2.8
  */
+import type { ShortItemWithCost } from './shortItemWithCost';
 
-export interface ItemChars {
-  country: string;
-  cultivation: string;
-  height: number;
-  quality: string;
-  region: string;
-  roasting: string;
-}
+export type GetOtherItems200Item = {
+  description?: string;
+  items?: ShortItemWithCost[];
+  nameCategory?: string;
+};
