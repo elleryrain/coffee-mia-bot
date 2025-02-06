@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import { useGetApiUserFavorite } from '../../api/generated/users/default';
+import { useGetFavoriteItems } from '../../api/generated/users/default';
 import { ProductCard } from '../../components';
 
 export const FavouritePage: FC = () => {
-  const { data } = useGetApiUserFavorite();
+  const { data } = useGetFavoriteItems();
 
   return (
     <div>

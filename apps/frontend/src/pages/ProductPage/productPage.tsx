@@ -11,10 +11,10 @@ import {
 } from '@nextui-org/react';
 import { radioClassNames } from '../../next-ui-styles';
 import {
-  useDeleteApiUserFavorite,
-  useGetApiGrindingTypes,
-  useGetApiItem,
-  usePostApiUserFavorite,
+  useRemoveFavoriteItem,
+  useGetGrindingTypes,
+  useGetItemById,
+  useAddFavoriteItem,
 } from '../../api/generated/users/default';
 
 const configurations = [
@@ -63,9 +63,9 @@ export const ProductPage: FC = () => {
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  const { data } = useGetApiItem({ idItem: params.id ?? '' });
-  const addToFavourite = usePostApiUserFavorite();
-  const deleteFromFavourite = useDeleteApiUserFavorite();
+  const { data } = useGetItemById({ idItem: params.id ?? '' });
+  const addToFavourite = useAddFavoriteItem();
+  const deleteFromFavourite = useRemoveFavoriteItem();
   // const {} = useGetApiGrindingTypes();
 
   const findProduct = (id: string) => {

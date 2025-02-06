@@ -1,9 +1,9 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { NavBar } from '../components';
-import { useGetApiUser } from '../api/generated/users/default';
+import { useGetUserInfo } from '../api/generated/users/default';
 
 export function App() {
-  const {} = useGetApiUser();
+  const {} = useGetUserInfo();
 
   const location = useLocation();
 
