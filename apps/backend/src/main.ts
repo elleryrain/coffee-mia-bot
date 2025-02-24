@@ -18,6 +18,7 @@ async function bootstrap() {
       'Accept',
       'Content-Type',
       'Authorization',
+      'X-Telegram-Auth',
     ],
     credentials: true,
     methods: ['GET', 'PUT', 'OPTIONS', 'POST', 'DELETE'],
