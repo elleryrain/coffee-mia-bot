@@ -12,9 +12,9 @@ import {
 import { radioClassNames } from '../../next-ui-styles';
 import {
   useRemoveFavoriteItem,
-  useGetGrindingTypes,
   useGetItemById,
   useAddFavoriteItem,
+  useGetGrindingTypes,
 } from '../../api/generated/users/default';
 
 const configurations = [
@@ -40,15 +40,15 @@ const configurations = [
   },
 ];
 
-const grindings = [
-  { id: 1, name: 'Без помола' },
-  { id: 2, name: 'Для турки' },
-  { id: 3, name: 'Для эспрессо' },
-  { id: 4, name: 'Для гейзера' },
-  { id: 5, name: 'Для воронки' },
-  { id: 6, name: 'Для фильтра' },
-  { id: 7, name: 'Для френч-пресс' },
-];
+// const grindings = [
+//   { id: 1, name: 'Без помола' },
+//   { id: 2, name: 'Для турки' },
+//   { id: 3, name: 'Для эспрессо' },
+//   { id: 4, name: 'Для гейзера' },
+//   { id: 5, name: 'Для воронки' },
+//   { id: 6, name: 'Для фильтра' },
+//   { id: 7, name: 'Для френч-пресс' },
+// ];
 
 export const ProductPage: FC = () => {
   const params = useParams<{ id: string }>();
@@ -63,10 +63,10 @@ export const ProductPage: FC = () => {
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  const { data } = useGetItemById({ idItem: params.id ?? '' });
+  const { data: product } = useGetItemById({ idItem: params.id ?? '' });
   const addToFavourite = useAddFavoriteItem();
   const deleteFromFavourite = useRemoveFavoriteItem();
-  // const {} = useGetApiGrindingTypes();
+  const { data: grindings } = useGetGrindingTypes();
 
   const findProduct = (id: string) => {
     return cartStore.products.find((e) => e.id.startsWith(id));
@@ -92,8 +92,8 @@ export const ProductPage: FC = () => {
       </button>
       <div className="embla" ref={emblaRef}>
         <div className="embla__container w-[calc(100vw-16px)] px-4 gap-2">
-          {data &&
-            data.images?.map((banner, ix) => {
+          {product &&
+            product.images?.map((banner, ix) => {
               if (banner.length > 0)
                 return (
                   <div
@@ -111,12 +111,12 @@ export const ProductPage: FC = () => {
             })}
         </div>
       </div>
-      {data && (
+      {product && (
         <>
           <div className="container mt-8">
             <div className="flex items-center justify-between py-1">
               <h1 className="text-[20px] leading-[22px] font-semibold">
-                {data.title}
+                {product.title}
               </h1>
               <button
                 onClick={() => {
@@ -127,10 +127,10 @@ export const ProductPage: FC = () => {
                 className={`w-8 h-8 rounded-lg  flex justify-center items-center`}
               >
                 {/* ${
-              data.isFavourite ? 'bg-red10' : 'bg-gray20'
+              product.isFavourite ? 'bg-red10' : 'bg-gray20'
             } */}
                 {/* ${
-                data.isFavourite ? '/heart_active.svg' : '/heart-nobg.svg'
+                product.isFavourite ? '/heart_active.svg' : '/heart-nobg.svg'
               } */}
                 <img src={`/heart-nobg.svg`} alt="like" />
               </button>
@@ -142,38 +142,38 @@ export const ProductPage: FC = () => {
                 Страна
               </p>
               <p className="text-[14px] leading-[19.6px] text-black">
-                {data.country}
+                {product.country}
               </p>
               <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
                 Регион
               </p>
               <p className="text-[14px] leading-[19.6px] text-black">
-                {data.region}
+                {product.region}
               </p>
               <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
                 Обжарка
               </p>
               <p className="text-[14px] leading-[19.6px] text-black">
-                {data.roasting}
+                {product.roasting}
               </p>
               <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
                 Обработка
               </p>
               <p className="text-[14px] leading-[19.6px] text-black">
-                {data.cultivation}
+                {product.cultivation}
               </p>
-              <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
+              {/* <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
                 Высота
               </p>
               <p className="text-[14px] leading-[19.6px] text-black">
-                {data.height} м
-              </p>
-              <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
+                {product.height} м
+              </p> */}
+              {/* <p className="text-[14px] leading-[19.6px] text-tetriaryBlack">
                 Качество
               </p>
               <p className="text-[14px] leading-[19.6px] text-black">
-                {data.quality}
-              </p>
+                {product.quality}
+              </p> */}
             </div>
           </div>
           <div className="container mb-6">
@@ -181,7 +181,7 @@ export const ProductPage: FC = () => {
               Дескрипторы
             </h2>
             <p className="py-1 text-[14px] leading-[19.6px] text-black">
-              {data.descriptors}
+              {product.descriptors}
             </p>
           </div>
           <div className="container flex gap-2 outline-none mb-7">
@@ -189,21 +189,23 @@ export const ProductPage: FC = () => {
               <div
                 key={config.id}
                 className={`p-2 rounded-xl  ${
-                  findProduct(`${data.id}_${config.id}`)
+                  findProduct(`${product.id}_${config.id}`)
                     ? 'bg-systemOrange'
                     : 'bg-gray15'
                 }`}
               >
                 <p
                   className={`text-[14px] leading-[16.8px] ${
-                    findProduct(`${data.id}_${config.id}`) ? 'text-white' : ''
+                    findProduct(`${product.id}_${config.id}`)
+                      ? 'text-white'
+                      : ''
                   }`}
                 >
                   {config.cost} ₽
                 </p>
                 <p
                   className={`text-[11px] leading-[14.3px] mb-2 ${
-                    findProduct(`${data.id}_${config.id}`)
+                    findProduct(`${product.id}_${config.id}`)
                       ? 'text-orange10'
                       : 'text-tetriaryBlack'
                   }`}
@@ -212,12 +214,12 @@ export const ProductPage: FC = () => {
                     ? config.weight / 1000 + ' кг'
                     : config.weight + ' г'}
                 </p>
-                {findProduct(`${data.id}_${config.id}`) ? (
+                {findProduct(`${product.id}_${config.id}`) ? (
                   <div className="py-1 w-[68px] bg-white rounded-2xl flex gap-1 justify-between px-[6px]">
                     <button
                       onClick={() => {
                         cartStore.changeCount(
-                          findProduct(`${data.id}_${config.id}`)?.id ?? '',
+                          findProduct(`${product.id}_${config.id}`)?.id ?? '',
                           -1
                         );
                       }}
@@ -229,15 +231,15 @@ export const ProductPage: FC = () => {
                       />
                     </button>
                     <p className="text-[11px] leading-[14.3px] w-4 h-4 justify-center flex items-center">
-                      {productsCount(`${data.id}_${config.id}`)}
+                      {productsCount(`${product.id}_${config.id}`)}
                     </p>
                     <button
                       onClick={() => {
                         setGrinding(
-                          findProduct(`${data.id}_${config.id}`)?.description ??
-                            ''
+                          findProduct(`${product.id}_${config.id}`)
+                            ?.description ?? ''
                         );
-                        setId(`${data.id}_${config.id}`);
+                        setId(`${product.id}_${config.id}`);
                         setPrice(config.cost);
                         setWeight(
                           config.weight >= 1000
@@ -257,7 +259,7 @@ export const ProductPage: FC = () => {
                 ) : (
                   <button
                     onClick={() => {
-                      setId(`${data.id}_${config.id}`);
+                      setId(`${product.id}_${config.id}`);
                       setPrice(config.cost);
                       setWeight(
                         config.weight >= 1000
@@ -305,9 +307,13 @@ export const ProductPage: FC = () => {
                 }}
                 value={grinding}
               >
-                {grindings.map((grinding) => (
-                  <Radio classNames={radioClassNames} value={grinding.name}>
-                    {grinding.name}
+                {grindings?.map((grinding) => (
+                  <Radio
+                    classNames={radioClassNames}
+                    key={grinding.id}
+                    value={grinding.title}
+                  >
+                    {grinding.title}
                   </Radio>
                 ))}
               </RadioGroup>
@@ -323,29 +329,29 @@ export const ProductPage: FC = () => {
                     } else {
                       cartStore.addProduct({
                         id: `${id}_${
-                          grindings.find((g) => g.name === grinding)?.id
+                          grindings?.find((g) => g.title === grinding)?.id
                         }`,
-                        link_id: data?.id ?? '',
+                        link_id: product?.id ?? '',
                         description: grinding,
                         quantity: weight,
                         count: 1,
                         image: undefined,
                         isFavourite: false,
                         price: price,
-                        name: data?.title ?? '',
+                        name: product?.title ?? '',
                       });
                     }
                   } else {
                     cartStore.addProduct({
                       id: id,
-                      link_id: data?.id ?? '',
+                      link_id: product?.id ?? '',
                       description: grinding,
                       quantity: weight,
                       count: 1,
                       image: undefined,
                       isFavourite: false,
                       price: price,
-                      name: data?.title ?? '',
+                      name: product?.title ?? '',
                     });
                   }
                   onClose();

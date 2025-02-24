@@ -22,7 +22,7 @@ export const baseApiRequest = async <T>({
 
   const allHeaders: { [key: string]: string } = {
     ...headers,
-    'X-Telegram-Auth': envConfig.telegramAuth,
+    'X-Telegram-Auth': `tma ${envConfig.telegramAuth}`,
   };
 
   const apiUrl = `${envConfig.apiUrl}${url}`;

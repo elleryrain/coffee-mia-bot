@@ -8,6 +8,8 @@ export const ProductCard: FC<{
 }> = ({ product }) => {
   const cartState = useCartStore();
 
+ 
+
   return (
     <div className="mb-2 flex flex-col justify-between items-start w-[calc((100%-24px)/2)]">
       <Link
