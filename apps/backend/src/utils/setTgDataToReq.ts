@@ -4,7 +4,7 @@ import { IncomingMessage } from 'http';
 
 export function setTgDataToReq(
   req: IncomingMessage,
-  data: InitData
+  data: InitData,
 ): null | 'user data not found' {
   if (!data.user) {
     throw new Error('auth user data not found');
@@ -12,8 +12,8 @@ export function setTgDataToReq(
 
   req.user = {
     id: data.user.id,
-    firstName: data.user.firstName,
-    lastName: data.user.lastName,
+    firstName: data.user.first_name,
+    lastName: data.user.last_name,
     username: data.user.username,
   };
   return null;
