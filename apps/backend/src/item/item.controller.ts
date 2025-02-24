@@ -41,7 +41,8 @@ export class ItemController {
     @Req() req: FastifyRequest,
     @Res() reply: FastifyReply
   ) {
-    const items = await this.itemServiceDB.getDripPacks();
+    const userId = req['raw'].user.id;
+    const items = await this.itemServiceDB.getDripPacks(userId);
     return reply.send(items);
   }
 
@@ -50,7 +51,8 @@ export class ItemController {
     @Req() req: FastifyRequest,
     @Res() reply: FastifyReply
   ) {
-    const items = await this.itemServiceDB.getOtherItems();
+    const userId = req['raw'].user.id
+    const items = await this.itemServiceDB.getOtherItems(userId);
     return reply.send(items);
   }
 }
