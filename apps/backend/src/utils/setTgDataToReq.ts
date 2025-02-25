@@ -12,8 +12,8 @@ export function setTgDataToReq(
 
   req.user = {
     id: data.user.id,
-    firstName: data.user.first_name,
-    lastName: data.user.last_name,
+    firstName: data.user.firstName,
+    lastName: data.user.lastName,
     username: data.user.username,
   };
   return null;

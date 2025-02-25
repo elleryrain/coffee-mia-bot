@@ -29,7 +29,7 @@ async function bootstrap() {
     AppModule,
     appAdapter,
   );
-  app.use();
+  // app.use();
   const globalPrefix = 'api';
 
   app.setGlobalPrefix(globalPrefix);
