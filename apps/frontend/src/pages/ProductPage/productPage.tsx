@@ -336,7 +336,6 @@ export const ProductPage: FC = () => {
                         quantity: weight,
                         count: 1,
                         image: undefined,
-                        isFavourite: false,
                         price: price,
                         name: product?.title ?? '',
                       });
@@ -349,7 +348,6 @@ export const ProductPage: FC = () => {
                       quantity: weight,
                       count: 1,
                       image: undefined,
-                      isFavourite: false,
                       price: price,
                       name: product?.title ?? '',
                     });

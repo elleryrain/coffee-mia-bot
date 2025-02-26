@@ -2,39 +2,67 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { useCartStore } from '../../store/cartStore';
 import { ShortItem, ShortItemWithCost } from '../../api/generated/users/model';
+import {
+  useAddFavoriteItem,
+  useRemoveFavoriteItem,
+} from '../../api/generated/users/default';
+import { RefetchOptions } from '@tanstack/react-query';
 
 export const ProductCard: FC<{
   product: ShortItem | ShortItemWithCost;
-}> = ({ product }) => {
+  refechFn: (options?: RefetchOptions) => Promise<unknown>;
+}> = ({ product, refechFn }) => {
   const cartState = useCartStore();
 
- 
+  const addToFavourite = useAddFavoriteItem();
+  const deleteFromFavourite = useRemoveFavoriteItem();
 
   return (
     <div className="mb-2 flex flex-col justify-between items-start w-[calc((100%-24px)/2)]">
-      <Link
-        to={`/products/${product.id}`}
-        className={`productCard border-gray20 flex flex-col gap-3`}
-        key={product.id}
-      >
-        <div className="productCardImg relative flex flex-col items-center justify-center overflow-hidden">
-          <button>
-            <img
-              className="absolute top-2 right-2"
-              src={`${product.favorite ? '/heart_active.svg' : 'heart.svg'}`}
-              alt="like"
-            />
-          </button>
+      <div className="relative max-w-[150px]">
+        <button
+          className="absolute top-2 right-2 z-20"
+          onClick={async () => {
+            if (product.favorite) {
+              await deleteFromFavourite.mutateAsync({
+                data: { itemId: product.id },
+              });
+              refechFn();
+            } else {
+              await addToFavourite.mutateAsync({
+                data: { itemId: product.id },
+              });
+              refechFn();
+            }
+          }}
+        >
           <img
-            className=""
-            src={product.image === null ? '/empty_img.svg' : product.image}
-            alt="coffee"
+            // className="absolute top-2 right-2"
+            src={`${product.favorite ? 'heart_active.svg' : 'heart.svg'}`}
+            alt="like"
           />
-        </div>
-        <p className="text-[16px] leading-[20.8px] font-normal w-[168px]">
-          {product.title}
-        </p>
-      </Link>
+        </button>
+        <Link
+          to={`/products/${product.id}`}
+          className={`productCard border-gray20 flex flex-col gap-3`}
+          key={product.id}
+        >
+          <div className="productCardImg relative flex flex-col items-center justify-center overflow-hidden">
+            <img
+              className=""
+              src={
+                product.image !== null && product.image.length > 1
+                  ? product.image
+                  : '/empty_img.svg'
+              }
+              alt="coffee"
+            />
+          </div>
+          <p className="text-[16px] leading-[20.8px] font-normal w-[168px]">
+            {product.title}
+          </p>
+        </Link>
+      </div>
       {'cost' in product && (
         <button
           onClick={() => {
@@ -43,7 +71,6 @@ export const ProductCard: FC<{
               quantity: '100г',
               count: 1,
               image: product.image ?? undefined,
-              isFavourite: product.favorite,
               id: String(product.id),
               price: product.cost,
             });

@@ -3,7 +3,7 @@ import { useGetFavoriteItems } from '../../api/generated/users/default';
 import { ProductCard } from '../../components';
 
 export const FavouritePage: FC = () => {
-  const { data } = useGetFavoriteItems();
+  const { data, refetch: refetchFn } = useGetFavoriteItems();
 
   return (
     <div>
@@ -13,9 +13,9 @@ export const FavouritePage: FC = () => {
         </h1>
       </div>
       <div className="w-[100vw] h-0 border-b-[0.5px] border-gray40 "></div>
-      <div className="container pt-10 flex flex-col gap-6">
+      <div className="container pt-10 flex flex-wrap gap-6">
         {data?.map((item) => (
-          <ProductCard product={item} />
+          <ProductCard product={item} refechFn={refetchFn} />
         ))}
       </div>
       {data?.length === 0 && (

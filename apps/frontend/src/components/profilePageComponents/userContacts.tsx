@@ -4,12 +4,19 @@ import { FC, Ref, useState } from 'react';
 import { ChangeData } from './changeData';
 import { inputStyles, modalStyles } from '../../next-ui-styles';
 import { useIMask } from 'react-imask';
+import { useGetUserInfo } from '../../api/generated/users/default';
 
 export const UserContacts: FC = () => {
   const { initData } = retrieveLaunchParams();
 
+  const { data: user } = useGetUserInfo();
+
   const [nickname, setNickname] = useState(
-    initData?.user?.username ? `@${initData?.user?.username}` : '@'
+    user?.username
+      ? `@${user.username}`
+      : initData?.user?.username
+      ? `@${initData?.user?.username}`
+      : '@'
   );
 
   const {

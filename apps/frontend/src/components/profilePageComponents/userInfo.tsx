@@ -9,12 +9,15 @@ import { on, retrieveLaunchParams } from '@telegram-apps/sdk-react';
 import { FC, useState } from 'react';
 import { avatarStyles, inputStyles, modalStyles } from '../../next-ui-styles';
 import { ChangeData } from './changeData';
+import { useGetUserInfo } from '../../api/generated/users/default';
 
 export const UserInfo: FC = () => {
   const { initData } = retrieveLaunchParams();
 
   const [name, setName] = useState(initData?.user?.firstName);
   const [surname, setSurname] = useState(initData?.user?.lastName);
+
+  const { data: user } = useGetUserInfo();
 
   const {
     isOpen: isUserDataModalOpen,
@@ -32,14 +35,22 @@ export const UserInfo: FC = () => {
               initData?.user?.firstName ? '' : 'text-gray40'
             }`}
           >
-            {initData?.user?.firstName ? initData?.user?.firstName : 'Имя'}
+            {user?.firstName
+              ? user.firstName
+              : initData?.user?.firstName
+              ? initData?.user?.firstName
+              : 'Имя'}
           </p>
           <p
             className={`text-[22px] leading-[26.25px] font-bold ${
               initData?.user?.lastName ? '' : 'text-gray40'
             }`}
           >
-            {initData?.user?.lastName ? initData?.user?.lastName : 'Фамилия'}
+            {user?.lastName
+              ? user.lastName
+              : initData?.user?.lastName
+              ? initData?.user?.lastName
+              : 'Фамилия'}
           </p>
         </div>
       </div>

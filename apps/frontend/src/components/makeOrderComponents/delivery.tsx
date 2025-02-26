@@ -12,11 +12,15 @@ import { useIMask } from 'react-imask';
 import { useOrderStore } from '../../store/orderStore';
 import { useNavigate } from 'react-router-dom';
 import { dateInputStyles, inputStyles, tabsStyle } from '../../next-ui-styles';
+import { useCartStore } from '../../store/cartStore';
+import { useGetUserInfo } from '../../api/generated/users/default';
 
 export const Delivery: FC = () => {
   const navigate = useNavigate();
 
   const orderStore = useOrderStore();
+
+  const { data: user } = useGetUserInfo();
 
   const { ref, value, setValue } = useIMask({ mask: '+{7}(900)000-00-00' });
   const {
@@ -103,6 +107,24 @@ export const Delivery: FC = () => {
     orderStore.courierDeliveryInfo.telegram_nickname.length,
     orderStore.courierDeliveryInfo.time,
   ]);
+
+  useEffect(() => {
+    // if (user?.phone) {
+    //   setValue(user.phone);
+    // }
+    if (user) {
+      orderStore.setDeliveryInfo({
+        ...orderStore.courierDeliveryInfo,
+        telegram_nickname: user.username,
+        first_name: user.firstName,
+      });
+      orderStore.setDeliveryInfo({
+        ...orderStore.cdekDeliveryInfo,
+        first_name: user.firstName,
+        last_name: user.lastName,
+      });
+    }
+  }, [user]);
 
   return (
     <div className="container">
@@ -215,6 +237,7 @@ export const Delivery: FC = () => {
               Стоимость доставки:{' '}
               <span className="text-primaryBlack">500р</span>
             </p>
+
             <button
               onClick={() => {
                 orderStore.setStep(2);
@@ -235,11 +258,11 @@ export const Delivery: FC = () => {
           <div className="pt-8">
             <Input
               classNames={inputStyles}
-              value={orderStore.cdekDeliveryInfo.first_name}
+              value={orderStore.cdekDeliveryInfo.last_name}
               onChange={(e) =>
                 orderStore.setDeliveryInfo({
                   ...orderStore.cdekDeliveryInfo,
-                  first_name: e.target.value,
+                  last_name: e.target.value,
                 })
               }
               labelPlacement="outside"
@@ -248,11 +271,11 @@ export const Delivery: FC = () => {
             />
             <Input
               className="!mt-12"
-              value={orderStore.cdekDeliveryInfo.last_name}
+              value={orderStore.cdekDeliveryInfo.first_name}
               onChange={(e) => {
                 orderStore.setDeliveryInfo({
                   ...orderStore.cdekDeliveryInfo,
-                  last_name: e.target.value,
+                  first_name: e.target.value,
                 });
               }}
               classNames={inputStyles}

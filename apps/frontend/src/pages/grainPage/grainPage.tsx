@@ -10,7 +10,7 @@ export const GrainPage: FC<{
 }> = ({ nameCategory, iconLink, color }) => {
   const navigate = useNavigate();
 
-  const { data, isLoading, isError } = useGetGrains();
+  const { data, isLoading, isError, refetch: refetchFn } = useGetGrains();
 
   return (
     <div className={`${color}`}>
@@ -38,6 +38,7 @@ export const GrainPage: FC<{
               title={category.nameCategory}
               description={category.description}
               products={category.items}
+              refechFn={refetchFn}
             />
           ))}
         {data && data.length === 0 && (

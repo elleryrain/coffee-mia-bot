@@ -20,7 +20,9 @@ export const CartPage: FC = () => {
       </div>
       <div className="container flex flex-col justify-center gap-3 min-h-[calc(100vh-135px)]">
         {cartState.products.length > 0 &&
-          cartState.products.map((product) => <CartItem product={product} />)}
+          cartState.products.map((product) => (
+            <CartItem key={product.id} product={product} />
+          ))}
         {cartState.products.length === 0 && (
           <div className="p-6 rounded-[32px] bg-gray15 self-center flex items-center justify-center flex-col">
             <img
@@ -34,7 +36,7 @@ export const CartPage: FC = () => {
         {cartState.totalPrice > 0 && (
           <Link
             to="/make-order/delivery"
-            className="text-[16px] font-semibold leading-[17.6px] justify-center fixed bottom-[92px] flex w-[calc(100vw-20px)] left-[10px] bg-orange10 gap-2 py-4 px-8 rounded-xl shadow-light"
+            className="text-[16px] font-semibold leading-[17.6px] justify-center fixed bottom-[92px] flex w-[calc(100vw-20px)] left-[10px] bg-orange10 gap-2 py-4 px-8 rounded-xl shadow-light active:bg-orange60 active:border-systemOrange active:text-white"
           >
             <p>{cartState.totalPrice} ₽</p>
             <p>Заказать</p>
