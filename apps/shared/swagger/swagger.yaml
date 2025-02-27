@@ -195,6 +195,65 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/GrindingType'
+  /api/user/phone:
+    put:
+      operationId: 'updateUserPhone'
+      summary: Обновление информации о пользователе
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  type: string
+      responses:
+        200:
+          description: 'успешное обновление профиля пользователя'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProperties'
+  /api/user/name:
+    put:
+      operationId: 'updateUserName'
+      summary: Обновление информации о пользователе
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+      responses:
+        200:
+          description: 'успешное обновление профиля пользователя'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProperties'
+  /api/user/username:
+    put:
+      operationId: 'updateUserUsername'
+      summary: Обновление информации о пользователе
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+      responses:
+        200:
+          description: 'успешное обновление профиля пользователя'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProperties'
   /api/user:
     get:
       operationId: getUserInfo
@@ -207,6 +266,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserProperties'
+
 components:
   schemas:
     Category:
@@ -339,6 +399,8 @@ components:
         lastName:
           type: string
         username:
+          type: string
+        phone:
           type: string
       required:
         - id

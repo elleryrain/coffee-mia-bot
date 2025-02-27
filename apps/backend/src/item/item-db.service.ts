@@ -41,7 +41,7 @@ export class ItemServiceDB {
     }));
     return transformedItems;
   }
-  async getDripPacks() {
+  async getDripPacks(userId: number) {
     const items = await this.db.query.chaptersTables.findMany({
       where: (chaptersTables, { eq }) =>
         eq(chaptersTables.categoryType, 'dripPack'),
@@ -51,6 +51,7 @@ export class ItemServiceDB {
             item: {
               with: {
                 cost: true,
+                favoriteItems: true,
               },
             },
           },
@@ -66,7 +67,7 @@ export class ItemServiceDB {
         id: item.item.id,
         title: item.item.title,
         image: item.item.mainImage,
-        favorite: false,
+        favorite: item.item.favoriteItems.some((fav) => fav.userId === userId),
         cost: item.item.cost.cost ? item.item.cost.cost : null,
         discountCos: item.item.cost.discountCost
           ? item.item.cost.discountCost
@@ -75,7 +76,7 @@ export class ItemServiceDB {
     }));
     return transformedItems;
   }
-  async getOtherItems() {
+  async getOtherItems(userId: number) {
     const items = await this.db.query.chaptersTables.findMany({
       where: (chaptersTables, { eq }) =>
         eq(chaptersTables.categoryType, 'other'),
@@ -85,6 +86,7 @@ export class ItemServiceDB {
             item: {
               with: {
                 cost: true,
+                favoriteItems: true,
               },
             },
           },
@@ -99,7 +101,7 @@ export class ItemServiceDB {
         id: item.item.id,
         title: item.item.title,
         image: item.item.mainImage,
-        favorite: false,
+        favorite: item.item.favoriteItems.some((fav) => fav.userId === userId),
         cost:
           item.item.cost && item.item.cost.cost ? item.item.cost.cost : null,
         discountCost:

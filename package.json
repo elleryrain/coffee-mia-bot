@@ -16,7 +16,7 @@
     "@fastify/cors": "^8",
     "@fastify/swagger": "^8",
     "@fastify/swagger-ui": "^2",
-    "@nestjs/platform-fastify": "^10.4.12",
+    "@nestjs/platform-fastify": "^10.0.2",
     "@nestjs/schematics": "^10.0.1",
     "@nestjs/testing": "^10.0.2",
     "@nx/eslint": "20.1.2",

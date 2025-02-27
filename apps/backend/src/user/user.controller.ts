@@ -1,4 +1,13 @@
-import { Controller, Delete, Get, Post, Req, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Post,
+  Put,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { UserServiceDB } from './user-db.service';
 
@@ -69,5 +78,45 @@ export class UserController {
     }
 
     return reply.send({ message: 'error on delete' });
+  }
+  @Put('phone')
+  async updateProfilePhoneHandler(
+    @Req() req: FastifyRequest,
+    @Body() body: { phone: string },
+    @Res() reply: FastifyReply
+  ) {
+    const { id } = req.raw.user;
+    const updatedUser = await this.userServiceDB.updateUserPhone(
+      id,
+      body.phone
+    );
+    return reply.send(updatedUser);
+  }
+  @Put('name')
+  async updateProfileNameHandler(
+    @Req() req: FastifyRequest,
+    @Body() body: { firstName: string; lastName: string },
+    @Res() reply: FastifyReply
+  ) {
+    const { id } = req.raw.user;
+    const updatedUser = await this.userServiceDB.updateUserName(
+      id,
+      body.firstName,
+      body.lastName
+    );
+    return reply.send(updatedUser);
+  }
+  @Put('username')
+  async updateProfileUsernameHandler(
+    @Req() req: FastifyRequest,
+    @Body() body: { username: string },
+    @Res() reply: FastifyReply
+  ) {
+    const { id } = req.raw.user;
+    const updatedUser = await this.userServiceDB.updateUserUsername(
+      id,
+      body.username
+    );
+    return reply.send(updatedUser);
   }
 }

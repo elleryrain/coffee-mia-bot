@@ -81,4 +81,28 @@ export class UserServiceDB {
       return 'error';
     }
   }
+  async updateUserPhone(userId: number, phone: string) {
+    const [user] = await this.db
+      .update(usersTable)
+      .set({ phone })
+      .where(eq(usersTable.id, userId))
+      .returning();
+    return user;
+  }
+  async updateUserUsername(userId: number, username: string) {
+    const [user] = await this.db
+      .update(usersTable)
+      .set({ username })
+      .where(eq(usersTable.id, userId))
+      .returning();
+    return user;
+  }
+  async updateUserName(userId: number, firstName: string, lastName: string) {
+    const [user] = await this.db
+      .update(usersTable)
+      .set({ firstName, lastName })
+      .where(eq(usersTable.id, userId))
+      .returning();
+    return user;
+  }
 }
