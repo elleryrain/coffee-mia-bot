@@ -62,6 +62,7 @@ export const usersTable = pgTable('User', {
   firstName: varchar('first_name', { length: 512 }),
   lastName: varchar('last_name', { length: 512 }),
   username: varchar('username', { length: 512 }),
+  phone: varchar('phone', { length: 512 }),
 });
 
 export const userFavoriteItemsTable = pgTable('User_Favorite_Item', {

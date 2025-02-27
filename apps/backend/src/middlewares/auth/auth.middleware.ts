@@ -22,7 +22,7 @@ export class AuthMiddleware implements NestMiddleware {
     console.log(`[AUTH TYPE]`, authType);
     console.log(`[AUTH DATA]`, authData);
     try {
-      validate(authData, botToken, { expiresIn: 3600 });
+      validate(authData, botToken, { expiresIn: 86400 });
       const data = parse(authData);
       setTgDataToReq(req, data);
       next();
