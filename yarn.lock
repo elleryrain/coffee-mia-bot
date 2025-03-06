@@ -2590,6 +2590,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fastify/busboy@npm:^2.0.0":
+  version: 2.1.1
+  resolution: "@fastify/busboy@npm:2.1.1"
+  checksum: 10c0/6f8027a8cba7f8f7b736718b013f5a38c0476eea67034c94a0d3c375e2b114366ad4419e6a6fa7ffc2ef9c6d3e0435d76dd584a7a1cbac23962fda7650b579e3
+  languageName: node
+  linkType: hard
+
 "@fastify/cors@npm:9.0.1":
   version: 9.0.1
   resolution: "@fastify/cors@npm:9.0.1"
@@ -3317,6 +3324,7 @@ __metadata:
     "@nestjs/schematics": "npm:^10.0.1"
     "@nestjs/testing": "npm:^10.0.2"
     "@nextui-org/react": "npm:^2.4.8"
+    "@nx/esbuild": "npm:20.1.2"
     "@nx/eslint": "npm:20.1.2"
     "@nx/eslint-plugin": "npm:20.1.2"
     "@nx/jest": "npm:20.1.2"
@@ -3354,6 +3362,7 @@ __metadata:
     drizzle-orm: "npm:^0.38.1"
     drizzle-zod: "npm:^0.6.0"
     embla-carousel-react: "npm:^8.5.1"
+    esbuild: "npm:^0.19.2"
     eslint: "npm:^9.8.0"
     eslint-config-prettier: "npm:^9.0.0"
     eslint-plugin-import: "npm:2.31.0"
@@ -3372,6 +3381,7 @@ __metadata:
     pg: "npm:^8.13.1"
     postcss: "npm:8.4.38"
     prettier: "npm:^2.6.2"
+    puregram: "npm:^2.26.8"
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
     react-imask: "npm:^7.6.1"
@@ -3386,6 +3396,7 @@ __metadata:
     typescript: "npm:~5.5.2"
     typescript-eslint: "npm:^8.0.0"
     vite: "npm:^5.0.0"
+    vite-plugin-mkcert: "npm:^1.17.7"
     vite-plugin-svgr: "npm:^4.2.0"
     vitest: "npm:^1.3.1"
     webpack-cli: "npm:^5.1.4"
@@ -5618,6 +5629,25 @@ __metadata:
   peerDependencies:
     nx: ">= 19 <= 21"
   checksum: 10c0/489ae272d80c13ee4cc404cbfc4c93b20a24802fb3c4895ad18cae6be72f4385dff8b423b49a3687f02595333c982d5da0156de2f15fbd86cd8e49fb4505726f
+  languageName: node
+  linkType: hard
+
+"@nx/esbuild@npm:20.1.2":
+  version: 20.1.2
+  resolution: "@nx/esbuild@npm:20.1.2"
+  dependencies:
+    "@nx/devkit": "npm:20.1.2"
+    "@nx/js": "npm:20.1.2"
+    fast-glob: "npm:3.2.7"
+    picocolors: "npm:^1.1.0"
+    tsconfig-paths: "npm:^4.1.2"
+    tslib: "npm:^2.3.0"
+  peerDependencies:
+    esbuild: ~0.19.2
+  peerDependenciesMeta:
+    esbuild:
+      optional: true
+  checksum: 10c0/353285dbb08420e85c6c7ce6107fd5152bdb80f98e061dacc73cbc95fd9e4e06851396894d371e736ad98675f6e6ebbee0d8f9d8d3d7b73fedcdf2277f24c373
   languageName: node
   linkType: hard
 
@@ -11128,6 +11158,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios@npm:^1.8.1":
+  version: 1.8.1
+  resolution: "axios@npm:1.8.1"
+  dependencies:
+    follow-redirects: "npm:^1.15.6"
+    form-data: "npm:^4.0.0"
+    proxy-from-env: "npm:^1.1.0"
+  checksum: 10c0/b2e1d5a61264502deee4b50f0a6df0aa3b174c546ccf68c0dff714a2b8863232e0bd8cb5b84f853303e97f242a98260f9bb9beabeafe451ad5af538e9eb7ac22
+  languageName: node
+  linkType: hard
+
 "axobject-query@npm:^4.1.0":
   version: 4.1.0
   resolution: "axobject-query@npm:4.1.0"
@@ -12681,7 +12722,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.4, debug@npm:^4.3.6, debug@npm:^4.3.7":
+"debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.4, debug@npm:^4.3.6, debug@npm:^4.3.7, debug@npm:^4.4.0":
   version: 4.4.0
   resolution: "debug@npm:4.4.0"
   dependencies:
@@ -13585,7 +13626,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.19.7":
+"esbuild@npm:^0.19.2, esbuild@npm:^0.19.7":
   version: 0.19.12
   resolution: "esbuild@npm:0.19.12"
   dependencies:
@@ -15010,6 +15051,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"form-data-encoder@npm:^1.7.2":
+  version: 1.9.0
+  resolution: "form-data-encoder@npm:1.9.0"
+  checksum: 10c0/e162be1203abd5a8a8855cbdef2d92ee259416690687fec68d59b77b674b0c553fdbaf2a1128953a842c1f446b5a811deed996c473f5558fd0ec36bcb505f011
+  languageName: node
+  linkType: hard
+
 "form-data@npm:^4.0.0":
   version: 4.0.2
   resolution: "form-data@npm:4.0.2"
@@ -15019,6 +15067,16 @@ __metadata:
     es-set-tostringtag: "npm:^2.1.0"
     mime-types: "npm:^2.1.12"
   checksum: 10c0/e534b0cf025c831a0929bf4b9bbe1a9a6b03e273a8161f9947286b9b13bf8fb279c6944aae0070c4c311100c6d6dbb815cd955dc217728caf73fad8dc5b8ee9c
+  languageName: node
+  linkType: hard
+
+"formdata-node@npm:^4.3.2":
+  version: 4.4.1
+  resolution: "formdata-node@npm:4.4.1"
+  dependencies:
+    node-domexception: "npm:1.0.0"
+    web-streams-polyfill: "npm:4.0.0-beta.3"
+  checksum: 10c0/74151e7b228ffb33b565cec69182694ad07cc3fdd9126a8240468bb70a8ba66e97e097072b60bcb08729b24c7ce3fd3e0bd7f1f80df6f9f662b9656786e76f6a
   languageName: node
   linkType: hard
 
@@ -16024,6 +16082,18 @@ __metadata:
     react: ^16.8 || ^17.0 || ^18.0 || ^19.0.0 || ^19.0.0-rc
     react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0.0 || ^19.0.0-rc
   checksum: 10c0/7630c5b2be54a0569d52579c8cc4a66dab5e17afff75adf889f878c2da35cebf391be5fd4f374884e2ca5514b563dfac46eb70f4047282ba8a3c91859ae8500b
+  languageName: node
+  linkType: hard
+
+"inspectable@npm:^2.0.0":
+  version: 2.1.1
+  resolution: "inspectable@npm:2.1.1"
+  peerDependencies:
+    reflect-metadata: ^0.1.13
+  peerDependenciesMeta:
+    reflect-metadata:
+      optional: true
+  checksum: 10c0/c52d2023c3f9068dd0402e0f2e702bdadec3107da87cbef7d6142592c6a037fb74419a86c89b00f3b7116e468b4c2871ff1aaac1fd713d08b7221cd7d9093d93
   languageName: node
   linkType: hard
 
@@ -18254,6 +18324,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"middleware-io@npm:^2.8.0":
+  version: 2.8.1
+  resolution: "middleware-io@npm:2.8.1"
+  checksum: 10c0/a54fbb23ceb95fdceb3a111eca91b960c693d875a03f75f1added7e12c0cec17663676deea0f7a79651def2cc40b9fb627f999e84592875b77790952bb0abd14
+  languageName: node
+  linkType: hard
+
 "mime-db@npm:1.52.0":
   version: 1.52.0
   resolution: "mime-db@npm:1.52.0"
@@ -18691,6 +18768,13 @@ __metadata:
   dependencies:
     node-gyp: "npm:latest"
   checksum: 10c0/fb32a206276d608037fa1bcd7e9921e177fe992fc610d098aa3128baca3c0050fc1e014fa007e9b3874cf865ddb4f5bd9f43ccb7cbbbe4efaff6a83e920b17e9
+  languageName: node
+  linkType: hard
+
+"node-domexception@npm:1.0.0":
+  version: 1.0.0
+  resolution: "node-domexception@npm:1.0.0"
+  checksum: 10c0/5e5d63cda29856402df9472335af4bb13875e1927ad3be861dc5ebde38917aecbf9ae337923777af52a48c426b70148815e890a5d72760f1b4d758cc671b1a2b
   languageName: node
   linkType: hard
 
@@ -20706,6 +20790,22 @@ __metadata:
   version: 6.1.0
   resolution: "pure-rand@npm:6.1.0"
   checksum: 10c0/1abe217897bf74dcb3a0c9aba3555fe975023147b48db540aa2faf507aee91c03bf54f6aef0eb2bf59cc259a16d06b28eca37f0dc426d94f4692aeff02fb0e65
+  languageName: node
+  linkType: hard
+
+"puregram@npm:^2.26.8":
+  version: 2.26.8
+  resolution: "puregram@npm:2.26.8"
+  dependencies:
+    debug: "npm:^4.3.2"
+    form-data-encoder: "npm:^1.7.2"
+    formdata-node: "npm:^4.3.2"
+    inspectable: "npm:^2.0.0"
+    middleware-io: "npm:^2.8.0"
+    reflect-metadata: "npm:^0.1.13"
+    tslib: "npm:^2.6.2"
+    undici: "npm:^5.26.2"
+  checksum: 10c0/dc0e898678f9b2843addb692364a40c136c91ffdeb768d140534b38a450038adaac9bfdc2a252bf96d72d170d77a3eea1cb440b779eab5dc1fa5be92de99c89c
   languageName: node
   linkType: hard
 
@@ -23484,6 +23584,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"undici@npm:^5.26.2":
+  version: 5.28.5
+  resolution: "undici@npm:5.28.5"
+  dependencies:
+    "@fastify/busboy": "npm:^2.0.0"
+  checksum: 10c0/4dfaa13089fe4c0758f84ec0d34b257e58608e6be3aa540f493b9864b39e3fdcd0a1ace38e434fe79db55f833aa30bcfddd8d6cbe3e0982b0dcae8ec17b65e08
+  languageName: node
+  linkType: hard
+
 "unicode-canonical-property-names-ecmascript@npm:^2.0.0":
   version: 2.0.1
   resolution: "unicode-canonical-property-names-ecmascript@npm:2.0.1"
@@ -23814,6 +23923,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vite-plugin-mkcert@npm:^1.17.7":
+  version: 1.17.7
+  resolution: "vite-plugin-mkcert@npm:1.17.7"
+  dependencies:
+    axios: "npm:^1.8.1"
+    debug: "npm:^4.4.0"
+    picocolors: "npm:^1.1.1"
+  peerDependencies:
+    vite: ">=3"
+  checksum: 10c0/791b41e2c7636c02d7cdb852819b1787bc4e412e13c37e981dac5e2cf2acd825d8222b20ac8cb715c19f4bcbb6449d1f6bd86664f40966bc1111ce64e096a144
+  languageName: node
+  linkType: hard
+
 "vite-plugin-svgr@npm:^4.2.0":
   version: 4.3.0
   resolution: "vite-plugin-svgr@npm:4.3.0"
@@ -23963,6 +24085,13 @@ __metadata:
   dependencies:
     defaults: "npm:^1.0.3"
   checksum: 10c0/5b61ca583a95e2dd85d7078400190efd452e05751a64accb8c06ce4db65d7e0b0cde9917d705e826a2e05cc2548f61efde115ffa374c3e436d04be45c889e5b4
+  languageName: node
+  linkType: hard
+
+"web-streams-polyfill@npm:4.0.0-beta.3":
+  version: 4.0.0-beta.3
+  resolution: "web-streams-polyfill@npm:4.0.0-beta.3"
+  checksum: 10c0/a9596779db2766990117ed3a158e0b0e9f69b887a6d6ba0779940259e95f99dc3922e534acc3e5a117b5f5905300f527d6fbf8a9f0957faf1d8e585ce3452e8e
   languageName: node
   linkType: hard
 

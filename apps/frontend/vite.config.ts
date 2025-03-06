@@ -7,6 +7,7 @@ import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 import basicSsl from '@vitejs/plugin-basic-ssl';
 import path from 'node:path';
 import { json } from 'node:stream/consumers';
+import mksert from 'vite-plugin-mkcert';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, path.join(__dirname, '../', '../.env'));
   console.log(env);
@@ -26,7 +27,8 @@ export default defineConfig(({ mode }) => {
       nxViteTsPaths(),
       nxCopyAssetsPlugin(['*.md']),
       svgr(),
-      // basicSsl(),
+      //basicSsl(),
+      mksert(),
     ],
     // envDir: '../../.env',
     // Uncomment this if you are using workers.
