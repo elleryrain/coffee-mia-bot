@@ -1,16 +1,24 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { NavBar } from '../components';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-const queryClient = new QueryClient();
+import { useGetUserInfo } from '../api/generated/users/default';
 
 export function App() {
+  const {} = useGetUserInfo();
+
+  const location = useLocation();
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="overflow-y-auto h-[calc(100vh-68px)] scroll !px-0">
+    <>
+      <div
+        className={`overflow-y-auto ${
+          location.pathname.includes('make-order')
+            ? 'h-[100vh]'
+            : 'h-[calc(100vh-68px)]'
+        } scroll !px-0 flex flex-col`}
+      >
         <Outlet />
       </div>
       <NavBar />
-    </QueryClientProvider>
+    </>
   );
 }

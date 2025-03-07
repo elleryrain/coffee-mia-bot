@@ -2,15 +2,27 @@ import { FC } from 'react';
 import { CartProduct, useCartStore } from '../../store/cartStore';
 import { Link } from 'react-router-dom';
 import { Modal, ModalContent, useDisclosure } from '@nextui-org/react';
+import {
+  useAddFavoriteItem,
+  useGetFavoriteItems,
+  useRemoveFavoriteItem,
+} from '../../api/generated/users/default';
 
 export const CartItem: FC<{ product: CartProduct }> = ({ product }) => {
   const cartState = useCartStore();
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { data: favorites, refetch: refetchFn } = useGetFavoriteItems();
+
+  const addToFavourite = useAddFavoriteItem();
+  const deleteFromFavourite = useRemoveFavoriteItem();
 
   return (
     <div className="rounded-3xl border-gray20 border-1 p-4">
-      <Link to={`/products/${product.id}`} className="flex gap-3 mb-4">
+      <Link
+        to={`/products/${product.link_id ? product.link_id : product.id}`}
+        className="flex gap-3 mb-4"
+      >
         <img
           src={`${product.image ? product.image : '/empty_img.svg'}`}
           alt="coffee"
@@ -36,27 +48,40 @@ export const CartItem: FC<{ product: CartProduct }> = ({ product }) => {
       <div className="flex justify-between">
         <div className="flex gap-3">
           <button
-            className={`w-8 h-8 rounded-lg ${
-              product.isFavourite ? 'bg-red10' : 'bg-gray20'
-            } flex justify-center items-center`}
+            onClick={async () => {
+              if (favorites?.find((e) => e.id === Number(product.link_id))) {
+                await deleteFromFavourite.mutateAsync({
+                  data: { itemId: Number(product.link_id) },
+                });
+                refetchFn();
+              } else {
+                await addToFavourite.mutateAsync({
+                  data: { itemId: Number(product.link_id) },
+                });
+                refetchFn();
+              }
+            }}
+            className={`w-8 h-8 rounded-lg ${'bg-gray20'} flex justify-center items-center active:bg-red10`}
           >
             <img
               src={`${
-                product.isFavourite ? '/heart_active.svg' : '/heart-nobg.svg'
+                favorites?.find((e) => e.id === Number(product.link_id))
+                  ? '/heart_active.svg'
+                  : '/heart-nobg.svg'
               }`}
               alt="like"
             />
           </button>
           <button
             onClick={onOpen}
-            className="w-8 h-8 rounded-lg bg-gray20 flex justify-center items-center"
+            className="w-8 h-8 rounded-lg bg-gray20 flex justify-center items-center active:bg-gray40"
           >
             <img src="/trashbin-icon.svg" alt="delete" />
           </button>
         </div>
         <div className="flex gap-2">
           <button
-            className="w-8 h-8 rounded-lg bg-gray20 flex justify-center items-center"
+            className="w-8 h-8 rounded-lg bg-gray20 flex justify-center items-center active:bg-gray40"
             onClick={() => {
               cartState.changeCount(product.id, -1);
             }}
@@ -67,7 +92,7 @@ export const CartItem: FC<{ product: CartProduct }> = ({ product }) => {
             {product.count}
           </span>
           <button
-            className="w-8 h-8 rounded-lg bg-gray20 flex justify-center items-center"
+            className="w-8 h-8 rounded-lg bg-gray20 flex justify-center items-center active:bg-gray40"
             onClick={() => {
               cartState.changeCount(product.id, 1);
             }}
@@ -94,13 +119,13 @@ export const CartItem: FC<{ product: CartProduct }> = ({ product }) => {
               </p>
               <div className="flex gap-6">
                 <button
-                  className="py-4 px-8 rounded-xl text-primaryBlack bg-orange10 border-[(255,230,208,1)]"
+                  className="py-4 px-8 rounded-xl shadow-light text-primaryBlack bg-orange10 border-[(255,230,208,1)] active:bg-orange60 active:border-systemOrange active:text-white"
                   onClick={onClose}
                 >
                   Отмена
                 </button>
                 <button
-                  className="py-4 px-8 rounded-xl text-orange10 bg-systemRed border-red60 border-1"
+                  className="py-4 px-8 rounded-xl shadow-light text-orange10 bg-systemRed border-red60 border-1 active:bg-red60 active:border-red60"
                   onClick={() => {
                     cartState.deleteProduct(product.id);
                     onClose();

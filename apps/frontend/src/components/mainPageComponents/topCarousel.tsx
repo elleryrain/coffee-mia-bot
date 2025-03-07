@@ -1,6 +1,7 @@
 import useEmblaCarousel from 'embla-carousel-react';
 import { FC } from 'react';
 import { mainBanners } from '../../mocks/mockItems';
+import { Link } from 'react-router-dom';
 
 export const TopCarousel: FC = () => {
   const [emblaRef] = useEmblaCarousel();
@@ -10,7 +11,8 @@ export const TopCarousel: FC = () => {
       <div className="embla" ref={emblaRef}>
         <div className="embla__container w-[calc(100vw-16px)] px-4 gap-2">
           {mainBanners.map((banner) => (
-            <div
+            <Link
+              to={banner.link}
               className={`embla__slide topSlide last:pr-4 flex items-end relative overflow-hidden`}
               key={banner.id}
             >
@@ -23,7 +25,7 @@ export const TopCarousel: FC = () => {
               <h2 className="mb-7 ml-8 text-white z-10 font-semibold text-[24px] leading-[26.4px]">
                 {banner.name}
               </h2>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

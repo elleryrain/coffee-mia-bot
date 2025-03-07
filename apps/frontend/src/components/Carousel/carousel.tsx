@@ -1,37 +1,66 @@
 import useEmblaCarousel from 'embla-carousel-react';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
+import { ShortItem } from '../../api/generated/users/model';
+import {
+  useAddFavoriteItem,
+  useGetFavoriteItems,
+  useRemoveFavoriteItem,
+} from '../../api/generated/users/default';
 
 export const Carousel: FC<{
-  items: { id: number; image: string; title: string; favorite: boolean }[];
+  items: ShortItem[];
 }> = ({ items }) => {
   const [emblaRef] = useEmblaCarousel({ dragFree: true });
 
+  const { refetch: getFavourites } = useGetFavoriteItems();
+  const addToFavourite = useAddFavoriteItem();
+  const deleteFromFavourite = useRemoveFavoriteItem();
+
   return (
     <div className="embla" ref={emblaRef}>
-      <div className="embla__container w-[340px] gap-2">
+      <div className="embla__container w-[calc(100vw-16px)] px-4 gap-2">
         {items.map((item) => (
-          <Link
-            to=""
-            className={`smallSlide border-gray20 flex flex-col gap-3`}
-            key={item.id}
-          >
-            <div className="smallSlideImg relative flex flex-col items-center justify-center overflow-hidden">
-              <button>
-                <img
-                  className="absolute top-2 right-2"
-                  src={`${item.favorite ? 'heart_active.svg' : 'heart.svg'}`}
-                  alt="like"
-                />
-              </button>
+          <div className="relative max-w-[150px]" key={item.id}>
+            <button
+              className="absolute top-2 right-2 z-20"
+              onClick={async () => {
+                if (item.favorite) {
+                  await deleteFromFavourite.mutateAsync({
+                    data: { itemId: item.id },
+                  });
+                  getFavourites();
+                } else {
+                  addToFavourite.mutateAsync({ data: { itemId: item.id } });
+                  getFavourites();
+                }
+              }}
+            >
               <img
-                className=""
-                src={item.image.length === 0 ? 'empty_img.svg' : item.image}
-                alt="coffee"
+                // className="absolute top-2 right-2"
+                src={`${item.favorite ? 'heart_active.svg' : 'heart.svg'}`}
+                alt="like"
               />
-            </div>
-            <p className="mt-3 text-[14px] font-normal">{item.title}</p>
-          </Link>
+            </button>
+            <Link
+              to={`/products/${item.id}`}
+              className={`smallSlide border-gray20 flex flex-col gap-3`}
+              key={item.id}
+            >
+              <div className="smallSlideImg relative flex flex-col items-center justify-center overflow-hidden">
+                <img
+                  className=""
+                  src={
+                    item.image && item.image.length > 1
+                      ? item.image
+                      : 'empty_img.svg'
+                  }
+                  alt="coffee"
+                />
+              </div>
+              <p className="mt-3 text-[14px] font-normal">{item.title}</p>
+            </Link>
+          </div>
         ))}
       </div>
     </div>

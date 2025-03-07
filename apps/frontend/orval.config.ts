@@ -16,7 +16,7 @@ export default defineConfig({
       },
     },
     input: {
-      target: '../shared/swagger/swagger.json',
+      target: '../shared/swagger/swagger.yaml',
     },
   },
 });

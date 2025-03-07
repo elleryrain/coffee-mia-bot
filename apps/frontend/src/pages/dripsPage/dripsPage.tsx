@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SubCategory } from '../../components';
-import { useGetApiItemDripPacks } from '../../api/generated/users/default';
+import { useGetDripPacks } from '../../api/generated/users/default';
 
 export const DripsPage: FC<{
   nameCategory: string;
@@ -10,7 +10,7 @@ export const DripsPage: FC<{
 }> = ({ nameCategory, iconLink, color }) => {
   const navigate = useNavigate();
 
-  const { data, isLoading, isError } = useGetApiItemDripPacks();
+  const { data, isLoading, isError } = useGetDripPacks();
 
   return (
     <div className={`${color}`}>

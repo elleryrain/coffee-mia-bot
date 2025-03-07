@@ -18,7 +18,7 @@ export const NavBar: FC = () => {
   const cartState = useCartStore();
 
   return (
-    <div className="h-[68px] w-full border-t border-[0.5px] border-gray40 flex items-center justify-center gap-8 fixed bottom-0 bg-gray15">
+    <div className={`${location.pathname.includes('make-order')?'hidden':''} h-[68px] w-full border-t border-[0.5px] border-gray40 flex items-center justify-center gap-8 fixed bottom-0 bg-gray15`}>
       <Link to="/" className="navItem">
         {location.pathname === '/' ? <MainpageICActive /> : <MainpageIC />}
       </Link>
