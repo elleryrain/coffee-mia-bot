@@ -6,13 +6,15 @@ import {
   FavouritePage,
   GrainPage,
   MainPage,
+  NewProductsPage,
   OrderPage,
   OtherPage,
+  PopularPage,
   ProductPage,
   ProfilePage,
+  RecomendationsPage,
 } from '../pages';
 import { App } from '../app/app';
-import { TestPage } from '../pages/test/testPage';
 import { Delivery, Payment, Ready } from '../components';
 
 export const router = createBrowserRouter([
@@ -64,9 +66,14 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: 'test',
-        element: <TestPage />,
+        path: 'new-products',
+        element: <NewProductsPage />,
       },
+      {
+        path: 'popular',
+        element: <PopularPage />,
+      },
+      { path: 'recomendations', element: <RecomendationsPage /> },
       { path: 'products/:id', element: <ProductPage /> },
     ],
   },

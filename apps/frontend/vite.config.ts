@@ -16,11 +16,13 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 4200,
       host: 'localhost',
+      allowedHosts: true
     },
     preview: {
       port: 4300,
       host: 'localhost',
     },
+    
     plugins: [
       react(),
       nxViteTsPaths(),

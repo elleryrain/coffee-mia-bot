@@ -21,11 +21,10 @@ export const Carousel: FC<{
     <div className="embla" ref={emblaRef}>
       <div className="embla__container w-[calc(100vw-16px)] px-4 gap-2">
         {items.map((item) => (
-          <div className="relative max-w-[150px]">
+          <div className="relative max-w-[150px]" key={item.id}>
             <button
               className="absolute top-2 right-2 z-20"
-              onClick={async (e) => {
-                e.stopPropagation();
+              onClick={async () => {
                 if (item.favorite) {
                   await deleteFromFavourite.mutateAsync({
                     data: { itemId: item.id },

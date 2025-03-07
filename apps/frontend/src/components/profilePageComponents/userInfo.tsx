@@ -9,15 +9,23 @@ import { on, retrieveLaunchParams } from '@telegram-apps/sdk-react';
 import { FC, useState } from 'react';
 import { avatarStyles, inputStyles, modalStyles } from '../../next-ui-styles';
 import { ChangeData } from './changeData';
-import { useGetUserInfo } from '../../api/generated/users/default';
+import {
+  useGetUserInfo,
+  useUpdateUserName,
+} from '../../api/generated/users/default';
 
 export const UserInfo: FC = () => {
   const { initData } = retrieveLaunchParams();
+  const { data: user, refetch: refetchUser } = useGetUserInfo();
 
-  const [name, setName] = useState(initData?.user?.firstName);
-  const [surname, setSurname] = useState(initData?.user?.lastName);
+  const [name, setName] = useState(
+    user?.firstName ? user?.firstName : initData?.user?.firstName
+  );
+  const [surname, setSurname] = useState(
+    user?.lastName ? user?.lastName : initData?.user?.firstName
+  );
 
-  const { data: user } = useGetUserInfo();
+  const { mutateAsync: updateUserName } = useUpdateUserName();
 
   const {
     isOpen: isUserDataModalOpen,
@@ -32,7 +40,7 @@ export const UserInfo: FC = () => {
         <div>
           <p
             className={`text-[22px] leading-[26.25px] font-bold ${
-              initData?.user?.firstName ? '' : 'text-gray40'
+              initData?.user?.firstName || user?.firstName ? '' : 'text-gray40'
             }`}
           >
             {user?.firstName
@@ -43,7 +51,7 @@ export const UserInfo: FC = () => {
           </p>
           <p
             className={`text-[22px] leading-[26.25px] font-bold ${
-              initData?.user?.lastName ? '' : 'text-gray40'
+              initData?.user?.firstName || user?.lastName ? '' : 'text-gray40'
             }`}
           >
             {user?.lastName
@@ -68,27 +76,43 @@ export const UserInfo: FC = () => {
         <ModalContent>
           {(onClose) => (
             <ChangeData onClose={onClose}>
-              <Input
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
+              <div>
+                <Input
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                  label="Имя"
+                  labelPlacement="outside"
+                  placeholder="Введите имя"
+                  classNames={inputStyles}
+                />
+                <Input
+                  className="!mt-12"
+                  value={surname}
+                  onChange={(e) => {
+                    setSurname(e.target.value);
+                  }}
+                  label="Фамилия"
+                  labelPlacement="outside"
+                  placeholder="Введите фамилию"
+                  classNames={inputStyles}
+                />
+              </div>
+              <button
+                disabled={
+                  user?.firstName === name && user?.lastName === surname
+                }
+                onClick={async () => {
+                  await updateUserName({
+                    data: { firstName: name, lastName: surname },
+                  });
+                  refetchUser();
                 }}
-                label="Имя"
-                labelPlacement="outside"
-                placeholder="Введите имя"
-                classNames={inputStyles}
-              />
-              <Input
-                className="!mt-12"
-                value={surname}
-                onChange={(e) => {
-                  setSurname(e.target.value);
-                }}
-                label="Фамилия"
-                labelPlacement="outside"
-                placeholder="Введите фамилию"
-                classNames={inputStyles}
-              />
+                className="update-button shadow-light"
+              >
+                Готово
+              </button>
             </ChangeData>
           )}
         </ModalContent>

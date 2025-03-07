@@ -65,13 +65,13 @@ export const mainBanners = [
   {
     id: 0,
     name: 'Новинки',
-    link: '',
-    image: '/coffee1.jpg'
+    link: 'new-products',
+    image: '/coffee1.jpg',
   },
   {
     id: 1,
     name: 'Рекомендуем',
-    link: '',
-    image: '/coffee2.jpg'
-  }
-]
+    link: 'recomendations',
+    image: '/coffee2.jpg',
+  },
+];

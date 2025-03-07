@@ -12,3 +12,5 @@ export { UserContacts } from './profilePageComponents/userContacts';
 export { ChangeData } from './profilePageComponents/changeData';
 export { Payment } from './makeOrderComponents/payment';
 export { Ready } from './makeOrderComponents/ready';
+export { OrdersHistory } from './profilePageComponents/ordersHistory';
+export { PurchasedItem } from './profilePageComponents/purchasedItem';

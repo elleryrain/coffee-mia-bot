@@ -13,6 +13,7 @@ export const MainPage: FC = () => {
 
   return (
     <div>
+      <Link to="./make-order">test</Link>
       <TopCarousel />
       <CatrgoriesList />
       <Popular />

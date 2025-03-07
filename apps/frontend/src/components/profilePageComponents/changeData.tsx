@@ -5,9 +5,9 @@ export const ChangeData: FC<{ onClose: () => void; children: ReactNode }> = ({
   children,
 }) => {
   return (
-    <div className="container">
+    <div className="container h-full flex flex-col">
       <button
-        className="text-systemOrange flex items-center my-3"
+        className="text-systemOrange gap-1 flex items-center my-3"
         onClick={onClose}
       >
         <img src="/arrow-left.svg" alt="" />
@@ -16,7 +16,7 @@ export const ChangeData: FC<{ onClose: () => void; children: ReactNode }> = ({
       <h1 className="font-bold text-[28px] leading-[33.41px] py-2">
         Изменить данные
       </h1>
-      <div className="pt-2">{children}</div>
+      <div className="pt-2 flex flex-col flex-1 justify-between">{children}</div>
     </div>
   );
 };

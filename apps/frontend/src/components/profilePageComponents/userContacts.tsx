@@ -1,15 +1,22 @@
 import { Input, Modal, ModalContent, useDisclosure } from '@nextui-org/react';
 import { retrieveLaunchParams } from '@telegram-apps/sdk-react';
-import { FC, Ref, useState } from 'react';
+import { FC, Ref, useEffect, useState } from 'react';
 import { ChangeData } from './changeData';
 import { inputStyles, modalStyles } from '../../next-ui-styles';
 import { useIMask } from 'react-imask';
-import { useGetUserInfo } from '../../api/generated/users/default';
+import {
+  useGetUserInfo,
+  useUpdateUserPhone,
+  useUpdateUserUsername,
+} from '../../api/generated/users/default';
 
 export const UserContacts: FC = () => {
   const { initData } = retrieveLaunchParams();
 
-  const { data: user } = useGetUserInfo();
+  const { data: user, refetch: refetchUser } = useGetUserInfo();
+
+  const { mutateAsync: updatePhone } = useUpdateUserPhone();
+  const { mutateAsync: updateUsername } = useUpdateUserUsername();
 
   const [nickname, setNickname] = useState(
     user?.username
@@ -37,6 +44,12 @@ export const UserContacts: FC = () => {
     onOpenChange: onNicknameModalOpenChange,
   } = useDisclosure();
 
+  useEffect(() => {
+    if (user?.phone) {
+      setPhone(user.phone);
+    }
+  }, [user]);
+
   return (
     <div className="mt-8">
       <div className="py-3 px-1 flex justify-between">
@@ -46,7 +59,7 @@ export const UserContacts: FC = () => {
             <p className="text-[14px] leading-[16.71px] mb-[2px] text-tetriaryBlack">
               Телефон
             </p>
-            <p className="text-[16px] leading-[19.09px]"></p>
+            <p className="text-[16px] leading-[19.09px]">{user?.phone}</p>
           </div>
         </div>
         <button onClick={onPhoneModalOpen}>
@@ -71,6 +84,17 @@ export const UserContacts: FC = () => {
                   placeholder="+7"
                   classNames={inputStyles}
                 />
+                <button
+                  disabled={phone.length < 16 || phone === user?.phone}
+                  className="update-button shadow-light"
+                  onClick={async () => {
+                    await updatePhone({ data: { phone: phone } });
+                    refetchUser();
+                  }}
+                >
+                  {' '}
+                  Готово
+                </button>
               </ChangeData>
             )}
           </ModalContent>
@@ -84,7 +108,7 @@ export const UserContacts: FC = () => {
               Ник в Телеграм
             </p>
             <p className="text-[16px] leading-[19.09px]">
-              @{initData?.user?.username}
+              @{user ? user.username : initData?.user?.username}
             </p>
           </div>
         </div>
@@ -109,6 +133,18 @@ export const UserContacts: FC = () => {
                     setNickname(e.target.value);
                   }}
                 />
+                <button
+                  disabled={nickname.replace('@', '') === user?.username}
+                  className="update-button shadow-light"
+                  onClick={async () => {
+                    await updateUsername({
+                      data: { username: nickname.replace('@', '') },
+                    });
+                    refetchUser();
+                  }}
+                >
+                  Готово
+                </button>
               </ChangeData>
             )}
           </ModalContent>

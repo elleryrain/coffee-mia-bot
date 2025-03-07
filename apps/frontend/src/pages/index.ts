@@ -8,3 +8,6 @@ export { OtherPage } from './otherPage/otherPage';
 export { OrderPage } from './orderPage/orderPage';
 export { FavouritePage } from './favouritePage/favouritePage';
 export { ProfilePage } from './profilePage/profilePage';
+export { NewProductsPage } from './newProductsPage/newProductsPage';
+export { PopularPage } from './popularPage/popularPage';
+export { RecomendationsPage } from './recomendationsPage/recomendationsPage';

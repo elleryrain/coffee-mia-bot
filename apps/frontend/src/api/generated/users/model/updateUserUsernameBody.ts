@@ -5,10 +5,7 @@
  * Описание api для демонстрации документации в формате JSON
  * OpenAPI spec version: 4.2.8
  */
-import type { ShortItem } from './shortItem';
 
-export type GetGrains200Item = {
-  nameCategory?: string;
-  description?: string;
-  items?: ShortItem[];
+export type UpdateUserUsernameBody = {
+  username?: string;
 };
