@@ -5,11 +5,8 @@
  * Описание api для демонстрации документации в формате JSON
  * OpenAPI spec version: 4.2.8
  */
-import type { ItemConfiguration } from './itemConfiguration';
-import type { ItemAllOfTypeItem } from './itemAllOfTypeItem';
+import type { CreateUserOrderBodyItemsItem } from './createUserOrderBodyItemsItem';
 
-export type ItemAllOf = {
-  configurations?: ItemConfiguration[];
-  images?: string[];
-  typeItem?: ItemAllOfTypeItem;
+export type CreateUserOrderBody = {
+  items?: CreateUserOrderBodyItemsItem[];
 };

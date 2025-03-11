@@ -5,11 +5,13 @@
  * Описание api для демонстрации документации в формате JSON
  * OpenAPI spec version: 4.2.8
  */
-import type { ItemConfiguration } from './itemConfiguration';
-import type { ItemAllOfTypeItem } from './itemAllOfTypeItem';
 
-export type ItemAllOf = {
-  configurations?: ItemConfiguration[];
-  images?: string[];
-  typeItem?: ItemAllOfTypeItem;
-};
+export type ItemAllOfTypeItem =
+  (typeof ItemAllOfTypeItem)[keyof typeof ItemAllOfTypeItem];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const ItemAllOfTypeItem = {
+  grain: 'grain',
+  drip: 'drip',
+  other: 'other',
+} as const;

@@ -1,5 +1,6 @@
 import { FC, useState } from 'react';
 import { useCartStore } from '../../store/cartStore';
+import { useGetApiUserOrder } from '../../api/generated/users/default';
 
 export type PurchasedProduct = {
   name: string;

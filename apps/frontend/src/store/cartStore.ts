@@ -9,6 +9,7 @@ export type CartProduct = {
   id: string;
   link_id?: string;
   price: number;
+  typeItem: string;
 };
 
 interface cartState {

@@ -22,6 +22,9 @@ import type {
 import type {
   AddFavoriteItem200,
   AddFavoriteItemBody,
+  CreateUserOrder200,
+  CreateUserOrderBody,
+  GetApiUserOrder200Item,
   GetDripPacks200Item,
   GetGrains200Item,
   GetItemByIdParams,
@@ -1377,6 +1380,203 @@ export const useUpdateUserUsername = <
 
   return useMutation(mutationOptions);
 };
+/**
+ * Создание заказа пользователя
+ * @summary создание заказа пользователя
+ */
+export const createUserOrder = (
+  createUserOrderBody: CreateUserOrderBody,
+  signal?: AbortSignal
+) => {
+  return baseApiRequest<CreateUserOrder200>({
+    url: `/api/user/order`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: createUserOrderBody,
+    signal,
+  });
+};
+
+export const getCreateUserOrderMutationOptions = <
+  TError = unknown,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createUserOrder>>,
+    TError,
+    { data: CreateUserOrderBody },
+    TContext
+  >;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof createUserOrder>>,
+  TError,
+  { data: CreateUserOrderBody },
+  TContext
+> => {
+  const mutationKey = ['createUserOrder'];
+  const { mutation: mutationOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey } };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createUserOrder>>,
+    { data: CreateUserOrderBody }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return createUserOrder(data);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type CreateUserOrderMutationResult = NonNullable<
+  Awaited<ReturnType<typeof createUserOrder>>
+>;
+export type CreateUserOrderMutationBody = CreateUserOrderBody;
+export type CreateUserOrderMutationError = unknown;
+
+/**
+ * @summary создание заказа пользователя
+ */
+export const useCreateUserOrder = <
+  TError = unknown,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createUserOrder>>,
+    TError,
+    { data: CreateUserOrderBody },
+    TContext
+  >;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof createUserOrder>>,
+  TError,
+  { data: CreateUserOrderBody },
+  TContext
+> => {
+  const mutationOptions = getCreateUserOrderMutationOptions(options);
+
+  return useMutation(mutationOptions);
+};
+/**
+ * @summary получение всех заказов пользователя
+ */
+export const getApiUserOrder = (signal?: AbortSignal) => {
+  return baseApiRequest<GetApiUserOrder200Item[]>({
+    url: `/api/user/order`,
+    method: 'GET',
+    signal,
+  });
+};
+
+export const getGetApiUserOrderQueryKey = () => {
+  return [`/api/user/order`] as const;
+};
+
+export const getGetApiUserOrderQueryOptions = <
+  TData = Awaited<ReturnType<typeof getApiUserOrder>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getApiUserOrder>>, TError, TData>
+  >;
+}) => {
+  const { query: queryOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetApiUserOrderQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getApiUserOrder>>> = ({
+    signal,
+  }) => getApiUserOrder(signal);
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getApiUserOrder>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type GetApiUserOrderQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getApiUserOrder>>
+>;
+export type GetApiUserOrderQueryError = unknown;
+
+export function useGetApiUserOrder<
+  TData = Awaited<ReturnType<typeof getApiUserOrder>>,
+  TError = unknown
+>(options: {
+  query: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getApiUserOrder>>, TError, TData>
+  > &
+    Pick<
+      DefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getApiUserOrder>>,
+        TError,
+        Awaited<ReturnType<typeof getApiUserOrder>>
+      >,
+      'initialData'
+    >;
+}): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetApiUserOrder<
+  TData = Awaited<ReturnType<typeof getApiUserOrder>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getApiUserOrder>>, TError, TData>
+  > &
+    Pick<
+      UndefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getApiUserOrder>>,
+        TError,
+        Awaited<ReturnType<typeof getApiUserOrder>>
+      >,
+      'initialData'
+    >;
+}): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetApiUserOrder<
+  TData = Awaited<ReturnType<typeof getApiUserOrder>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getApiUserOrder>>, TError, TData>
+  >;
+}): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+/**
+ * @summary получение всех заказов пользователя
+ */
+
+export function useGetApiUserOrder<
+  TData = Awaited<ReturnType<typeof getApiUserOrder>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getApiUserOrder>>, TError, TData>
+  >;
+}): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getGetApiUserOrderQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
+}
+
 /**
  * получение информации о пользователе (роут нужен для того, чтобы в начале, когда пользователь запускает приложение, то происходит проверка захода в приложение
  * @summary Получение информации о пользователе
