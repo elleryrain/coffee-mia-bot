@@ -1,5 +1,5 @@
 export type TBodyOrderItem = {
-  idItem: number;
-  idItemVar?: number;
-  idGrindingType?: number;
+  itemId: number;
+  itemVarId?: number;
+  drindingTypeId?: number;
 };
