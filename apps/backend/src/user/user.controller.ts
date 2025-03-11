@@ -135,4 +135,9 @@ export class UserController {
     const items = await this.userOrderService.orderItems(id, body.items);
     return reply.send(items);
   }
+
+  @Get('order')
+  async getOrderItemsHandler(@Res() reply: FastifyReply) {
+    return reply.send([]);
+  }
 }

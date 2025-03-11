@@ -10,7 +10,8 @@
     "dev:backend": "nx serve backend",
     "db:generate": "yarn drizzle-kit generate --out apps/backend/src/drizzle/migrations --schema apps/backend/src/drizzle/schemas/schema.ts --dialect postgresql",
     "db:migrate": "cd apps/backend && yarn drizzle-kit migrate",
-    "db:push": "cd apps/backend && yarn drizzle-kit push"
+    "db:push": "cd apps/backend && yarn drizzle-kit push",
+    "db:seed": "tsx apps/backend/src/drizzle/seed/db.seed.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",

@@ -29,7 +29,7 @@ export const itemCostsTable = pgTable('Item_Cost', {
 });
 
 export const grainItemVarsTable = pgTable('grain_item_var', {
-  id: integer().primaryKey().generatedByDefaultAsIdentity(),
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
   cost: integer().notNull(),
   weight: integer().notNull(),
   grainItemId: integer()
@@ -38,7 +38,7 @@ export const grainItemVarsTable = pgTable('grain_item_var', {
 });
 
 export const chaptersTables = pgTable('Chapter', {
-  id: integer().primaryKey().generatedByDefaultAsIdentity(),
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
   title: varchar({ length: 512 }).notNull(),
   description: varchar({ length: 1024 }),
   categoryType: varchar('category_type', {

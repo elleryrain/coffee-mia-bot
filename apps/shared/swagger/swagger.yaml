@@ -435,12 +435,6 @@ components:
               type: array
               items:
                 type: string
-            typeItem:
-              type: string
-              enum:
-                - grain
-                - drip
-                - other
     GrindingType:
       type: object
       properties:
