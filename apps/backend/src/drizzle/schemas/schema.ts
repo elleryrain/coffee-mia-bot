@@ -4,7 +4,7 @@ import { integer, pgTable, varchar } from 'drizzle-orm/pg-core';
 export const itemsTable = pgTable('Item', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   title: varchar({ length: 512 }).notNull(),
-  mainImage: varchar({ length: 1024 }).notNull(),
+  mainImage: varchar({ length: 1024 }),
   otherImages: varchar({ length: 1024 }).array().notNull(),
   description: varchar({ length: 1024 }),
   descriptors: varchar({ length: 512 }).array().notNull(),
@@ -28,7 +28,7 @@ export const itemCostsTable = pgTable('Item_Cost', {
   discountCost: integer('discount_cost'),
 });
 
-export const grainItemCostsTable = pgTable('Grain_Item_Cost', {
+export const grainItemVarsTable = pgTable('grain_item_var', {
   id: integer().primaryKey().generatedByDefaultAsIdentity(),
   cost: integer().notNull(),
   weight: integer().notNull(),
@@ -92,8 +92,8 @@ export const orderItemsTable = pgTable('Item_Order', {
   itemId: integer()
     .notNull()
     .references(() => itemsTable.id),
-  grindingTypeItem: integer().references(() => grindingTypesTables.id),
-  grainCostItemId: integer().references(() => grainItemCostsTable.id),
+  grindingTypeItemId: integer().references(() => grindingTypesTables.id),
+  grainItemVarId: integer().references(() => grainItemVarsTable.id),
   orderId: integer()
     .notNull()
     .references(() => ordersTable.id),
@@ -124,15 +124,15 @@ export const itemsRelations = relations(itemsTable, ({ one, many }) => ({
     fields: [itemsTable.id],
     references: [itemCharacteristicsTables.itemId],
   }),
-  grainConfigs: many(grainItemCostsTable),
+  grainConfigs: many(grainItemVarsTable),
   favoriteItems: many(userFavoriteItemsTable),
 }));
 
 export const grainItemCostsRelations = relations(
-  grainItemCostsTable,
+  grainItemVarsTable,
   ({ one }) => ({
     item: one(itemsTable, {
-      fields: [grainItemCostsTable.grainItemId],
+      fields: [grainItemVarsTable.grainItemId],
       references: [itemsTable.id],
     }),
   })

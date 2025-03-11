@@ -1,8 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DrizzlePg } from '../db/db.module';
-import { userFavoriteItemsTable, usersTable } from '../drizzle/schemas/schema';
+import {
+  orderItemsTable,
+  ordersTable,
+  userFavoriteItemsTable,
+  usersTable,
+} from '../drizzle/schemas/schema';
 import { and, eq } from 'drizzle-orm';
-
+import { TBodyOrderItem } from './dto/order';
 @Injectable()
 export class UserServiceDB {
   constructor(@Inject('DB') private db: DrizzlePg) {}

@@ -254,6 +254,62 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserProperties'
+  /api/user/order:
+    post:
+      summary: 'создание заказа пользователя'
+      operationId: 'createUserOrder'
+      description: 'Создание заказа пользователя'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      itemId:
+                        type: number
+                      itemVarId:
+                        type: number
+                      itemGrindingTypeId:
+                        type: number
+                      typeItem:
+                        type: string
+      responses:
+        '200':
+          description: 'успешное выполнение роута'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+    get:
+      summary: 'получение всех заказов пользователя'
+      responses:
+        '200':
+          description: 'успешное выполнение роута'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    image:
+                      type: string
+                    name:
+                      type: string
+                    weight:
+                      type: number
+                    cost:
+                      type: number
   /api/user:
     get:
       operationId: getUserInfo
@@ -379,6 +435,12 @@ components:
               type: array
               items:
                 type: string
+            typeItem:
+              type: string
+              enum:
+                - grain
+                - drip
+                - other
     GrindingType:
       type: object
       properties:

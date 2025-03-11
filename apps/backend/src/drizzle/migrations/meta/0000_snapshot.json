@@ -1,5 +1,5 @@
 {
-  "id": "5ee0f618-e45f-446d-b68c-fd9a63c44907",
+  "id": "2e396df5-3e22-484c-86e6-cd571ce9603b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -52,8 +52,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.Grain_Item_Cost": {
-      "name": "Grain_Item_Cost",
+    "public.grain_item_var": {
+      "name": "grain_item_var",
       "schema": "",
       "columns": {
         "id": {
@@ -63,7 +63,7 @@
           "notNull": true,
           "identity": {
             "type": "byDefault",
-            "name": "Grain_Item_Cost_id_seq",
+            "name": "grain_item_var_id_seq",
             "schema": "public",
             "increment": "1",
             "startWith": "1",
@@ -94,9 +94,9 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "Grain_Item_Cost_grainItemId_Item_id_fk": {
-          "name": "Grain_Item_Cost_grainItemId_Item_id_fk",
-          "tableFrom": "Grain_Item_Cost",
+        "grain_item_var_grainItemId_Item_id_fk": {
+          "name": "grain_item_var_grainItemId_Item_id_fk",
+          "tableFrom": "grain_item_var",
           "tableTo": "Item",
           "columnsFrom": [
             "grainItemId"
@@ -281,7 +281,7 @@
           "name": "mainImage",
           "type": "varchar(1024)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "otherImages": {
           "name": "otherImages",
@@ -406,14 +406,14 @@
           "primaryKey": false,
           "notNull": true
         },
-        "grindingTypeItem": {
-          "name": "grindingTypeItem",
+        "grindingTypeItemId": {
+          "name": "grindingTypeItemId",
           "type": "integer",
           "primaryKey": false,
           "notNull": false
         },
-        "grainCostItemId": {
-          "name": "grainCostItemId",
+        "grainItemVarId": {
+          "name": "grainItemVarId",
           "type": "integer",
           "primaryKey": false,
           "notNull": false
@@ -440,12 +440,12 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "Item_Order_grindingTypeItem_Gringing_Type_id_fk": {
-          "name": "Item_Order_grindingTypeItem_Gringing_Type_id_fk",
+        "Item_Order_grindingTypeItemId_Gringing_Type_id_fk": {
+          "name": "Item_Order_grindingTypeItemId_Gringing_Type_id_fk",
           "tableFrom": "Item_Order",
           "tableTo": "Gringing_Type",
           "columnsFrom": [
-            "grindingTypeItem"
+            "grindingTypeItemId"
           ],
           "columnsTo": [
             "id"
@@ -453,12 +453,12 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "Item_Order_grainCostItemId_Grain_Item_Cost_id_fk": {
-          "name": "Item_Order_grainCostItemId_Grain_Item_Cost_id_fk",
+        "Item_Order_grainItemVarId_grain_item_var_id_fk": {
+          "name": "Item_Order_grainItemVarId_grain_item_var_id_fk",
           "tableFrom": "Item_Order",
-          "tableTo": "Grain_Item_Cost",
+          "tableTo": "grain_item_var",
           "columnsFrom": [
-            "grainCostItemId"
+            "grainItemVarId"
           ],
           "columnsTo": [
             "id"
