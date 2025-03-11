@@ -1,12 +1,14 @@
 import { FC } from 'react';
 import { ProductCard } from '../ProductCard/productCard';
 import { ShortItem, ShortItemWithCost } from '../../api/generated/users/model';
+import { RefetchOptions } from '@tanstack/react-query';
 
 export const SubCategory: FC<{
   title?: string;
   description?: string;
   products?: ShortItem[] | ShortItemWithCost[];
-}> = ({ products, title, description }) => {
+  refechFn: (options?: RefetchOptions) => Promise<unknown>;
+}> = ({ products, title, description, refechFn }) => {
   return (
     <div className="w-full bg-white rounded-2xl pb-8 last:rounded-b-none">
       <div className="container">
@@ -21,7 +23,7 @@ export const SubCategory: FC<{
         <div className="flex flex-wrap gap-6 mt-6">
           {products &&
             products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} refechFn={refechFn} />
             ))}
         </div>
       </div>

@@ -81,4 +81,26 @@
     border-radius: 0.25px;
     position: absolute;
   }
+
+  .update-button {
+    width: 100%;
+    height: 50px;
+    border-radius: 12px;
+    background-color: rgba(255, 241, 217, 1);
+    border: 1px solid rgba(255, 230, 208, 1);
+    color: rgba(24, 24, 26, 1);
+    margin-bottom: 34px;
+  }
+
+  .update-button:disabled {
+    background-color: rgba(242, 242, 247, 1);
+    border-color: rgba(245, 245, 245, 1);
+    color: rgba(169, 169, 172, 1);
+  }
+
+  .update-button:active {
+    background-color: rgba(242, 153, 74, 1);
+    border-color: rgba(255, 149, 0, 1);
+    color: white;
+  }
 }

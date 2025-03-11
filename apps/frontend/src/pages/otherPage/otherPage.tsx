@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SubCategory } from '../../components';
-import { useGetApiItemOther } from '../../api/generated/users/default';
+import { useGetOtherItems } from '../../api/generated/users/default';
 
 export const OtherPage: FC<{
   nameCategory: string;
@@ -10,7 +10,7 @@ export const OtherPage: FC<{
 }> = ({ nameCategory, iconLink, color }) => {
   const navigate = useNavigate();
 
-  const { data, isLoading, isError } = useGetApiItemOther();
+  const { data, isLoading, isError, refetch: refetchFn } = useGetOtherItems();
 
   return (
     <div className={`${color}`}>
@@ -38,6 +38,7 @@ export const OtherPage: FC<{
               title={category.nameCategory}
               description={category.description}
               products={category.items}
+              refechFn={refetchFn}
             />
           ))}
         {data && data.length === 0 && (

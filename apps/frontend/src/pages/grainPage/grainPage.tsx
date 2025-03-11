@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SubCategory } from '../../components';
-import { useGetApiItemGrain } from '../../api/generated/users/default';
+import { useGetGrains } from '../../api/generated/users/default';
 
 export const GrainPage: FC<{
   nameCategory: string;
@@ -10,7 +10,7 @@ export const GrainPage: FC<{
 }> = ({ nameCategory, iconLink, color }) => {
   const navigate = useNavigate();
 
-  const { data, isLoading, isError } = useGetApiItemGrain();
+  const { data, isLoading, isError, refetch: refetchFn } = useGetGrains();
 
   return (
     <div className={`${color}`}>
@@ -38,6 +38,7 @@ export const GrainPage: FC<{
               title={category.nameCategory}
               description={category.description}
               products={category.items}
+              refechFn={refetchFn}
             />
           ))}
         {data && data.length === 0 && (
