@@ -13,7 +13,7 @@ import { eq, inArray } from 'drizzle-orm';
 export class UserOrderService {
   constructor(@Inject('DB') private db: DrizzlePg) {}
   async orderItems(userId: number, itemsArray: TBodyOrderItem[]) {
-    const itemsIdArray = itemsArray.map((item) => item.idItem);
+    const itemsIdArray = itemsArray.map((item) => item.itemId);
     await this.db.transaction(async (tx) => {
       const dbItems = await tx
         .select()
@@ -32,9 +32,9 @@ export class UserOrderService {
         .returning({ id: ordersTable.id })
     )[0];
     const itemsToOrder = itemsArray.map((item) => ({
-      itemId: item.idItem,
-      grindingTypeItemId: item.idGrindingType,
-      grainItemVarId: item.idItemVar,
+      itemId: item.itemId,
+      grindingTypeItemId: item.grindingTypeId,
+      grainItemVarId: item.itemVarId,
       orderId: order.id,
     }));
     const items = await this.db
