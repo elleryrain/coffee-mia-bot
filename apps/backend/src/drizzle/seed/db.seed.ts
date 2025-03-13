@@ -774,7 +774,20 @@ async function seedChapters() {
   await db.insert(schema.chaptersTables).values(chaptersData);
   console.log('Разделы добавлены успешно');
 }
-
+async function seedGrindingTypes() {
+  await db
+    .insert(schema.grindingTypesTables)
+    .values([
+      { title: 'Для турки' },
+      { title: 'Без помола' },
+      { title: 'Для эспрессо' },
+      { title: 'Для гейзера' },
+      { title: 'Для воронки' },
+      { title: 'Для фильтра' },
+      { title: 'для френч-пресс' },
+    ]);
+  console.log('[SEED GRINDING TYPES] данные успешно добавлены');
+}
 // Добавление товаров и связанных данных
 async function seedItems() {
   for (const item of itemsData) {
@@ -851,8 +864,8 @@ async function seedItems() {
   console.log('Товары добавлены успешно');
 }
 
-// Основная функция seed
 async function seed() {
+  await seedGrindingTypes();
   await seedChapters();
   await seedItems();
 }

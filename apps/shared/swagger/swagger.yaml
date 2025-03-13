@@ -265,6 +265,16 @@ paths:
             schema:
               type: object
               properties:
+                cdekDelivery:
+                  $ref: '#/components/schemas/CdekDelivery'
+                courierDelivery:
+                  $ref: '#/components/schemas/CourierDelivery'
+                typeDelivery:
+                  type: string
+                  enum:
+                    - 'courier'
+                    - 'CDEK'
+
                 items:
                   type: array
                   items:
@@ -276,8 +286,8 @@ paths:
                         type: number
                       itemGrindingTypeId:
                         type: number
-                      typeItem:
-                        type: string
+                      count:
+                        type: number
       responses:
         '200':
           description: 'успешное выполнение роута'
@@ -310,6 +320,8 @@ paths:
                       type: number
                     cost:
                       type: number
+                    grindingType:
+                      type: string
   /api/user:
     get:
       operationId: getUserInfo
@@ -463,3 +475,33 @@ components:
         - firstName
         - lastName
         - username
+    CdekDelivery:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        middle_name:
+          type: string
+        phone:
+          type: string
+        cdek_address:
+          type: string
+    CourierDelivery:
+      type: object
+      properties:
+        first_name:
+          type: string
+        telegram_nickname:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        date:
+          type: string
+        time:
+          type: string
+        comment:
+          type: string

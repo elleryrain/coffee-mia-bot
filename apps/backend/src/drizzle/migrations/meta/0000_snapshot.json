@@ -1,5 +1,5 @@
 {
-  "id": "2e396df5-3e22-484c-86e6-cd571ce9603b",
+  "id": "a4d91294-1d33-4576-8517-835992274111",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -62,7 +62,7 @@
           "primaryKey": true,
           "notNull": true,
           "identity": {
-            "type": "byDefault",
+            "type": "always",
             "name": "grain_item_var_id_seq",
             "schema": "public",
             "increment": "1",
@@ -512,6 +512,76 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true
+        },
+        "deliveryType": {
+          "name": "deliveryType",
+          "type": "delivery_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'CDEK'"
+        },
+        "firstName": {
+          "name": "firstName",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lastName": {
+          "name": "lastName",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "middleName": {
+          "name": "middleName",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nickname": {
+          "name": "nickname",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phone": {
+          "name": "phone",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cdekAddress": {
+          "name": "cdekAddress",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "date": {
+          "name": "date",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "time": {
+          "name": "time",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "comment": {
+          "name": "comment",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "orderStatus": {
+          "name": "orderStatus",
+          "type": "order_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'payed'"
         }
       },
       "indexes": {},
@@ -649,7 +719,24 @@
       "isRLSEnabled": false
     }
   },
-  "enums": {},
+  "enums": {
+    "public.delivery_type": {
+      "name": "delivery_type",
+      "schema": "public",
+      "values": [
+        "courier",
+        "CDEK"
+      ]
+    },
+    "public.order_status": {
+      "name": "order_status",
+      "schema": "public",
+      "values": [
+        "payed",
+        "delivered"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "roles": {},

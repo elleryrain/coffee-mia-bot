@@ -1,5 +1,8 @@
 import { relations } from 'drizzle-orm';
-import { integer, pgTable, varchar } from 'drizzle-orm/pg-core';
+import { integer, pgEnum, pgTable, varchar } from 'drizzle-orm/pg-core';
+
+export const deliveryTypeEnum = pgEnum('delivery_type', ['courier', 'CDEK']);
+export const orderStatuses = pgEnum('order_status', ['payed', 'delivered']);
 
 export const itemsTable = pgTable('Item', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -38,7 +41,7 @@ export const grainItemVarsTable = pgTable('grain_item_var', {
 });
 
 export const chaptersTables = pgTable('Chapter', {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  id: integer().primaryKey().generatedByDefaultAsIdentity(),
   title: varchar({ length: 512 }).notNull(),
   description: varchar({ length: 1024 }),
   categoryType: varchar('category_type', {
@@ -85,6 +88,17 @@ export const ordersTable = pgTable('Order', {
   userId: integer('user_id')
     .notNull()
     .references(() => usersTable.id),
+  deliveryType: deliveryTypeEnum().default('CDEK'),
+  firstName: varchar({ length: 256 }),
+  lastName: varchar({ length: 256 }),
+  middleName: varchar({ length: 256 }),
+  nickname: varchar({ length: 256 }),
+  phone: varchar({ length: 256 }),
+  cdekAddress: varchar({ length: 256 }),
+  date: varchar({ length: 256 }),
+  time: varchar({ length: 256 }),
+  comment: varchar({ length: 256 }),
+  orderStatus: orderStatuses().default('payed'),
 });
 
 export const orderItemsTable = pgTable('Item_Order', {

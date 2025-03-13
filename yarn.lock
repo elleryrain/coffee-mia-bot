@@ -3358,9 +3358,9 @@ __metadata:
     autoprefixer: "npm:10.4.13"
     babel-jest: "npm:^29.7.0"
     dotenv: "npm:^16.4.7"
-    drizzle-kit: "npm:^0.30.0"
-    drizzle-orm: "npm:^0.38.1"
-    drizzle-zod: "npm:^0.6.0"
+    drizzle-kit: "npm:^0.30.5"
+    drizzle-orm: "npm:^0.40.0"
+    drizzle-zod: "npm:^0.7.0"
     embla-carousel-react: "npm:^8.5.1"
     esbuild: "npm:^0.19.2"
     eslint: "npm:^9.8.0"
@@ -6405,6 +6405,13 @@ __metadata:
     "@parcel/watcher-win32-x64":
       optional: true
   checksum: 10c0/8f35073d0c0b34a63d4c8d2213482f0ebc6a25de7b2cdd415d19cb929964a793cb285b68d1d50bfb732b070b3c82a2fdb4eb9c250eab709a1cd9d63345455a82
+  languageName: node
+  linkType: hard
+
+"@petamoriken/float16@npm:^3.8.7":
+  version: 3.9.2
+  resolution: "@petamoriken/float16@npm:3.9.2"
+  checksum: 10c0/af229a0fc429083e76c459cc3bf7e682f578518c34c21e2d1c1b1c2744e69a5208b94245c41757f500ef722dd79fb6c55e8858d29d7fb57d4fe2b3e5734f1149
   languageName: node
   linkType: hard
 
@@ -13111,23 +13118,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"drizzle-kit@npm:^0.30.0":
-  version: 0.30.4
-  resolution: "drizzle-kit@npm:0.30.4"
+"drizzle-kit@npm:^0.30.5":
+  version: 0.30.5
+  resolution: "drizzle-kit@npm:0.30.5"
   dependencies:
     "@drizzle-team/brocli": "npm:^0.10.2"
     "@esbuild-kit/esm-loader": "npm:^2.5.5"
     esbuild: "npm:^0.19.7"
     esbuild-register: "npm:^3.5.0"
+    gel: "npm:^2.0.0"
   bin:
     drizzle-kit: bin.cjs
-  checksum: 10c0/effbf922bce693de2ab66d1e29be58b27818da7bea83804b2f8f79ceea186242a7d1d789978ca06578a97d54bcd5405253b975cd0a3b64c5b7854c943d58361e
+  checksum: 10c0/9bb64214d795e12e6ef941c5bc46fe0fbf2de0f8e56dbb16eb69ee2d02655907f291aa0d17ae19c0adf399f6fcc833630fe4f969e093936d8baac0069df4a542
   languageName: node
   linkType: hard
 
-"drizzle-orm@npm:^0.38.1":
-  version: 0.38.4
-  resolution: "drizzle-orm@npm:0.38.4"
+"drizzle-orm@npm:^0.40.0":
+  version: 0.40.0
+  resolution: "drizzle-orm@npm:0.40.0"
   peerDependencies:
     "@aws-sdk/client-rds-data": ">=3"
     "@cloudflare/workers-types": ">=4"
@@ -13142,19 +13150,18 @@ __metadata:
     "@tidbcloud/serverless": "*"
     "@types/better-sqlite3": "*"
     "@types/pg": "*"
-    "@types/react": ">=18"
     "@types/sql.js": "*"
     "@vercel/postgres": ">=0.8.0"
     "@xata.io/client": "*"
     better-sqlite3: ">=7"
     bun-types: "*"
     expo-sqlite: ">=14.0.0"
+    gel: ">=2"
     knex: "*"
     kysely: "*"
     mysql2: ">=2"
     pg: ">=8"
     postgres: ">=3"
-    react: ">=18"
     sql.js: ">=1"
     sqlite3: ">=5"
   peerDependenciesMeta:
@@ -13184,8 +13191,6 @@ __metadata:
       optional: true
     "@types/pg":
       optional: true
-    "@types/react":
-      optional: true
     "@types/sql.js":
       optional: true
     "@vercel/postgres":
@@ -13197,6 +13202,8 @@ __metadata:
     bun-types:
       optional: true
     expo-sqlite:
+      optional: true
+    gel:
       optional: true
     knex:
       optional: true
@@ -13210,23 +13217,21 @@ __metadata:
       optional: true
     prisma:
       optional: true
-    react:
-      optional: true
     sql.js:
       optional: true
     sqlite3:
       optional: true
-  checksum: 10c0/40ec1d8752a389fbfd1d2bc40569750b0ad9fafd83a146ac70b57126a134978e451ef2e9472a066adadd56e924b4434369437d751fc590c978e4f5486e971339
+  checksum: 10c0/e0e8f4e9a528709a5ce77dbced35972cce1b0e8592049d1170b52e2a496692ab2149bc25d296b6f9b4d5bffdbb996b437ca244178fb4611fcf7af720fc0bfb1d
   languageName: node
   linkType: hard
 
-"drizzle-zod@npm:^0.6.0":
-  version: 0.6.1
-  resolution: "drizzle-zod@npm:0.6.1"
+"drizzle-zod@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "drizzle-zod@npm:0.7.0"
   peerDependencies:
     drizzle-orm: ">=0.36.0"
     zod: ">=3.0.0"
-  checksum: 10c0/295ca31eaa25399d46283f6730f3ba3fa72b58fb933ca8e583afafdc9810bd915886ce7bc8354307882266b51c9fcb01f6445888f80c98888f57dfd73fb1fd9f
+  checksum: 10c0/9454dc6bf8d4a0c262168d954846b11554c2faa62f09c6bc32161a238e1a3ecd940e6a374af2081206c5a89a76283cd9f3511272e5bdcd012af8b66147e077b1
   languageName: node
   linkType: hard
 
@@ -13408,6 +13413,13 @@ __metadata:
   version: 2.2.1
   resolution: "env-paths@npm:2.2.1"
   checksum: 10c0/285325677bf00e30845e330eec32894f5105529db97496ee3f598478e50f008c5352a41a30e5e72ec9de8a542b5a570b85699cd63bd2bc646dbcb9f311d83bc4
+  languageName: node
+  linkType: hard
+
+"env-paths@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "env-paths@npm:3.0.0"
+  checksum: 10c0/76dec878cee47f841103bacd7fae03283af16f0702dad65102ef0a556f310b98a377885e0f32943831eb08b5ab37842a323d02529f3dfd5d0a40ca71b01b435f
   languageName: node
   linkType: hard
 
@@ -15251,6 +15263,22 @@ __metadata:
   version: 1.2.3
   resolution: "functions-have-names@npm:1.2.3"
   checksum: 10c0/33e77fd29bddc2d9bb78ab3eb854c165909201f88c75faa8272e35899e2d35a8a642a15e7420ef945e1f64a9670d6aa3ec744106b2aa42be68ca5114025954ca
+  languageName: node
+  linkType: hard
+
+"gel@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "gel@npm:2.0.1"
+  dependencies:
+    "@petamoriken/float16": "npm:^3.8.7"
+    debug: "npm:^4.3.4"
+    env-paths: "npm:^3.0.0"
+    semver: "npm:^7.6.2"
+    shell-quote: "npm:^1.8.1"
+    which: "npm:^4.0.0"
+  bin:
+    gel: dist/cli.mjs
+  checksum: 10c0/9b57281cb8895b0cfb101ebb1159abd696c3cb13627476cc65bfcef15b15d6ea589aee7973f7edf362f0cc21e667903f542f4f9849d926b74e141d65e6216897
   languageName: node
   linkType: hard
 
@@ -21807,7 +21835,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.8, semver@npm:^7.5.3, semver@npm:^7.5.4, semver@npm:^7.6.0, semver@npm:^7.7.1":
+"semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.8, semver@npm:^7.5.3, semver@npm:^7.5.4, semver@npm:^7.6.0, semver@npm:^7.6.2, semver@npm:^7.7.1":
   version: 7.7.1
   resolution: "semver@npm:7.7.1"
   bin:
@@ -24423,6 +24451,17 @@ __metadata:
   bin:
     node-which: ./bin/node-which
   checksum: 10c0/66522872a768b60c2a65a57e8ad184e5372f5b6a9ca6d5f033d4b0dc98aff63995655a7503b9c0a2598936f532120e81dd8cc155e2e92ed662a2b9377cc4374f
+  languageName: node
+  linkType: hard
+
+"which@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "which@npm:4.0.0"
+  dependencies:
+    isexe: "npm:^3.1.1"
+  bin:
+    node-which: bin/which.js
+  checksum: 10c0/449fa5c44ed120ccecfe18c433296a4978a7583bf2391c50abce13f76878d2476defde04d0f79db8165bdf432853c1f8389d0485ca6e8ebce3bbcded513d5e6a
   languageName: node
   linkType: hard
 
