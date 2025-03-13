@@ -9,9 +9,12 @@ import {
 import { modalStyles } from '../../next-ui-styles';
 import { purchased } from '../../mocks/mockPurchased';
 import { PurchasedItem } from './purchasedItem';
+import { useGetApiUserOrder } from '../../api/generated/users/default';
 
 export const OrdersHistory: FC = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  const { data: purchasedItems } = useGetApiUserOrder();
 
   return (
     <div>

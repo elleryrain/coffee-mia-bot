@@ -4,11 +4,14 @@ import { tabsStyle } from '../../next-ui-styles';
 import { useCartStore } from '../../store/cartStore';
 import { useNavigate } from 'react-router-dom';
 import { useOrderStore } from '../../store/orderStore';
+import { useCreateUserOrder } from '../../api/generated/users/default';
 
 export const Payment: FC = () => {
   const cartStore = useCartStore();
   const orderStore = useOrderStore();
   const navigate = useNavigate();
+
+  const { mutateAsync } = useCreateUserOrder();
 
   return (
     <div className="container flex-grow flex flex-col">
@@ -44,7 +47,18 @@ export const Payment: FC = () => {
             </div>
           </div>
           <button
-            onClick={() => {
+            onClick={async () => {
+              await mutateAsync({
+                data: {
+                  items: cartStore.products.map((e) => {
+                    return {
+                      itemId: Number(e.id.split('_')[0]),
+                      itemVarId: Number(e.id.split('_')[1]),
+                      itemGrindingTypeId: Number(e.id.split('_')[2]),
+                    };
+                  }),
+                },
+              });
               orderStore.setPaymentType('number');
               orderStore.setStep(3);
               navigate('../ready');

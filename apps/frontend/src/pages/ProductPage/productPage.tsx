@@ -17,28 +17,28 @@ import {
   useGetGrindingTypes,
 } from '../../api/generated/users/default';
 
-const configurations = [
-  {
-    id: 0,
-    cost: 500,
-    weight: 250,
-  },
-  {
-    id: 1,
-    cost: 981,
-    weight: 500,
-  },
-  {
-    id: 2,
-    cost: 1900,
-    weight: 1000,
-  },
-  {
-    id: 3,
-    cost: 16000,
-    weight: 10000,
-  },
-];
+// const configurations = [
+//   {
+//     id: 0,
+//     cost: 500,
+//     weight: 250,
+//   },
+//   {
+//     id: 1,
+//     cost: 981,
+//     weight: 500,
+//   },
+//   {
+//     id: 2,
+//     cost: 1900,
+//     weight: 1000,
+//   },
+//   {
+//     id: 3,
+//     cost: 16000,
+//     weight: 10000,
+//   },
+// ];
 
 // const grindings = [
 //   { id: 1, name: 'Без помола' },
@@ -185,7 +185,7 @@ export const ProductPage: FC = () => {
             </p>
           </div>
           <div className="container flex gap-2 outline-none mb-7">
-            {configurations.map((config) => (
+            {product.configurations?.map((config) => (
               <div
                 key={config.id}
                 className={`p-2 rounded-xl  ${
@@ -303,6 +303,7 @@ export const ProductPage: FC = () => {
               <RadioGroup
                 className="mb-8"
                 onChange={(e) => {
+                  console.log(e.target.value);
                   setGrinding(e.target.value);
                 }}
                 value={grinding}
@@ -338,11 +339,14 @@ export const ProductPage: FC = () => {
                         image: undefined,
                         price: price,
                         name: product?.title ?? '',
+                        typeItem: product?.typeItem ?? '',
                       });
                     }
                   } else {
                     cartStore.addProduct({
-                      id: id,
+                      id: `${id}_${
+                        grindings?.find((g) => g.title === grinding)?.id
+                      }`,
                       link_id: product?.id ?? '',
                       description: grinding,
                       quantity: weight,
@@ -350,6 +354,7 @@ export const ProductPage: FC = () => {
                       image: undefined,
                       price: price,
                       name: product?.title ?? '',
+                      typeItem: product?.typeItem ?? '',
                     });
                   }
                   onClose();

@@ -18,11 +18,11 @@ export const CartPage: FC = () => {
       </div>
       <div className="w-[100vw] h-0 border-b-[0.5px] border-gray40 "></div>
       {cartState.products.length > 0 && (
-        <div className="container flex flex-col justify-center gap-3 min-h-[calc(100vh-135px)]">
+        <div className="container flex flex-col pt-3 gap-3 h-[calc(100vh-130px)] overflow-y-auto scroll">
           {cartState.products.map((product) => (
             <CartItem key={product.id} product={product} />
           ))}
-
+          <div className="pb-[75px]"></div>
           {cartState.totalPrice > 0 && (
             <Link
               to="/make-order/delivery"
