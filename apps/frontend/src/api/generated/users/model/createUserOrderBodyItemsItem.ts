@@ -10,5 +10,5 @@ export type CreateUserOrderBodyItemsItem = {
   itemId?: number;
   itemVarId?: number;
   itemGrindingTypeId?: number;
-  typeItem?: string;
+  count?: number;
 };

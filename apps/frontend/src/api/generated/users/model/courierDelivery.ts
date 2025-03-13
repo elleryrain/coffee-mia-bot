@@ -5,9 +5,13 @@
  * Описание api для демонстрации документации в формате JSON
  * OpenAPI spec version: 4.2.8
  */
-import type { ItemConfiguration } from './itemConfiguration';
 
-export type ItemAllOf = {
-  configurations?: ItemConfiguration[];
-  images?: string[];
-};
+export interface CourierDelivery {
+  first_name?: string;
+  telegram_nickname?: string;
+  phone?: string;
+  address?: string;
+  date?: string;
+  time?: string;
+  comment?: string;
+}

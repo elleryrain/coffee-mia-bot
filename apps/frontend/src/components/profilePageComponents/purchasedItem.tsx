@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { useCartStore } from '../../store/cartStore';
 import { useGetApiUserOrder } from '../../api/generated/users/default';
+import { GetApiUserOrder200Item } from '../../api/generated/users/model';
 
 export type PurchasedProduct = {
   name: string;
@@ -12,7 +13,9 @@ export type PurchasedProduct = {
   price: number;
 };
 
-export const PurchasedItem: FC<{ item: PurchasedProduct }> = ({ item }) => {
+export const PurchasedItem: FC<{ item: GetApiUserOrder200Item }> = ({
+  item,
+}) => {
   const cartStore = useCartStore();
 
   const [text, setText] = useState('Добавить в корзину');
@@ -28,23 +31,32 @@ export const PurchasedItem: FC<{ item: PurchasedProduct }> = ({ item }) => {
         <div className="flex flex-col justify-between">
           <div className="flex flex-col gap-1">
             <p className="text-[14px] leading-[16.8px]">{item.name}</p>
-            {item.description && (
+            {item.grindingType && (
               <p className="text-tetriaryBlack text-[14px] leading-[16.8px]">
-                {item.description}
+                {item.grindingType}
               </p>
             )}
             <p className="text-tetriaryBlack text-[14px] leading-[16.8px]">
-              {item.quantity}
+              {item.weight}
             </p>
           </div>
           <p className="text-[18px] leading-[19.8px] font-semibold">
-            {item.price}₽
+            {item.cost}₽
           </p>
         </div>
       </div>
       <button
         onClick={() => {
-          cartStore.addProduct({ ...item, count: 1 });
+          cartStore.addProduct({
+            name: item.name ?? '',
+            description: item.grindingType ?? '',
+            quantity: item.weight?.toString() ?? '',
+            image: item.image ?? '',
+            id: `${item.id}_`,
+            link_id: item.id?.toString() ?? '',
+            price: item.cost ?? 0,
+            count: 1,
+          });
           setText('Добавлено в корзину');
         }}
         className="update-button font-semibold !mb-0"

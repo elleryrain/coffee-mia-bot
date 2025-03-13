@@ -27,7 +27,7 @@ export const OrdersHistory: FC = () => {
           <img src="/arrow_right.svg" alt="" />
         </button>
         <Modal classNames={modalStyles} isOpen={isOpen} onClose={onOpenChange}>
-          <ModalContent>
+          <ModalContent className='scroll overflow-y-auto pb-4'>
             {(onClose) => (
               <>
                 <div className="container">
@@ -44,7 +44,7 @@ export const OrdersHistory: FC = () => {
                 </div>
                 <div className="w-[100vw] h-0 border-b-[0.5px] border-gray40 mt-2 mb-2"></div>
                 <div className="container mt-6 flex flex-col gap-3">
-                  {purchased.map((item, index) => (
+                  {purchasedItems?.map((item, index) => (
                     <PurchasedItem item={item} key={index} />
                   ))}
                 </div>

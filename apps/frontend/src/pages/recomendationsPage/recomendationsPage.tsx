@@ -3,6 +3,8 @@ import { ProductCard } from '../../components';
 import { items as data } from '../../mocks/mockItems';
 
 export const RecomendationsPage: FC = () => {
+
+
   return (
     <div>
       <div className="container ">

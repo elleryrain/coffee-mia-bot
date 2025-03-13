@@ -12,4 +12,5 @@ export type GetApiUserOrder200Item = {
   name?: string;
   weight?: number;
   cost?: number;
+  grindingType?: string;
 };

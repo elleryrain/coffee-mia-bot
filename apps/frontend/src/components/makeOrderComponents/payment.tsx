@@ -55,10 +55,24 @@ export const Payment: FC = () => {
                       itemId: Number(e.id.split('_')[0]),
                       itemVarId: Number(e.id.split('_')[1]),
                       itemGrindingTypeId: Number(e.id.split('_')[2]),
+                      count: e.count,
                     };
                   }),
+                  cdekDelivery:
+                    orderStore.deliveyType === 'CDEK'
+                      ? orderStore.cdekDeliveryInfo
+                      : undefined,
+                  courierDelivery:
+                    orderStore.deliveyType === 'courier'
+                      ? {
+                          ...orderStore.courierDeliveryInfo,
+                          date: orderStore.courierDeliveryInfo.date?.toString(),
+                          time: orderStore.courierDeliveryInfo.time?.toString(),
+                        }
+                      : undefined,
                 },
               });
+              cartStore.clear();
               orderStore.setPaymentType('number');
               orderStore.setStep(3);
               navigate('../ready');

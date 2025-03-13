@@ -5,9 +5,11 @@
  * Описание api для демонстрации документации в формате JSON
  * OpenAPI spec version: 4.2.8
  */
-import type { ItemConfiguration } from './itemConfiguration';
 
-export type ItemAllOf = {
-  configurations?: ItemConfiguration[];
-  images?: string[];
-};
+export interface CdekDelivery {
+  first_name?: string;
+  last_name?: string;
+  middle_name?: string;
+  phone?: string;
+  cdek_address?: string;
+}

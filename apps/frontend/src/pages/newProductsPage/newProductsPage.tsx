@@ -1,8 +1,10 @@
 import { FC } from 'react';
-import { items as data } from '../../mocks/mockItems';
 import { ProductCard } from '../../components';
+import { useGetNewItems } from '../../api/generated/users/default';
 
 export const NewProductsPage: FC = () => {
+  const { data: items, refetch: refetchFn } = useGetNewItems();
+
   return (
     <div>
       <div className="container ">
@@ -11,14 +13,14 @@ export const NewProductsPage: FC = () => {
         </h1>
       </div>
       <div className="w-[100vw] h-0 border-b-[0.5px] border-gray40 "></div>
-      {data?.length !== 0 && (
+      {items?.length !== 0 && (
         <div className="container pt-10 flex flex-wrap gap-6">
-          {data?.map((item) => (
-            <ProductCard product={item} />
+          {items?.map((item) => (
+            <ProductCard refechFn={refetchFn} product={item} />
           ))}
         </div>
       )}
-      {data?.length === 0 && (
+      {items?.length === 0 && (
         <p className="absolute left-4 bottom-[-35px] text-[18px] font-medium">
           Здесь пока пусто
         </p>

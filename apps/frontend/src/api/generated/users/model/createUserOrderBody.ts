@@ -5,8 +5,14 @@
  * Описание api для демонстрации документации в формате JSON
  * OpenAPI spec version: 4.2.8
  */
+import type { CdekDelivery } from './cdekDelivery';
+import type { CourierDelivery } from './courierDelivery';
+import type { CreateUserOrderBodyTypeDelivery } from './createUserOrderBodyTypeDelivery';
 import type { CreateUserOrderBodyItemsItem } from './createUserOrderBodyItemsItem';
 
 export type CreateUserOrderBody = {
+  cdekDelivery?: CdekDelivery;
+  courierDelivery?: CourierDelivery;
+  typeDelivery?: CreateUserOrderBodyTypeDelivery;
   items?: CreateUserOrderBodyItemsItem[];
 };

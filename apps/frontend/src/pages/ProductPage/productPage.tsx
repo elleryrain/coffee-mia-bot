@@ -339,7 +339,6 @@ export const ProductPage: FC = () => {
                         image: undefined,
                         price: price,
                         name: product?.title ?? '',
-                        typeItem: product?.typeItem ?? '',
                       });
                     }
                   } else {
@@ -354,7 +353,6 @@ export const ProductPage: FC = () => {
                       image: undefined,
                       price: price,
                       name: product?.title ?? '',
-                      typeItem: product?.typeItem ?? '',
                     });
                   }
                   onClose();

@@ -9,7 +9,6 @@ export type CartProduct = {
   id: string;
   link_id?: string;
   price: number;
-  typeItem: string;
 };
 
 interface cartState {
@@ -19,6 +18,7 @@ interface cartState {
   changeCount: (productId: string, quantity: number) => void;
   addProduct: (product: CartProduct) => void;
   deleteProduct: (productId: string) => void;
+  clear: () => void;
 }
 
 export const useCartStore = create<cartState>()((set) => ({
@@ -77,5 +77,11 @@ export const useCartStore = create<cartState>()((set) => ({
         totalPrice: state.totalPrice + product.price,
       }));
     }
+  },
+  clear() {
+    set(() => ({
+      products: [],
+      totalPrice: 0,
+    }));
   },
 }));
