@@ -30,7 +30,7 @@ export default defineConfig(({ mode }) => {
       nxCopyAssetsPlugin(['*.md']),
       svgr(),
       //basicSsl(),
-      mksert(),
+      // mksert(),
     ],
     // envDir: '../../.env',
     // Uncomment this if you are using workers.

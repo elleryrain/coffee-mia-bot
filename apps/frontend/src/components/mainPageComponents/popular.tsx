@@ -11,7 +11,7 @@ export const Popular: FC = () => {
           Часто покупают
         </h2>
         <Link
-          className="flex w-[140px] justify-between text-gray50 text-[17px] leading-[18.7px]"
+          className="flex w-[135px] justify-between font-light items-center text-gray50 text-[17px] leading-[18.7px]"
           to="popular"
         >
           Смотреть все
