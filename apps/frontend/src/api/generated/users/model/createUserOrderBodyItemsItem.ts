@@ -9,6 +9,6 @@
 export type CreateUserOrderBodyItemsItem = {
   itemId?: number;
   itemVarId?: number;
-  itemGrindingTypeId?: number;
+  grindingTypeId?: number;
   count?: number;
 };

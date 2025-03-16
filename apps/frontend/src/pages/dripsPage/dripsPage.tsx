@@ -10,7 +10,7 @@ export const DripsPage: FC<{
 }> = ({ nameCategory, iconLink, color }) => {
   const navigate = useNavigate();
 
-  const { data, isLoading, isError } = useGetDripPacks();
+  const { data, isLoading, isError, refetch: refetchFn } = useGetDripPacks();
 
   return (
     <div className={`${color}`}>
@@ -35,6 +35,7 @@ export const DripsPage: FC<{
         {data &&
           data.map((category) => (
             <SubCategory
+              refechFn={refetchFn}
               title={category.nameCategory}
               description={category.description}
               products={category.items}
