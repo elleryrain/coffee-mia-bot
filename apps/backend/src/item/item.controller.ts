@@ -63,6 +63,7 @@ export class ItemController {
   ) {
     return reply.send([]);
   }
+
   @Get('new')
   async getNewItemsHandler(
     @Req() req: FastifyRequest,
