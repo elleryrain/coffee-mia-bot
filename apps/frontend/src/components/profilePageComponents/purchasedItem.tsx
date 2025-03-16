@@ -37,7 +37,10 @@ export const PurchasedItem: FC<{ item: GetApiUserOrder200Item }> = ({
               </p>
             )}
             <p className="text-tetriaryBlack text-[14px] leading-[16.8px]">
-              {item.weight}
+              {(item?.weight ?? 0) >= 1000
+                ? (item?.weight ?? 0) / 1000
+                : item.weight}{' '}
+              {(item.weight ?? 0) >= 1000 ? 'кг' : 'г'}
             </p>
           </div>
           <p className="text-[18px] leading-[19.8px] font-semibold">
@@ -50,9 +53,12 @@ export const PurchasedItem: FC<{ item: GetApiUserOrder200Item }> = ({
           cartStore.addProduct({
             name: item.name ?? '',
             description: item.grindingType ?? '',
-            quantity: item.weight?.toString() ?? '',
+            quantity:
+              (item?.weight ?? 0) >= 1000
+                ? (item?.weight ?? 0) / 1000 + ' кг'
+                : item.weight + ' г',
             image: item.image ?? '',
-            id: `${item.id}_`,
+            id: `${item.id}_${item.idItemVar}_${item.idGrindingType}`,
             link_id: item.id?.toString() ?? '',
             price: item.cost ?? 0,
             count: 1,

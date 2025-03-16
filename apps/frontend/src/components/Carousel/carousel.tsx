@@ -44,7 +44,7 @@ export const Carousel: FC<{
             </button>
             <Link
               to={`/products/${item.id}`}
-              className={`smallSlide border-gray20 flex flex-col gap-3`}
+              className={`smallSlide border-gray20 flex flex-col`}
               key={item.id}
             >
               <div className="smallSlideImg relative flex flex-col items-center justify-center overflow-hidden">

@@ -324,23 +324,19 @@ export const ProductPage: FC = () => {
                font-semibold text-[16px] leading-[17.6px] border-[rgba(255,230,208,1)] shadow-light
              disabled:bg-gray20 disabled:border-gray15 disabled:shadow-none disabled:text-gray50`}
                 onClick={() => {
-                  if (findProduct(id)) {
-                    if (findProduct(id)?.description === grinding) {
-                      cartStore.changeCount(id, 1);
-                    } else {
-                      cartStore.addProduct({
-                        id: `${id}_${
-                          grindings?.find((g) => g.title === grinding)?.id
-                        }`,
-                        link_id: product?.id ?? '',
-                        description: grinding,
-                        quantity: weight,
-                        count: 1,
-                        image: undefined,
-                        price: price,
-                        name: product?.title ?? '',
-                      });
-                    }
+                  if (
+                    findProduct(
+                      `${id}_${
+                        grindings?.find((g) => g.title === grinding)?.id
+                      }`
+                    )
+                  ) {
+                    cartStore.changeCount(
+                      `${id}_${
+                        grindings?.find((g) => g.title === grinding)?.id
+                      }`,
+                      1
+                    );
                   } else {
                     cartStore.addProduct({
                       id: `${id}_${

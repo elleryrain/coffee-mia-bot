@@ -502,6 +502,121 @@ export function useGetNewItems<
 }
 
 /**
+ * роут для получения всех популярных предметов
+ * @summary Получение всех популярных предметов
+ */
+export const getPopularItems = (signal?: AbortSignal) => {
+  return baseApiRequest<ShortItem[]>({
+    url: `/api/item/popular`,
+    method: 'GET',
+    signal,
+  });
+};
+
+export const getGetPopularItemsQueryKey = () => {
+  return [`/api/item/popular`] as const;
+};
+
+export const getGetPopularItemsQueryOptions = <
+  TData = Awaited<ReturnType<typeof getPopularItems>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getPopularItems>>, TError, TData>
+  >;
+}) => {
+  const { query: queryOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetPopularItemsQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getPopularItems>>> = ({
+    signal,
+  }) => getPopularItems(signal);
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getPopularItems>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type GetPopularItemsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getPopularItems>>
+>;
+export type GetPopularItemsQueryError = unknown;
+
+export function useGetPopularItems<
+  TData = Awaited<ReturnType<typeof getPopularItems>>,
+  TError = unknown
+>(options: {
+  query: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getPopularItems>>, TError, TData>
+  > &
+    Pick<
+      DefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getPopularItems>>,
+        TError,
+        Awaited<ReturnType<typeof getPopularItems>>
+      >,
+      'initialData'
+    >;
+}): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetPopularItems<
+  TData = Awaited<ReturnType<typeof getPopularItems>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getPopularItems>>, TError, TData>
+  > &
+    Pick<
+      UndefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getPopularItems>>,
+        TError,
+        Awaited<ReturnType<typeof getPopularItems>>
+      >,
+      'initialData'
+    >;
+}): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetPopularItems<
+  TData = Awaited<ReturnType<typeof getPopularItems>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getPopularItems>>, TError, TData>
+  >;
+}): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+/**
+ * @summary Получение всех популярных предметов
+ */
+
+export function useGetPopularItems<
+  TData = Awaited<ReturnType<typeof getPopularItems>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof getPopularItems>>, TError, TData>
+  >;
+}): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getGetPopularItemsQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
+}
+
+/**
  * роут для получения всей продукции, которую пользователь добавил в избранное
  * @summary Получение избранных товаров пользователя
  */
@@ -904,121 +1019,6 @@ export function useGetItemById<
   queryKey: DataTag<QueryKey, TData, TError>;
 } {
   const queryOptions = getGetItemByIdQueryOptions(params, options);
-
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: DataTag<QueryKey, TData, TError>;
-  };
-
-  query.queryKey = queryOptions.queryKey;
-
-  return query;
-}
-
-/**
- * Получение часто покупаемых товаров
- * @summary Получение часто покупаемых товаров
- */
-export const getPopularItems = (signal?: AbortSignal) => {
-  return baseApiRequest<ShortItem[]>({
-    url: `/api/item/popular`,
-    method: 'GET',
-    signal,
-  });
-};
-
-export const getGetPopularItemsQueryKey = () => {
-  return [`/api/item/popular`] as const;
-};
-
-export const getGetPopularItemsQueryOptions = <
-  TData = Awaited<ReturnType<typeof getPopularItems>>,
-  TError = unknown
->(options?: {
-  query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getPopularItems>>, TError, TData>
-  >;
-}) => {
-  const { query: queryOptions } = options ?? {};
-
-  const queryKey = queryOptions?.queryKey ?? getGetPopularItemsQueryKey();
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getPopularItems>>> = ({
-    signal,
-  }) => getPopularItems(signal);
-
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getPopularItems>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
-
-export type GetPopularItemsQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getPopularItems>>
->;
-export type GetPopularItemsQueryError = unknown;
-
-export function useGetPopularItems<
-  TData = Awaited<ReturnType<typeof getPopularItems>>,
-  TError = unknown
->(options: {
-  query: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getPopularItems>>, TError, TData>
-  > &
-    Pick<
-      DefinedInitialDataOptions<
-        Awaited<ReturnType<typeof getPopularItems>>,
-        TError,
-        Awaited<ReturnType<typeof getPopularItems>>
-      >,
-      'initialData'
-    >;
-}): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useGetPopularItems<
-  TData = Awaited<ReturnType<typeof getPopularItems>>,
-  TError = unknown
->(options?: {
-  query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getPopularItems>>, TError, TData>
-  > &
-    Pick<
-      UndefinedInitialDataOptions<
-        Awaited<ReturnType<typeof getPopularItems>>,
-        TError,
-        Awaited<ReturnType<typeof getPopularItems>>
-      >,
-      'initialData'
-    >;
-}): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useGetPopularItems<
-  TData = Awaited<ReturnType<typeof getPopularItems>>,
-  TError = unknown
->(options?: {
-  query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getPopularItems>>, TError, TData>
-  >;
-}): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-/**
- * @summary Получение часто покупаемых товаров
- */
-
-export function useGetPopularItems<
-  TData = Awaited<ReturnType<typeof getPopularItems>>,
-  TError = unknown
->(options?: {
-  query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getPopularItems>>, TError, TData>
-  >;
-}): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-} {
-  const queryOptions = getGetPopularItemsQueryOptions(options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;

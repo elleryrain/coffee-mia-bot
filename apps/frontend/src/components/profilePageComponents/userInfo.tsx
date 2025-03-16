@@ -5,7 +5,7 @@ import {
   ModalContent,
   useDisclosure,
 } from '@nextui-org/react';
-import { on, retrieveLaunchParams } from '@telegram-apps/sdk-react';
+import { retrieveLaunchParams } from '@telegram-apps/sdk-react';
 import { FC, useState } from 'react';
 import { avatarStyles, inputStyles, modalStyles } from '../../next-ui-styles';
 import { ChangeData } from './changeData';

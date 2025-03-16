@@ -54,7 +54,7 @@ export const Payment: FC = () => {
                     return {
                       itemId: Number(e.id.split('_')[0]),
                       itemVarId: Number(e.id.split('_')[1]),
-                      itemGrindingTypeId: Number(e.id.split('_')[2]),
+                      grindingTypeId: Number(e.id.split('_')[2]),
                       count: e.count,
                     };
                   }),
