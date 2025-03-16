@@ -3,6 +3,7 @@ import { DrizzlePg } from '../db/db.module';
 import {
   grainItemVarsTable,
   grindingTypesTables,
+  itemCharacteristicsTables,
   itemCostsTable,
   itemsTable,
   itemsToChaptersTable,
@@ -59,6 +60,8 @@ export class UserOrderService {
         ),
         weight: grainItemVarsTable.weight,
         grindingType: grindingTypesTables.title,
+        idGrindingType: grindingTypesTables.id,
+        idItemVar: grainItemVarsTable.id,
       })
       .from(itemsTable)
       .innerJoin(orderItemsTable, eq(itemsTable.id, orderItemsTable.itemId))
@@ -79,9 +82,11 @@ export class UserOrderService {
       id: row.itemId,
       image: row.mainImage,
       name: row.title,
-      weight: row.weight, // null для незерновых товаров
-      cost: row.cost, // всегда число благодаря COALESCE
-      grindingType: row.grindingType ?? '', // пустая строка, если null
+      weight: row.weight,
+      cost: row.cost,
+      grindingType: row.grindingType ?? '',
+      idGrindingType: row.grindingType,
+      idItemVar: row.idItemVar,
     }));
   }
 }

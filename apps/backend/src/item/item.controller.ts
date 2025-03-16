@@ -51,8 +51,23 @@ export class ItemController {
     @Req() req: FastifyRequest,
     @Res() reply: FastifyReply
   ) {
-    const userId = req['raw'].user.id
+    const userId = req['raw'].user.id;
     const items = await this.itemServiceDB.getOtherItems(userId);
     return reply.send(items);
+  }
+
+  @Get('popular')
+  async getPopularItemsHandler(
+    @Req() req: FastifyRequest,
+    @Res() reply: FastifyReply
+  ) {
+    return reply.send([]);
+  }
+  @Get('new')
+  async getNewItemsHandler(
+    @Req() req: FastifyRequest,
+    @Res() reply: FastifyReply
+  ) {
+    return reply.send([]);
   }
 }

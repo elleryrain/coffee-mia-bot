@@ -87,6 +87,20 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ShortItem'
+  /api/item/popular:
+    get:
+      operationId: getPopularItems
+      summary: Получение всех популярных предметов
+      description: роут для получения всех популярных предметов
+      responses:
+        '200':
+          description: успешное получение всех популярных предметов
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShortItem'
   /api/user/favorite:
     get:
       operationId: getFavoriteItems
@@ -167,20 +181,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Item'
-  /api/item/popular:
-    get:
-      operationId: getPopularItems
-      summary: Получение часто покупаемых товаров
-      description: Получение часто покупаемых товаров
-      responses:
-        '200':
-          description: успешное получение информации о популярных
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ShortItem'
   /api/grindingTypes:
     get:
       operationId: getGrindingTypes
@@ -284,7 +284,7 @@ paths:
                         type: number
                       itemVarId:
                         type: number
-                      itemGrindingTypeId:
+                      grindingTypeId:
                         type: number
                       count:
                         type: number
@@ -322,6 +322,10 @@ paths:
                       type: number
                     grindingType:
                       type: string
+                    idItemVar:
+                      type: number
+                    idGrindingType:
+                      type: number
   /api/user:
     get:
       operationId: getUserInfo
