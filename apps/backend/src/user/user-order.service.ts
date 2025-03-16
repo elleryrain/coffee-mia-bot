@@ -1,13 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DrizzlePg } from '../db/db.module';
 import {
+  grainItemVarsTable,
+  grindingTypesTables,
+  itemCostsTable,
   itemsTable,
   itemsToChaptersTable,
   orderItemsTable,
   ordersTable,
 } from '../drizzle/schemas/schema';
 import { TBodyOrderItem } from './dto/order';
-import { eq, inArray } from 'drizzle-orm';
+import { eq, inArray, sql } from 'drizzle-orm';
 
 @Injectable()
 export class UserOrderService {
@@ -48,21 +51,37 @@ export class UserOrderService {
   async getUserOrderedItems(userId: number) {
     const result = await this.db
       .select({
-        item: itemsTable,
+        itemId: itemsTable.id,
+        title: itemsTable.title,
+        mainImage: itemsTable.mainImage,
+        cost: sql`COALESCE(${grainItemVarsTable.cost}, ${itemCostsTable.cost})`.as(
+          'cost'
+        ),
+        weight: grainItemVarsTable.weight,
+        grindingType: grindingTypesTables.title,
       })
       .from(itemsTable)
       .innerJoin(orderItemsTable, eq(itemsTable.id, orderItemsTable.itemId))
       .innerJoin(ordersTable, eq(orderItemsTable.orderId, ordersTable.id))
+      .innerJoin(itemCostsTable, eq(itemsTable.id, itemCostsTable.itemId))
+      .leftJoin(
+        grainItemVarsTable,
+        eq(orderItemsTable.grainItemVarId, grainItemVarsTable.id)
+      )
+      .leftJoin(
+        grindingTypesTables,
+        eq(orderItemsTable.grindingTypeItemId, grindingTypesTables.id)
+      )
       .where(eq(ordersTable.userId, userId))
       .execute();
 
     return result.map((row) => ({
-      id: row.item.id,
-      image: row.item.mainImage,
-      name: row.item.title,
-      weight: 500,
-      cost: 500,
-      grindingType: '',
+      id: row.itemId,
+      image: row.mainImage,
+      name: row.title,
+      weight: row.weight, // null для незерновых товаров
+      cost: row.cost, // всегда число благодаря COALESCE
+      grindingType: row.grindingType ?? '', // пустая строка, если null
     }));
   }
 }
