@@ -22,7 +22,7 @@ export const UserInfo: FC = () => {
     user?.firstName ? user?.firstName : initData?.user?.firstName
   );
   const [surname, setSurname] = useState(
-    user?.lastName ? user?.lastName : initData?.user?.firstName
+    user?.lastName ? user?.lastName : initData?.user?.lastName
   );
 
   const { mutateAsync: updateUserName } = useUpdateUserName();
@@ -51,7 +51,7 @@ export const UserInfo: FC = () => {
           </p>
           <p
             className={`text-[22px] leading-[26.25px] font-bold ${
-              initData?.user?.firstName || user?.lastName ? '' : 'text-gray40'
+              initData?.user?.lastName || user?.lastName ? '' : 'text-gray40'
             }`}
           >
             {user?.lastName
