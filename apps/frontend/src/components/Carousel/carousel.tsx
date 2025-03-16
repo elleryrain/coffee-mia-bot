@@ -16,7 +16,7 @@ export const Carousel: FC<{
   const { refetch: getFavourites } = useGetFavoriteItems();
   const addToFavourite = useAddFavoriteItem();
   const deleteFromFavourite = useRemoveFavoriteItem();
-
+  console.log(items);
   return (
     <div className="embla" ref={emblaRef}>
       <div className="embla__container w-[calc(100vw-16px)] px-4 gap-2">

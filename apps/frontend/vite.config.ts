@@ -17,19 +17,16 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 4200,
       host: 'localhost',
-      allowedHosts: true
+      allowedHosts: true,
     },
     preview: {
       port: 4300,
-      host: 'localhost',
     },
-    
     plugins: [
       react(),
       nxViteTsPaths(),
       nxCopyAssetsPlugin(['*.md']),
       svgr(),
-      //basicSsl(),
       mksert(),
     ],
     // envDir: '../../.env',
