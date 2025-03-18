@@ -59,7 +59,7 @@ export class ItemServiceDB {
         },
       },
     });
-    console.log(JSON.stringify(items));
+    console.log(JSON.stringify(items, null, 4));
     const transformedItems = items.map((chapter) => ({
       nameCategory: chapter.id,
       description: chapter.description,
@@ -94,6 +94,7 @@ export class ItemServiceDB {
         },
       },
     });
+    console.log(items);
     const transformedItems = items.map((chapter) => ({
       nameCategory: chapter.title,
       description: chapter.description,
@@ -102,8 +103,7 @@ export class ItemServiceDB {
         title: item.item.title,
         image: item.item.mainImage,
         favorite: item.item.favoriteItems.some((fav) => fav.userId === userId),
-        cost:
-          item.item.cost && item.item.cost.cost ? item.item.cost.cost : null,
+        cost: item.item.cost ? item.item.cost.cost : null,
         discountCost:
           item.item.cost && item.item.cost.discountCost
             ? item.item.cost.discountCost
@@ -113,13 +113,14 @@ export class ItemServiceDB {
     return transformedItems;
   }
 
-  async getExtendedItemById(itemId: number) {
+  async getExtendedItemById(itemId: number, userId: number) {
     console.log(itemId);
     const item = await this.db.query.itemsTable.findFirst({
       where: (itemsTable, { eq }) => eq(itemsTable.id, itemId),
       with: {
         chars: true,
         grainConfigs: true,
+        favoriteItems: true,
       },
     });
     if (!item) return null;
@@ -141,6 +142,7 @@ export class ItemServiceDB {
         cost: config.cost,
         weight: config.weight,
       })),
+      favorite: item.favoriteItems.some((fav) => fav.userId === userId),
     };
 
     return transformedItem;

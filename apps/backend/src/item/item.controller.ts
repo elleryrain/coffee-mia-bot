@@ -17,12 +17,16 @@ export class ItemController {
     @Res() reply: FastifyReply
   ) {
     const { idItem } = req.query;
+    const { id: userId } = req.raw.user;
     console.log(req.raw.user);
     if (!idItem) {
       return reply.code(204).send();
     }
     const numberItemId = Number(idItem);
-    const item = await this.itemServiceDB.getExtendedItemById(numberItemId);
+    const item = await this.itemServiceDB.getExtendedItemById(
+      numberItemId,
+      userId
+    );
     return reply.send(item);
   }
 

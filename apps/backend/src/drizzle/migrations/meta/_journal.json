@@ -8,6 +8,13 @@
       "when": 1741892032875,
       "tag": "0000_slim_silverclaw",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1742307764460,
+      "tag": "0001_military_moon_knight",
+      "breakpoints": true
     }
   ]
 }

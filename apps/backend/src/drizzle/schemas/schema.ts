@@ -26,7 +26,10 @@ export const itemCharacteristicsTables = pgTable('Item_Characteristics', {
 });
 
 export const itemCostsTable = pgTable('Item_Cost', {
-  itemId: integer('item_id').primaryKey().notNull(),
+  itemId: integer('item_id')
+    .primaryKey()
+    .notNull()
+    .references(() => itemsTable.id),
   cost: integer().notNull(),
   discountCost: integer('discount_cost'),
 });
