@@ -455,6 +455,8 @@ components:
               type: array
               items:
                 type: string
+            favorite:
+              type: boolean
     GrindingType:
       type: object
       properties:
