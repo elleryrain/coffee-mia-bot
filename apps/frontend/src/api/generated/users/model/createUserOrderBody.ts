@@ -8,11 +8,13 @@
 import type { CdekDelivery } from './cdekDelivery';
 import type { CourierDelivery } from './courierDelivery';
 import type { CreateUserOrderBodyTypeDelivery } from './createUserOrderBodyTypeDelivery';
+import type { CreateUserOrderBodyTypePayment } from './createUserOrderBodyTypePayment';
 import type { CreateUserOrderBodyItemsItem } from './createUserOrderBodyItemsItem';
 
 export type CreateUserOrderBody = {
   cdekDelivery?: CdekDelivery;
   courierDelivery?: CourierDelivery;
   typeDelivery?: CreateUserOrderBodyTypeDelivery;
+  typePayment?: CreateUserOrderBodyTypePayment;
   items?: CreateUserOrderBodyItemsItem[];
 };

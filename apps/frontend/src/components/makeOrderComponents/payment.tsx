@@ -70,6 +70,8 @@ export const Payment: FC = () => {
                           time: orderStore.courierDeliveryInfo.time?.toString(),
                         }
                       : undefined,
+                  typeDelivery: orderStore.deliveyType ?? 'courier',
+                  typePayment: 'sbp',
                 },
               });
               cartStore.clear();
@@ -97,6 +99,33 @@ export const Payment: FC = () => {
           </div>
           <button
             onClick={() => {
+              await mutateAsync({
+                data: {
+                  items: cartStore.products.map((e) => {
+                    return {
+                      itemId: Number(e.id.split('_')[0]),
+                      itemVarId: Number(e.id.split('_')[1]),
+                      grindingTypeId: Number(e.id.split('_')[2]),
+                      count: e.count,
+                    };
+                  }),
+                  cdekDelivery:
+                    orderStore.deliveyType === 'CDEK'
+                      ? orderStore.cdekDeliveryInfo
+                      : undefined,
+                  courierDelivery:
+                    orderStore.deliveyType === 'courier'
+                      ? {
+                          ...orderStore.courierDeliveryInfo,
+                          date: orderStore.courierDeliveryInfo.date?.toString(),
+                          time: orderStore.courierDeliveryInfo.time?.toString(),
+                        }
+                      : undefined,
+                  typeDelivery: orderStore.deliveyType ?? 'courier',
+                  typePayment: 'invoice',
+                },
+              });
+              cartStore.clear();
               orderStore.setPaymentType('juridical');
               orderStore.setStep(3);
               navigate('../ready');

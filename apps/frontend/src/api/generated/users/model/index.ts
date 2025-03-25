@@ -15,6 +15,7 @@ export * from './createUserOrder200';
 export * from './createUserOrderBody';
 export * from './createUserOrderBodyItemsItem';
 export * from './createUserOrderBodyTypeDelivery';
+export * from './createUserOrderBodyTypePayment';
 export * from './deleteApiUserFavorite200';
 export * from './deleteApiUserFavoriteBody';
 export * from './getApiItemDripPacks200Item';
