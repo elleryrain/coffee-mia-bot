@@ -1,12 +1,11 @@
 import { DateValue, TimeInputValue } from '@nextui-org/react';
 import { create } from 'zustand';
-
 export interface courierDelivery {
   first_name: string;
   telegram_nickname: string;
   phone: string;
   address: string;
-  date: DateValue | null;
+  date: DateValue | null | undefined;
   time: TimeInputValue | null;
   comment?: string;
 }

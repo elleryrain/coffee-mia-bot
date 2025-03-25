@@ -10,4 +10,5 @@ import type { ItemConfiguration } from './itemConfiguration';
 export type ItemAllOf = {
   configurations?: ItemConfiguration[];
   images?: string[];
+  favorite?: boolean;
 };
