@@ -274,7 +274,11 @@ paths:
                   enum:
                     - 'courier'
                     - 'CDEK'
-
+                typePayment:
+                  type: string
+                  enum:
+                    - 'sbp'
+                    - 'invoice'
                 items:
                   type: array
                   items:
