@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => {
       nxViteTsPaths(),
       nxCopyAssetsPlugin(['*.md']),
       svgr(),
-      mksert(),
+      // mksert(),
     ],
     // envDir: '../../.env',
     // Uncomment this if you are using workers.

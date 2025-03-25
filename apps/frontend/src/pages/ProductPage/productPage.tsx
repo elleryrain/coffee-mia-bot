@@ -63,9 +63,11 @@ export const ProductPage: FC = () => {
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  const { data: product } = useGetItemById({ idItem: params.id ?? '' });
-  const addToFavourite = useAddFavoriteItem();
-  const deleteFromFavourite = useRemoveFavoriteItem();
+  const { data: product, refetch: refetchFn } = useGetItemById({
+    idItem: params.id ?? '',
+  });
+  const { mutateAsync: addFavourite } = useAddFavoriteItem();
+  const { mutateAsync: removeFavorite } = useRemoveFavoriteItem();
   const { data: grindings } = useGetGrindingTypes();
 
   const findProduct = (id: string) => {
@@ -119,19 +121,23 @@ export const ProductPage: FC = () => {
                 {product.title}
               </h1>
               <button
-                onClick={() => {
-                  addToFavourite.mutate({
-                    data: { itemId: Number(params.id ?? '0') },
-                  });
+                onClick={async () => {
+                  if (product.favourite) {
+                    await removeFavorite({
+                      data: { itemId: Number(params.id ?? '0') },
+                    });
+                    refetchFn();
+                  } else {
+                    await addFavourite({
+                      data: { itemId: Number(params.id ?? '0') },
+                    });
+                    refetchFn();
+                  }
                 }}
                 className={`w-8 h-8 rounded-lg  flex justify-center items-center`}
               >
-                {/* ${
-              product.isFavourite ? 'bg-red10' : 'bg-gray20'
-            } */}
-                {/* ${
-                product.isFavourite ? '/heart_active.svg' : '/heart-nobg.svg'
-              } */}
+                ${product.favourite ? 'bg-red10' : 'bg-gray20'}$
+                {product.favourite ? '/heart_active.svg' : '/heart-nobg.svg'}
                 <img src={`/heart-nobg.svg`} alt="like" />
               </button>
             </div>
@@ -181,7 +187,7 @@ export const ProductPage: FC = () => {
               Дескрипторы
             </h2>
             <p className="py-1 text-[14px] leading-[19.6px] text-black">
-              {product.descriptors}
+              {product.descriptors.map((e) => e + ' ')}
             </p>
           </div>
           <div className="container flex gap-2 outline-none mb-7">
