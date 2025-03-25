@@ -6,7 +6,7 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 
-import { backendPort } from './config/env';
+import { PortConfigService } from './config/port.config';
 
 async function bootstrap() {
   const CORS_OPTIONS = {
@@ -27,15 +27,17 @@ async function bootstrap() {
   appAdapter.enableCors(CORS_OPTIONS);
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    appAdapter,
+    appAdapter
   );
   // app.use();
   const globalPrefix = 'api';
+  const portConfigService = app.get(PortConfigService);
 
+  const port = portConfigService.getBackendPort();
   app.setGlobalPrefix(globalPrefix);
-  await app.listen({ port: backendPort, host: '0.0.0.0' });
+  await app.listen({ port: port, host: '0.0.0.0' });
   Logger.log(
-    `Application is running on: http://localhost:${backendPort}/${globalPrefix}`,
+    `Application is running on: http://localhost:${port}/${globalPrefix}`
   );
 }
 

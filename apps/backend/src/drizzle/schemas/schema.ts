@@ -167,3 +167,17 @@ export const favoriteUserItemRelations = relations(
     }),
   })
 );
+
+export const popularItemsTable = pgTable('popular_item', {
+  id: integer().notNull().primaryKey().generatedAlwaysAsIdentity(),
+  itemId: integer()
+    .notNull()
+    .references(() => itemsTable.id),
+});
+
+export const newItemsTable = pgTable('new_item', {
+  id: integer().notNull().primaryKey().generatedAlwaysAsIdentity(),
+  itemId: integer()
+    .notNull()
+    .references(() => itemsTable.id),
+});

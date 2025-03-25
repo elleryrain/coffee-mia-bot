@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { DrizzlePg } from '../db/db.module';
 import {
   grainItemVarsTable,
@@ -10,44 +10,84 @@ import {
   orderItemsTable,
   ordersTable,
 } from '../drizzle/schemas/schema';
-import { TBodyOrderItem } from './dto/order';
+import { TBodyOrderItem } from './dto/order.dto';
 import { eq, inArray, sql } from 'drizzle-orm';
+import { OrderDelivery } from './types/order';
 
 @Injectable()
 export class UserOrderService {
   constructor(@Inject('DB') private db: DrizzlePg) {}
-  async orderItems(userId: number, itemsArray: TBodyOrderItem[]) {
-    const itemsIdArray = itemsArray.map((item) => item.itemId);
-    // await this.db.transaction(async (tx) => {
-    //   const dbItems = await tx
-    //     .select()
-    //     .from(itemsTable)
-    //     .leftJoin(
-    //       itemsToChaptersTable,
-    //       eq(itemsTable.id, itemsToChaptersTable.itemId)
-    //     )
-    //     .where(inArray(itemsTable.id, itemsIdArray));
-    //   console.log(dbItems);
-    // });
-    console.log(1);
-    const order = (
-      await this.db
-        .insert(ordersTable)
-        .values({ userId, deliveryType: 'CDEK' })
-        .returning({ id: ordersTable.id })
-    )[0];
-    console.log(123, order);
-    const itemsToOrder = itemsArray.map((item) => ({
-      itemId: item.itemId,
-      grindingTypeItemId: item.grindingTypeId,
-      grainItemVarId: item.itemVarId,
-      orderId: order.id,
-    }));
-    const items = await this.db
-      .insert(orderItemsTable)
-      .values(itemsToOrder)
-      .returning();
-    return items;
+  async orderItems(
+    userId: number,
+    itemsArray: TBodyOrderItem[],
+    delivery: OrderDelivery
+  ) {
+    // const itemsIdArray = itemsArray.map((item) => item.itemId);
+    try {
+      const res = await this.db.transaction(async (tx) => {
+        let orderInfoCdek: null | {
+          first_name?: string | undefined;
+          last_name?: string | undefined;
+          middle_name?: string | undefined;
+          phone?: string | undefined;
+          cdek_address?: string | undefined;
+          deliveryType: 'CDEK';
+        };
+        let orderInfoCourier: null | {
+          first_name?: string | undefined;
+          telegram_nickname?: string | undefined;
+          phone?: string | undefined;
+          address?: string | undefined;
+          date?: string | undefined;
+          time?: string | undefined;
+          comment?: string | undefined;
+          deliveryType: string;
+        };
+        let order: undefined | { id: number } = undefined;
+        if (delivery.typeDelivery === 'cdek') {
+          orderInfoCdek = {
+            deliveryType: 'CDEK',
+            ...delivery.cdekDelivery,
+          };
+          order = (
+            await tx
+              .insert(ordersTable)
+              .values({ userId, ...orderInfoCdek })
+              .returning({ id: ordersTable.id })
+          )[0];
+        }
+
+        if (delivery.typeDelivery === 'courier') {
+          orderInfoCourier = {
+            deliveryType: 'courier',
+            ...delivery.courierDelidery,
+          };
+          order = (
+            await tx
+              .insert(ordersTable)
+              .values({ userId, ...orderInfoCourier })
+              .returning({ id: ordersTable.id })
+          )[0];
+        }
+        if (!order) {
+          throw new HttpException('order not created', 500);
+        }
+        const itemsToOrder = itemsArray.map((item) => ({
+          itemId: item.itemId,
+          grindingTypeItemId: item.grindingTypeId,
+          grainItemVarId: item.itemVarId,
+          orderId: order.id,
+        }));
+        const items = await this.db
+          .insert(orderItemsTable)
+          .values(itemsToOrder)
+          .returning();
+        console.log(items);
+      });
+    } catch (err) {
+      console.log('Ошибка в транзакции', err);
+      throw err;
+    }
   }
   async getUserOrderedItems(userId: number) {
     const result = await this.db

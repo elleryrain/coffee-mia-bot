@@ -15,6 +15,13 @@
       "when": 1742307764460,
       "tag": "0001_military_moon_knight",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1742896224895,
+      "tag": "0002_soft_archangel",
+      "breakpoints": true
     }
   ]
 }

@@ -7,7 +7,7 @@ import {
   usersTable,
 } from '../drizzle/schemas/schema';
 import { and, eq } from 'drizzle-orm';
-import { TBodyOrderItem } from './dto/order';
+import { TBodyOrderItem } from './dto/order.dto';
 @Injectable()
 export class UserServiceDB {
   constructor(@Inject('DB') private db: DrizzlePg) {}

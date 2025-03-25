@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
 import { drizzle, NodePgDatabase } from 'drizzle-orm/node-postgres';
 import * as sc from '../drizzle/schemas/schema';
-
-import { databaseUrl } from '../config/env';
+import { DatabaseConfigService } from '../config/db.config';
 
 export type DrizzlePg = NodePgDatabase<typeof sc>;
 
@@ -11,12 +10,14 @@ export type DrizzlePg = NodePgDatabase<typeof sc>;
   providers: [
     {
       provide: 'DB',
-      useFactory: () => {
+      useFactory: (databaseConfigService: DatabaseConfigService) => {
+        const databaseUrl = databaseConfigService.getDatabaseUrl();
         const db = drizzle(databaseUrl, { schema: sc });
         return db;
       },
-      inject: [],
+      inject: [DatabaseConfigService],
     },
+    DatabaseConfigService,
   ],
   exports: ['DB'],
 })

@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { UserServiceDB } from './user-db.service';
-import { TBodyOrderItem } from './dto/order';
+import { TBody, TBodyOrderItem, TCdekDelivery } from './dto/order.dto';
 import { UserOrderService } from './user-order.service';
 
 @Controller('user')
@@ -129,11 +129,13 @@ export class UserController {
   async orderItemsHandler(
     @Req() req: FastifyRequest,
     @Res() reply: FastifyReply,
-    @Body() body: { items: TBodyOrderItem[] }
+    @Body() body: TBody
   ) {
     const { id } = req.raw.user;
-    const items = await this.userOrderService.orderItems(id, body.items);
-    return reply.send(items);
+    const { items, typeDelivery, cdekDelivery, courierDelivery } = body;
+
+    const itemsDB = await this.userOrderService.orderItems(id, body.items);
+    return reply.send(itemsDB);
   }
 
   @Get('order')
