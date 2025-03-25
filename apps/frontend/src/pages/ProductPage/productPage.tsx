@@ -122,7 +122,7 @@ export const ProductPage: FC = () => {
               </h1>
               <button
                 onClick={async () => {
-                  if (product.favourite) {
+                  if (product.favorite) {
                     await removeFavorite({
                       data: { itemId: Number(params.id ?? '0') },
                     });
@@ -136,8 +136,8 @@ export const ProductPage: FC = () => {
                 }}
                 className={`w-8 h-8 rounded-lg  flex justify-center items-center`}
               >
-                ${product.favourite ? 'bg-red10' : 'bg-gray20'}$
-                {product.favourite ? '/heart_active.svg' : '/heart-nobg.svg'}
+                ${product.favorite ? 'bg-red10' : 'bg-gray20'}$
+                {product.favorite ? '/heart_active.svg' : '/heart-nobg.svg'}
                 <img src={`/heart-nobg.svg`} alt="like" />
               </button>
             </div>

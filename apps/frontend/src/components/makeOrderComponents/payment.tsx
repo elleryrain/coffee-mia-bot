@@ -98,7 +98,7 @@ export const Payment: FC = () => {
             </p>
           </div>
           <button
-            onClick={() => {
+            onClick={async () => {
               await mutateAsync({
                 data: {
                   items: cartStore.products.map((e) => {
