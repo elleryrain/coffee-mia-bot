@@ -203,7 +203,6 @@ export const Delivery: FC = () => {
                   });
                 }}
                 value={orderStore.courierDeliveryInfo.date}
-                placeholderValue={today(getLocalTimeZone())}
                 labelPlacement="outside"
                 minValue={today(getLocalTimeZone())}
                 maxValue={getMaxDate()}
