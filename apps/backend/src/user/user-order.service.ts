@@ -62,16 +62,17 @@ export class UserOrderService {
             deliveryType: 'courier',
             ...delivery.courierDelidery,
           };
-          order = (
-            await tx
-              .insert(ordersTable)
-              .values({ userId, ...orderInfoCourier })
-              .returning({ id: ordersTable.id })
-          )[0];
+          // order = (
+          //   await tx
+          //     .insert(ordersTable)
+          //     .values({ userId, ...orderInfoCourier })
+          //     .returning({ id: ordersTable.id })
+          // )[0];
         }
         if (!order) {
           throw new HttpException('order not created', 500);
         }
+
         const itemsToOrder = itemsArray.map((item) => ({
           itemId: item.itemId,
           grindingTypeItemId: item.grindingTypeId,
