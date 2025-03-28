@@ -12,7 +12,6 @@ import { useIMask } from 'react-imask';
 import { useOrderStore } from '../../store/orderStore';
 import { useNavigate } from 'react-router-dom';
 import { dateInputStyles, inputStyles, tabsStyle } from '../../next-ui-styles';
-import { useCartStore } from '../../store/cartStore';
 import { useGetUserInfo } from '../../api/generated/users/default';
 
 export const Delivery: FC = () => {
@@ -204,10 +203,18 @@ export const Delivery: FC = () => {
                   });
                 }}
                 value={orderStore.courierDeliveryInfo.date}
-                placeholderValue={today(getLocalTimeZone())}
                 labelPlacement="outside"
                 minValue={today(getLocalTimeZone())}
                 maxValue={getMaxDate()}
+                errorMessage={(value) => {
+                  if (value.validationDetails.rangeUnderflow) {
+                    return 'Выберите дату не раньше сегодняшней';
+                  } else if (value.validationDetails.rangeOverflow) {
+                    return `Выберите дату не позже ${getMaxDate().toDate('+03:00').toLocaleDateString()}`;
+                  } else {
+                    return '';
+                  }
+                }}
               />
               <TimeInput
                 classNames={dateInputStyles}

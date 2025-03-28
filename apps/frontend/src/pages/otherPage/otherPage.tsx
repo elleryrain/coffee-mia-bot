@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SubCategory } from '../../components';
 import { useGetOtherItems } from '../../api/generated/users/default';
+import { productsList } from '../../mocks/mockSubCategories';
 
 export const OtherPage: FC<{
   nameCategory: string;
@@ -32,6 +33,14 @@ export const OtherPage: FC<{
         </h1>
       </div>
       <div className="flex flex-col gap-6 bg-transparent relative">
+        {productsList['otherSubCategories'].map((category) => (
+          <SubCategory
+            title={category.nameCategory}
+            description={category.description}
+            products={category.items}
+            refechFn={refetchFn}
+          />
+        ))}
         {data &&
           data.map((category) => (
             <SubCategory

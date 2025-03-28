@@ -1,12 +1,15 @@
 import { DateValue, TimeInputValue } from '@nextui-org/react';
 import { create } from 'zustand';
+import { getLocalTimeZone, today } from '@internationalized/date';
+
+const date = today(getLocalTimeZone());
 
 export interface courierDelivery {
   first_name: string;
   telegram_nickname: string;
   phone: string;
   address: string;
-  date: DateValue | null;
+  date: DateValue | null | undefined;
   time: TimeInputValue | null;
   comment?: string;
 }
@@ -48,7 +51,7 @@ export const useOrderStore = create<orderState>()((set) => ({
     telegram_nickname: '',
     phone: '',
     address: '',
-    date: null,
+    date: date.set({ day: date.day + 1 }),
     time: null,
   },
   deliveyType: null,
