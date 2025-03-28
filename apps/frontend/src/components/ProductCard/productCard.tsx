@@ -68,11 +68,11 @@ export const ProductCard: FC<{
           onClick={() => {
             cartState.addProduct({
               name: product.title,
-              quantity: '100г',
+              quantity: '',
               count: 1,
               image: product.image ?? undefined,
               id: String(product.id),
-              price: product.cost,
+              price: product.discountCost ? product.discountCost : product.cost,
             });
           }}
           className="flex items-center gap-1 px-4 py-1 bg-gray20 mt-4 rounded-[20px] text-[16px] leading-6 font-medium"
