@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1741892032875,
-      "tag": "0000_slim_silverclaw",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1742307764460,
-      "tag": "0001_military_moon_knight",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1742896224895,
-      "tag": "0002_soft_archangel",
+      "when": 1745323795278,
+      "tag": "0000_motionless_beyonder",
       "breakpoints": true
     }
   ]

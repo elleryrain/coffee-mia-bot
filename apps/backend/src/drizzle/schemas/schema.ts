@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { integer, pgEnum, pgTable, varchar } from 'drizzle-orm/pg-core';
+import { bigint, integer, pgEnum, pgTable, varchar } from 'drizzle-orm/pg-core';
 
 export const deliveryTypeEnum = pgEnum('delivery_type', ['courier', 'CDEK']);
 export const orderStatuses = pgEnum('order_status', ['payed', 'delivered']);
@@ -64,7 +64,7 @@ export const itemsToChaptersTable = pgTable('Item_Chapter', {
 });
 
 export const usersTable = pgTable('User', {
-  id: integer().primaryKey(),
+  id: bigint({ mode: 'number' }).primaryKey(),
   firstName: varchar('first_name', { length: 512 }),
   lastName: varchar('last_name', { length: 512 }),
   username: varchar('username', { length: 512 }),
@@ -73,7 +73,7 @@ export const usersTable = pgTable('User', {
 
 export const userFavoriteItemsTable = pgTable('User_Favorite_Item', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  userId: integer()
+  userId: bigint('user_id', { mode: 'number' })
     .notNull()
     .references(() => usersTable.id),
   itemId: integer()
@@ -88,7 +88,7 @@ export const grindingTypesTables = pgTable('Gringing_Type', {
 
 export const ordersTable = pgTable('Order', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  userId: integer('user_id')
+  userId: bigint('user_id', { mode: 'number' })
     .notNull()
     .references(() => usersTable.id),
   deliveryType: deliveryTypeEnum().default('CDEK'),

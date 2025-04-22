@@ -4,5 +4,6 @@ import { BotsConfigService } from '../config/bots.config';
 
 @Module({
   providers: [AdminBotService, BotsConfigService],
+  exports: [AdminBotService],
 })
 export class AdminBotModule {}
