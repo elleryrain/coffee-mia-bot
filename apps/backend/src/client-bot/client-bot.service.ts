@@ -8,6 +8,7 @@ export class ClientBotService implements OnApplicationBootstrap {
   private bot: Telegraf;
   constructor(private readonly botsConfigService: BotsConfigService) {
     //
+    console.log(console.log('new bot'));
   }
   onApplicationBootstrap() {
     this.initializeBot();
