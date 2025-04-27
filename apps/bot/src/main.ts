@@ -4,7 +4,7 @@ import { InlineKeyboardBuilder, MediaSourceType, Telegram } from 'puregram';
 import { envConfig } from './config/env';
 
 const telegram = Telegram.fromToken(envConfig.botToken);
-
+console.log('previous bot');
 const keyboard = new InlineKeyboardBuilder().webAppButton({
   text: 'Купить кофе',
   url: envConfig.appLink,

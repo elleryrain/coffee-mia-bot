@@ -133,10 +133,10 @@ export class UserController {
   ) {
     const { id } = req.raw.user;
     const { items, typeDelivery, cdekDelivery, courierDelivery } = body;
+    const delivery = { typeDelivery, cdekDelivery, courierDelivery };
+    const itemsDB = await this.userOrderService.orderItems(id, items, delivery);
 
-    // const itemsDB = await this.userOrderService.orderItems(id, body.items);
-
-    return reply.send([]);
+    return reply.send(itemsDB);
   }
 
   @Get('order')

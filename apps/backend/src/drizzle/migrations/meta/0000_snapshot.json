@@ -1,5 +1,5 @@
 {
-  "id": "a4d91294-1d33-4576-8517-835992274111",
+  "id": "815bae39-68b5-4566-aa30-341935c6e8e0",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -243,7 +243,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "Item_Cost_item_id_Item_id_fk": {
+          "name": "Item_Cost_item_id_Item_id_fk",
+          "tableFrom": "Item_Cost",
+          "tableTo": "Item",
+          "columnsFrom": [
+            "item_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -365,6 +379,56 @@
           "tableTo": "Chapter",
           "columnsFrom": [
             "chapterId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.new_item": {
+      "name": "new_item",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "new_item_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "itemId": {
+          "name": "itemId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "new_item_itemId_Item_id_fk": {
+          "name": "new_item_itemId_Item_id_fk",
+          "tableFrom": "new_item",
+          "tableTo": "Item",
+          "columnsFrom": [
+            "itemId"
           ],
           "columnsTo": [
             "id"
@@ -509,7 +573,7 @@
         },
         "user_id": {
           "name": "user_id",
-          "type": "integer",
+          "type": "bigint",
           "primaryKey": false,
           "notNull": true
         },
@@ -606,6 +670,56 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.popular_item": {
+      "name": "popular_item",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "popular_item_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "itemId": {
+          "name": "itemId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "popular_item_itemId_Item_id_fk": {
+          "name": "popular_item_itemId_Item_id_fk",
+          "tableFrom": "popular_item",
+          "tableTo": "Item",
+          "columnsFrom": [
+            "itemId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.User_Favorite_Item": {
       "name": "User_Favorite_Item",
       "schema": "",
@@ -627,9 +741,9 @@
             "cycle": false
           }
         },
-        "userId": {
-          "name": "userId",
-          "type": "integer",
+        "user_id": {
+          "name": "user_id",
+          "type": "bigint",
           "primaryKey": false,
           "notNull": true
         },
@@ -642,12 +756,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "User_Favorite_Item_userId_User_id_fk": {
-          "name": "User_Favorite_Item_userId_User_id_fk",
+        "User_Favorite_Item_user_id_User_id_fk": {
+          "name": "User_Favorite_Item_user_id_User_id_fk",
           "tableFrom": "User_Favorite_Item",
           "tableTo": "User",
           "columnsFrom": [
-            "userId"
+            "user_id"
           ],
           "columnsTo": [
             "id"
@@ -681,7 +795,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "bigint",
           "primaryKey": true,
           "notNull": true
         },

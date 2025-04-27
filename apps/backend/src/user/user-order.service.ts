@@ -10,67 +10,69 @@ import {
   orderItemsTable,
   ordersTable,
 } from '../drizzle/schemas/schema';
-import { TBodyOrderItem } from './dto/order.dto';
+import {
+  TBodyOrderItem,
+  TCdekDelivery,
+  TCourierDelivery,
+} from './dto/order.dto';
 import { eq, inArray, sql } from 'drizzle-orm';
 import { OrderDelivery } from './types/order';
+import { TOrder, TOrderItem } from '../types/order';
+import { ClientBotService } from '../client-bot/client-bot.service';
+import { AdminBotService } from '../admin-bot/admin-bot.service';
 
 @Injectable()
 export class UserOrderService {
-  constructor(@Inject('DB') private db: DrizzlePg) {}
+  constructor(
+    @Inject('DB') private db: DrizzlePg,
+    private readonly clientBotService: ClientBotService,
+    private readonly adminBotService: AdminBotService
+  ) {}
   async orderItems(
     userId: number,
     itemsArray: TBodyOrderItem[],
     delivery: OrderDelivery
   ) {
-    // const itemsIdArray = itemsArray.map((item) => item.itemId);
     try {
-      const res = await this.db.transaction(async (tx) => {
-        let orderInfoCdek: null | {
-          first_name?: string | undefined;
-          last_name?: string | undefined;
-          middle_name?: string | undefined;
-          phone?: string | undefined;
-          cdek_address?: string | undefined;
-          deliveryType: 'CDEK';
+      const result = await this.db.transaction(async (tx) => {
+        // Базовая информация о заказе
+        let orderInfo: typeof ordersTable.$inferInsert = {
+          userId,
+          deliveryType:
+            delivery.typeDelivery === 'cdek' ? 'CDEK' : delivery.typeDelivery,
         };
-        let orderInfoCourier: null | {
-          first_name?: string | undefined;
-          telegram_nickname?: string | undefined;
-          phone?: string | undefined;
-          address?: string | undefined;
-          date?: string | undefined;
-          time?: string | undefined;
-          comment?: string | undefined;
-          deliveryType: string;
-        };
-        let order: undefined | { id: number } = undefined;
+
+        // Обработка типа доставки
         if (delivery.typeDelivery === 'cdek') {
-          orderInfoCdek = {
-            deliveryType: 'CDEK',
+          if (!delivery.cdekDelivery) {
+            throw new HttpException('Не указаны данные для доставки CDEK', 400);
+          }
+          orderInfo = {
+            ...orderInfo,
             ...delivery.cdekDelivery,
           };
-          order = (
-            await tx
-              .insert(ordersTable)
-              .values({ userId, ...orderInfoCdek })
-              .returning({ id: ordersTable.id })
-          )[0];
+        } else if (delivery.typeDelivery === 'courier') {
+          if (!delivery.courierDelivery) {
+            throw new HttpException(
+              'Не указаны данные для доставки курьером',
+              400
+            );
+          }
+          orderInfo = {
+            ...orderInfo,
+            ...delivery.courierDelivery,
+          };
+        } else {
+          throw new HttpException('Неверный тип доставки', 400);
         }
 
-        if (delivery.typeDelivery === 'courier') {
-          orderInfoCourier = {
-            deliveryType: 'courier',
-            ...delivery.courierDelidery,
-          };
-          // order = (
-          //   await tx
-          //     .insert(ordersTable)
-          //     .values({ userId, ...orderInfoCourier })
-          //     .returning({ id: ordersTable.id })
-          // )[0];
-        }
+        const [order] = await tx
+          .insert(ordersTable)
+          .values(orderInfo)
+          .returning();
+
         if (!order) {
-          throw new HttpException('order not created', 500);
+          throw new HttpException('Заказ не создан', 500);
         }
 
         const itemsToOrder = itemsArray.map((item) => ({
@@ -79,17 +81,42 @@ export class UserOrderService {
           grainItemVarId: item.itemVarId,
           orderId: order.id,
         }));
-        const items = await this.db
+
+        const insertedItems = await tx
           .insert(orderItemsTable)
           .values(itemsToOrder)
           .returning();
-        console.log(items);
+        const itemsToOrderSend: TOrderItem[] = insertedItems.map((item) => ({
+          id: item.itemId,
+          title: '1',
+          count: 1,
+        }));
+        const sum = insertedItems.length * 100;
+        const orderToBot: TOrder = {
+          id: order.id,
+          deliveryType: delivery.typeDelivery,
+          address:
+            delivery.typeDelivery === 'cdek'
+              ? (delivery.cdekDelivery as TCdekDelivery).cdek_address
+              : (delivery.courierDelivery as TCourierDelivery)?.address,
+          sum,
+          status: 'reserved',
+
+          items: itemsToOrderSend,
+        };
+        await this.clientBotService.sendOrder(userId, orderToBot);
+        await this.adminBotService.sendOrder(orderToBot);
+
+        return orderToBot;
       });
+
+      return result;
     } catch (err) {
-      console.log('Ошибка в транзакции', err);
+      console.error('Ошибка в транзакции:', err);
       throw err;
     }
   }
+
   async getUserOrderedItems(userId: number) {
     const result = await this.db
       .select({
