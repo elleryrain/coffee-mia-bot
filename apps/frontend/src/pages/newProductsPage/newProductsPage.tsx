@@ -21,7 +21,7 @@ export const NewProductsPage: FC = () => {
         </div>
       )}
       {items?.length === 0 && (
-        <p className="absolute left-4 bottom-[-35px] text-[18px] font-medium">
+        <p className="relative left-4 top-[-25px] text-[18px] font-medium">
           Здесь пока пусто
         </p>
       )}

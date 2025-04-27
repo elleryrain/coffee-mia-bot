@@ -68,10 +68,10 @@ export const mainBanners = [
     link: 'new-products',
     image: '/coffee1.jpg',
   },
-  {
-    id: 1,
-    name: 'Рекомендуем',
-    link: 'recomendations',
-    image: '/coffee2.jpg',
-  },
+  // {
+  //   id: 1,
+  //   name: 'Рекомендуем',
+  //   link: 'recomendations',
+  //   image: '/coffee2.jpg',
+  // },
 ];

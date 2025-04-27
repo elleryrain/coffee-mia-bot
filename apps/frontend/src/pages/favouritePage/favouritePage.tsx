@@ -4,7 +4,7 @@ import { ProductCard } from '../../components';
 
 export const FavouritePage: FC = () => {
   const { data, refetch: refetchFn } = useGetFavoriteItems();
-  console.log(data);
+  // console.log(data);
   return (
     <div>
       <div className="container ">
