@@ -2,7 +2,11 @@ import { relations } from 'drizzle-orm';
 import { bigint, integer, pgEnum, pgTable, varchar } from 'drizzle-orm/pg-core';
 
 export const deliveryTypeEnum = pgEnum('delivery_type', ['courier', 'CDEK']);
-export const orderStatuses = pgEnum('order_status', ['payed', 'delivered']);
+export const orderStatuses = pgEnum('order_status', [
+  'pending',
+  'payed',
+  'delivered',
+]);
 
 export const itemsTable = pgTable('Item', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),

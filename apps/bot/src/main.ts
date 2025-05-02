@@ -1,27 +1,15 @@
-import path from 'path';
-import { InlineKeyboardBuilder, MediaSourceType, Telegram } from 'puregram';
+import fastify from 'fastify';
+import { BOT_CONFIG } from './config/env.config';
+import { setupBot } from './bot/grammy';
+import { setupRoutes } from './routes';
 
-import { envConfig } from './config/env';
+(async () => {
+  const app = fastify({ logger: true });
+  const bot = await setupBot();
+  app.decorate('bot', bot);
 
-const telegram = Telegram.fromToken(envConfig.botToken);
-console.log('previous bot');
-const keyboard = new InlineKeyboardBuilder().webAppButton({
-  text: 'Купить кофе',
-  url: envConfig.appLink,
-});
-
-telegram.updates.on('message', (context) => {
-  context.sendPhoto(
-    {
-      type: MediaSourceType.Path,
-      value: path.resolve(__dirname, 'assets/image.jpg'),
-    },
-    {
-      caption: envConfig.imageCaption,
-      parse_mode: 'Markdown',
-      reply_markup: keyboard,
-    }
-  );
-});
-
-telegram.updates.startPolling();
+  setupRoutes(app);
+  await app.listen({ port: Number(BOT_CONFIG.port) });
+  console.log('[CLIENT BOT] started');
+  await app.bot.start();
+})();

@@ -4,11 +4,9 @@ import { DatabaseModule } from '../db/db.module';
 import { UserServiceDB } from './user-db.service';
 import { AuthMiddleware } from '../middlewares/auth/auth.middleware';
 import { UserOrderService } from './user-order.service';
-import { ClientBotModule } from '../client-bot/client-bot.module';
-import { AdminBotModule } from '../admin-bot/admin-bot.module';
 
 @Module({
-  imports: [DatabaseModule, ClientBotModule, AdminBotModule],
+  imports: [DatabaseModule],
   controllers: [UserController],
   exports: [],
   providers: [UserServiceDB, UserOrderService],

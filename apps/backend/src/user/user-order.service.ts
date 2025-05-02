@@ -3,10 +3,8 @@ import { DrizzlePg } from '../db/db.module';
 import {
   grainItemVarsTable,
   grindingTypesTables,
-  itemCharacteristicsTables,
   itemCostsTable,
   itemsTable,
-  itemsToChaptersTable,
   orderItemsTable,
   ordersTable,
 } from '../drizzle/schemas/schema';
@@ -15,19 +13,13 @@ import {
   TCdekDelivery,
   TCourierDelivery,
 } from './dto/order.dto';
-import { eq, inArray, sql } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { OrderDelivery } from './types/order';
 import { TOrder, TOrderItem } from '../types/order';
-import { ClientBotService } from '../client-bot/client-bot.service';
-import { AdminBotService } from '../admin-bot/admin-bot.service';
 
 @Injectable()
 export class UserOrderService {
-  constructor(
-    @Inject('DB') private db: DrizzlePg,
-    private readonly clientBotService: ClientBotService,
-    private readonly adminBotService: AdminBotService
-  ) {}
+  constructor(@Inject('DB') private db: DrizzlePg) {}
   async orderItems(
     userId: number,
     itemsArray: TBodyOrderItem[],
@@ -104,8 +96,6 @@ export class UserOrderService {
 
           items: itemsToOrderSend,
         };
-        await this.clientBotService.sendOrder(userId, orderToBot);
-        await this.adminBotService.sendOrder(orderToBot);
 
         return orderToBot;
       });

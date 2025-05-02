@@ -5,8 +5,6 @@ import { GrindingTypesModule } from '../grindingTypes/grindingTypes.module';
 import { UserModule } from '../user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { PortConfigService } from '../config/port.config';
-import { AdminBotModule } from '../admin-bot/admin-bot.module';
-import { ClientBotModule } from '../client-bot/client-bot.module';
 @Module({
   imports: [
     ItemModule,
@@ -15,8 +13,6 @@ import { ClientBotModule } from '../client-bot/client-bot.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    AdminBotModule,
-    ClientBotModule,
   ],
   controllers: [],
   providers: [PortConfigService],

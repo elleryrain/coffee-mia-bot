@@ -6,6 +6,7 @@
   "scripts": {
     "build": "nx run-many -t build",
     "dev": "nx run-many -t serve --parallel 4",
+    "dev:bot": "nx serve bot",
     "dev:front": "nx serve frontend --host",
     "dev:backend": "nx serve backend",
     "db:generate": "yarn drizzle-kit generate --out apps/backend/src/drizzle/migrations --schema apps/backend/src/drizzle/schemas/schema.ts --dialect postgresql",
@@ -97,6 +98,7 @@
     "embla-carousel-react": "^8.5.1",
     "fastify": "^4",
     "framer-motion": "^11.11.17",
+    "grammy": "^1.36.1",
     "pg": "^8.13.1",
     "puregram": "^2.26.8",
     "react": "18.3.1",
