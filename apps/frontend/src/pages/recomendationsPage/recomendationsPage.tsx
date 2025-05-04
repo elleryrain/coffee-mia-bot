@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 export const RecomendationsPage: FC = () => {
   const navigate = useNavigate();
 
+  
+
   return (
     <div>
       <div className="container ">

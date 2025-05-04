@@ -242,7 +242,7 @@ export const Delivery: FC = () => {
             />
             <p className="text-secondaryBlack text-[16px] leading-[20.8px] font-normal mt-6">
               Стоимость доставки:{' '}
-              <span className="text-primaryBlack">500р</span>
+              <span className="text-primaryBlack">Бесплатно</span>
             </p>
 
             <button
@@ -333,7 +333,7 @@ export const Delivery: FC = () => {
               type="text"
             />
             <p className="text-secondaryBlack text-[16px] leading-[20.8px] font-normal mt-6">
-              Стоимость CDEK: <span className="text-primaryBlack">500р</span>
+              Стоимость CDEK: <span className="text-primaryBlack">Бесплатно</span>
             </p>
             <button
               onClick={() => {

@@ -23,7 +23,7 @@ export const Payment: FC = () => {
         >
           <div className="border border-gray20 rounded-xl p-4">
             <p className="py-2 px-3 text-[22px] leading-[24.2px] bg-orange10 mb-6 rounded-lg">
-              {cartStore.totalPrice + 500} ₽
+              {cartStore.totalPrice + 0} ₽ {/*// добавление цены доставки */}
             </p>
             <div className="flex gap-2 items-center mb-3">
               <p className="px-3 py-2 bg-gray15 rounded-lg">
