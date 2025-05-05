@@ -87,6 +87,21 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ShortItem'
+  /api/item/recommend: 
+    get:
+      operationId: getRecommendItems
+      summary: Получение всех рекомендованных товаров
+      description: роут для получения всех рекомендованных товаров
+      responses:
+        '200':
+          description: успешное получение всех рекомендованных товаров
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShortItem'
+  
   /api/item/popular:
     get:
       operationId: getPopularItems
