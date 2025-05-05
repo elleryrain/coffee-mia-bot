@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import { ProductCard } from '../../components';
-import { items as data } from '../../mocks/mockItems';
 import { useNavigate } from 'react-router-dom';
+import { useGetRecommendItems } from '../../api/generated/users/default';
 
 export const RecomendationsPage: FC = () => {
   const navigate = useNavigate();
 
-  
+  const {data: items, refetch: refetchFn} = useGetRecommendItems()
 
   return (
     <div>
@@ -25,14 +25,14 @@ export const RecomendationsPage: FC = () => {
         </h1>
       </div>
       <div className="w-[100vw] h-0 border-b-[0.5px] border-gray40 "></div>
-      {data?.length !== 0 && (
+      {items?.length !== 0 && (
         <div className="container pt-10 flex flex-wrap gap-6">
-          {data?.map((item) => (
-            <ProductCard product={item} />
+          {items?.map((item) => (
+            <ProductCard product={item} refechFn={refetchFn} />
           ))}
         </div>
       )}
-      {data?.length === 0 && (
+      {items?.length === 0 && (
         <p className="relative left-4 top-[-25px] text-[18px] font-medium">
           Здесь пока пусто
         </p>

@@ -502,6 +502,141 @@ export function useGetNewItems<
 }
 
 /**
+ * роут для получения всех рекомендованных товаров
+ * @summary Получение всех рекомендованных товаров
+ */
+export const getRecommendItems = (signal?: AbortSignal) => {
+  return baseApiRequest<ShortItem[]>({
+    url: `/api/item/recommend`,
+    method: 'GET',
+    signal,
+  });
+};
+
+export const getGetRecommendItemsQueryKey = () => {
+  return [`/api/item/recommend`] as const;
+};
+
+export const getGetRecommendItemsQueryOptions = <
+  TData = Awaited<ReturnType<typeof getRecommendItems>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getRecommendItems>>,
+      TError,
+      TData
+    >
+  >;
+}) => {
+  const { query: queryOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetRecommendItemsQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getRecommendItems>>
+  > = ({ signal }) => getRecommendItems(signal);
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getRecommendItems>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type GetRecommendItemsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getRecommendItems>>
+>;
+export type GetRecommendItemsQueryError = unknown;
+
+export function useGetRecommendItems<
+  TData = Awaited<ReturnType<typeof getRecommendItems>>,
+  TError = unknown
+>(options: {
+  query: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getRecommendItems>>,
+      TError,
+      TData
+    >
+  > &
+    Pick<
+      DefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getRecommendItems>>,
+        TError,
+        Awaited<ReturnType<typeof getRecommendItems>>
+      >,
+      'initialData'
+    >;
+}): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetRecommendItems<
+  TData = Awaited<ReturnType<typeof getRecommendItems>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getRecommendItems>>,
+      TError,
+      TData
+    >
+  > &
+    Pick<
+      UndefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getRecommendItems>>,
+        TError,
+        Awaited<ReturnType<typeof getRecommendItems>>
+      >,
+      'initialData'
+    >;
+}): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetRecommendItems<
+  TData = Awaited<ReturnType<typeof getRecommendItems>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getRecommendItems>>,
+      TError,
+      TData
+    >
+  >;
+}): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+/**
+ * @summary Получение всех рекомендованных товаров
+ */
+
+export function useGetRecommendItems<
+  TData = Awaited<ReturnType<typeof getRecommendItems>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getRecommendItems>>,
+      TError,
+      TData
+    >
+  >;
+}): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getGetRecommendItemsQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
+}
+
+/**
  * роут для получения всех популярных предметов
  * @summary Получение всех популярных предметов
  */
