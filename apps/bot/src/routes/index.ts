@@ -24,7 +24,7 @@ export async function setupRoutes(fastify: FastifyInstance) {
         })
         .join('\n');
 
-      message += 'Доставка 500 рублей\n';
+      message += 'Доставка бесплатно\n';
 
       if (body.deliveryType === 'courier') {
         message += 'Курьер\n';
