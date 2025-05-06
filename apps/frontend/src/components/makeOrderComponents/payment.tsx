@@ -27,7 +27,7 @@ export const Payment: FC = () => {
             </p>
             <div className="flex gap-2 items-center mb-3">
               <p className="px-3 py-2 bg-gray15 rounded-lg">
-                +7 (963) 770-65-35
+                +7 (906) 755-87-08
               </p>
               <button
                 onClick={() => {
@@ -38,12 +38,17 @@ export const Payment: FC = () => {
                 <img src="/copy-ic.svg" alt="" />
               </button>
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex flex-col gap-3 items-start">
               <p className="px-3 py-2 bg-gray15 rounded-lg text-tetriaryBlack">
-                Глеб Алексеевич М.
+                Юрий Сергеевич К.
               </p>
-              <img src="/tBank.png" alt="t-bank" />
-              <img src="/sber.png" alt="sber" />
+              <div className="flex gap-2">
+                <img className="bank_logo" src="/tbank.png" alt="t-bank" />
+                <img className="bank_logo" src="/sber.png" alt="sber" />
+                <img className="bank_logo" src="/ozon.png" alt="ozon-bank" />
+                <img className="bank_logo" src="/alfa.png" alt="alfa" />
+                <img className="bank_logo" src="/raif.png" alt="raif" />
+              </div>
             </div>
           </div>
           <button

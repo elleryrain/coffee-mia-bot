@@ -103,4 +103,10 @@
     border-color: rgba(255, 149, 0, 1);
     color: white;
   }
+
+  .bank_logo {
+    width: 32px;
+    height: 32px;
+    
+  }
 }
