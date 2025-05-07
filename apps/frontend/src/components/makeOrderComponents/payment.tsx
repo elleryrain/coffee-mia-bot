@@ -21,7 +21,7 @@ export const Payment: FC = () => {
 
   useEffect(() => {
     if (isOpen) {
-      // setTimeout(() => setIsOpen(false), 1000);
+      setTimeout(() => setIsOpen(false), 1000);
     }
   }, [isOpen]);
 
@@ -43,15 +43,18 @@ export const Payment: FC = () => {
               <p className="px-3 py-2 bg-gray15 rounded-lg">
                 +7 (906) 755-87-08
               </p>
-              <Popover placement="bottom" isOpen={isOpen}>
-                <PopoverTrigger>
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText('+7(906)755-87-08');
-                      setIsOpen(true);
-                    }}
-                    className="p-3 bg-gray15 rounded-lg"
-                  >
+              <Popover
+                placement="bottom"
+                isOpen={isOpen}
+                onOpenChange={(e) => {
+                  setIsOpen(e);
+                  if (e) {
+                    navigator.clipboard.writeText('+7(906)755-87-08');
+                  }
+                }}
+              >
+                <PopoverTrigger className="outline-none">
+                  <button className="p-3 bg-gray15 rounded-lg">
                     <img src="/copy-ic.svg" alt="" />
                   </button>
                 </PopoverTrigger>
