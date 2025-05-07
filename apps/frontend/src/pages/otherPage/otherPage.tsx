@@ -33,14 +33,6 @@ export const OtherPage: FC<{
         </h1>
       </div>
       <div className="flex flex-col gap-6 bg-transparent relative">
-        {productsList['otherSubCategories'].map((category) => (
-          <SubCategory
-            title={category.nameCategory}
-            description={category.description}
-            products={category.items}
-            refechFn={refetchFn}
-          />
-        ))}
         {data &&
           data.map((category) => (
             <SubCategory

@@ -116,6 +116,7 @@ export const Delivery: FC = () => {
         ...orderStore.courierDeliveryInfo,
         telegram_nickname: user.username,
         first_name: user.firstName,
+        phone: user.phone ?? '',
       });
       orderStore.setDeliveryInfo({
         ...orderStore.cdekDeliveryInfo,
@@ -210,7 +211,9 @@ export const Delivery: FC = () => {
                   if (value.validationDetails.rangeUnderflow) {
                     return 'Выберите дату не раньше сегодняшней';
                   } else if (value.validationDetails.rangeOverflow) {
-                    return `Выберите дату не позже ${getMaxDate().toDate('+03:00').toLocaleDateString()}`;
+                    return `Выберите дату не позже ${getMaxDate()
+                      .toDate('+03:00')
+                      .toLocaleDateString()}`;
                   } else {
                     return '';
                   }
@@ -333,7 +336,8 @@ export const Delivery: FC = () => {
               type="text"
             />
             <p className="text-secondaryBlack text-[16px] leading-[20.8px] font-normal mt-6">
-              Стоимость CDEK: <span className="text-primaryBlack">Бесплатно</span>
+              Стоимость CDEK:{' '}
+              <span className="text-primaryBlack">Бесплатно</span>
             </p>
             <button
               onClick={() => {

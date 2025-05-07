@@ -4,7 +4,7 @@ import { useGetPopularItems } from '../../api/generated/users/default';
 import { useNavigate } from 'react-router-dom';
 
 export const PopularPage: FC = () => {
-  const { data: items, refetch: refetchFn } = useGetPopularItems();
+  const { data: items, refetch: refetchFn, error } = useGetPopularItems();
 
   const navigate = useNavigate();
 
@@ -32,7 +32,7 @@ export const PopularPage: FC = () => {
           ))}
         </div>
       )}
-      {items?.length === 0 && (
+      {(items?.length === 0 || error !== null) && (
         <p className="relative left-4 top-[-25px] text-[18px] font-medium">
           Здесь пока пусто
         </p>
