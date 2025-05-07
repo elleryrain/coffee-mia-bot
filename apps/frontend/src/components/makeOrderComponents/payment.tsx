@@ -31,7 +31,7 @@ export const Payment: FC = () => {
               </p>
               <button
                 onClick={() => {
-                  navigator.clipboard.writeText('+7(963)770-65-35');
+                  navigator.clipboard.writeText('+7(906)755-87-08');
                 }}
                 className="p-3 bg-gray15 rounded-lg"
               >
