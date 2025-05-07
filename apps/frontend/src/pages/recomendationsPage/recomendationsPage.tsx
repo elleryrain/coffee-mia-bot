@@ -6,7 +6,7 @@ import { useGetRecommendItems } from '../../api/generated/users/default';
 export const RecomendationsPage: FC = () => {
   const navigate = useNavigate();
 
-  const {data: items, refetch: refetchFn, error} = useGetRecommendItems()
+  const {data: items, refetch: refetchFn, isError} = useGetRecommendItems()
 
   return (
     <div>
@@ -32,7 +32,7 @@ export const RecomendationsPage: FC = () => {
           ))}
         </div>
       )}
-      {(items?.length === 0 || error !== null) && (
+      {(items?.length === 0 || isError) && (
         <p className="relative left-4 top-[-25px] text-[18px] font-medium">
           Здесь пока пусто
         </p>

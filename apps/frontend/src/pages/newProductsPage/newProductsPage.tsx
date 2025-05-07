@@ -3,7 +3,7 @@ import { ProductCard } from '../../components';
 import { useGetNewItems } from '../../api/generated/users/default';
 
 export const NewProductsPage: FC = () => {
-  const { data: items, refetch: refetchFn } = useGetNewItems();
+  const { data: items, refetch: refetchFn, isError } = useGetNewItems();
 
   return (
     <div>
@@ -20,7 +20,7 @@ export const NewProductsPage: FC = () => {
           ))}
         </div>
       )}
-      {items?.length === 0 && (
+      {(items?.length === 0 || isError) && (
         <p className="relative left-4 top-[-25px] text-[18px] font-medium">
           Здесь пока пусто
         </p>

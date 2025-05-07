@@ -121,6 +121,7 @@ export const Delivery: FC = () => {
       orderStore.setDeliveryInfo({
         ...orderStore.cdekDeliveryInfo,
         first_name: user.firstName,
+        phone: user.phone ?? '',
         last_name: user.lastName,
       });
     }

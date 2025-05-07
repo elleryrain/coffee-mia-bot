@@ -1,5 +1,11 @@
-import { Tab, Tabs } from '@nextui-org/react';
-import { FC } from 'react';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Tab,
+  Tabs,
+} from '@nextui-org/react';
+import { FC, useEffect, useState } from 'react';
 import { tabsStyle } from '../../next-ui-styles';
 import { useCartStore } from '../../store/cartStore';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +16,14 @@ export const Payment: FC = () => {
   const cartStore = useCartStore();
   const orderStore = useOrderStore();
   const navigate = useNavigate();
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      // setTimeout(() => setIsOpen(false), 1000);
+    }
+  }, [isOpen]);
 
   const { mutateAsync } = useCreateUserOrder();
 
@@ -29,14 +43,25 @@ export const Payment: FC = () => {
               <p className="px-3 py-2 bg-gray15 rounded-lg">
                 +7 (906) 755-87-08
               </p>
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText('+7(906)755-87-08');
-                }}
-                className="p-3 bg-gray15 rounded-lg"
-              >
-                <img src="/copy-ic.svg" alt="" />
-              </button>
+              <Popover placement="bottom" isOpen={isOpen}>
+                <PopoverTrigger>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText('+7(906)755-87-08');
+                      setIsOpen(true);
+                    }}
+                    className="p-3 bg-gray15 rounded-lg"
+                  >
+                    <img src="/copy-ic.svg" alt="" />
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent
+                  className="bg-gray15 rounded-md shadow-light text-[12px]
+                "
+                >
+                  Номер скопирован
+                </PopoverContent>
+              </Popover>
             </div>
             <div className="flex flex-col gap-3 items-start">
               <p className="px-3 py-2 bg-gray15 rounded-lg text-tetriaryBlack">
