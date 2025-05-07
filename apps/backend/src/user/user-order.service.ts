@@ -34,7 +34,7 @@ export class UserOrderService {
             delivery.typeDelivery === 'cdek' ? 'CDEK' : delivery.typeDelivery,
         };
 
-        // Обработка типа доставки
+      
         if (delivery.typeDelivery === 'cdek') {
           if (!delivery.cdekDelivery) {
             throw new HttpException('Не указаны данные для доставки CDEK', 400);

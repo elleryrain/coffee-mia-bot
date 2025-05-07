@@ -1,2 +1,2 @@
 export * from './lib/shared';
-export * as ApiOrderBot from './botApi/postOder.dto';
+export * as ApiOrderBot from './bot/postOder.dto';
