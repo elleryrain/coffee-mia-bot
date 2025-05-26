@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build": "nx run-many -t build",
-    "dev": "nx run-many -t serve --parallel 4",
+    "dev": "nx run-many -t serve --parallel 5",
     "dev:bot": "nx serve bot",
     "dev:front": "nx serve frontend --host",
     "dev:backend": "nx serve backend",
