@@ -18,6 +18,9 @@ export default defineConfig(({ mode }) => {
       port: 4200,
       host: 'localhost',
       allowedHosts: true,
+      hmr: {
+        overlay: false,
+      },
     },
     preview: {
       port: 4300,
