@@ -45,7 +45,6 @@ export const ProductCard: FC<{
         <Link
           to={`/products/${product.id}`}
           className={`productCard border-gray20 flex flex-col gap-3`}
-          key={product.id}
         >
           <div className="productCardImg relative flex flex-col items-center justify-center overflow-hidden">
             <img

@@ -34,8 +34,9 @@ export const OtherPage: FC<{
       </div>
       <div className="flex flex-col gap-6 bg-transparent relative">
         {data &&
-          data.map((category) => (
+          data.map((category, ix) => (
             <SubCategory
+              key={ix}
               title={category.nameCategory}
               description={category.description}
               products={category.items}

@@ -1,13 +1,10 @@
 import { FC } from 'react';
 import {
-  Avatar,
-  Input,
   Modal,
   ModalContent,
   useDisclosure,
 } from '@nextui-org/react';
 import { modalStyles } from '../../next-ui-styles';
-import { purchased } from '../../mocks/mockPurchased';
 import { PurchasedItem } from './purchasedItem';
 import { useGetApiUserOrder } from '../../api/generated/users/default';
 
@@ -44,8 +41,8 @@ export const OrdersHistory: FC = () => {
                 </div>
                 <div className="w-[100vw] h-0 border-b-[0.5px] border-gray40 mt-2 mb-2"></div>
                 <div className="container mt-6 flex flex-col gap-3">
-                  {purchasedItems?.map((item, index) => (
-                    <PurchasedItem item={item} key={index} />
+                  {purchasedItems?.map((item) => (
+                    <PurchasedItem item={item} key={item.id} />
                   ))}
                 </div>
               </>

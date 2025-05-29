@@ -33,8 +33,9 @@ export const DripsPage: FC<{
       </div>
       <div className="flex flex-col gap-6 bg-transparent relative">
         {data &&
-          data.map((category) => (
+          data.map((category, ix) => (
             <SubCategory
+              key={ix}
               refechFn={refetchFn}
               title={category.nameCategory}
               description={category.description}

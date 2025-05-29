@@ -6,7 +6,7 @@ import { useGetRecommendItems } from '../../api/generated/users/default';
 export const RecomendationsPage: FC = () => {
   const navigate = useNavigate();
 
-  const {data: items, refetch: refetchFn, isError} = useGetRecommendItems()
+  const { data: items, refetch: refetchFn, isError } = useGetRecommendItems();
 
   return (
     <div>
@@ -28,7 +28,7 @@ export const RecomendationsPage: FC = () => {
       {items?.length !== 0 && (
         <div className="container pt-10 flex flex-wrap gap-6">
           {items?.map((item) => (
-            <ProductCard product={item} refechFn={refetchFn} />
+            <ProductCard key={item.id} product={item} refechFn={refetchFn} />
           ))}
         </div>
       )}

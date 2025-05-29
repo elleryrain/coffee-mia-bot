@@ -16,7 +16,7 @@ export const NewProductsPage: FC = () => {
       {items?.length !== 0 && (
         <div className="container pt-10 flex flex-wrap gap-6">
           {items?.map((item) => (
-            <ProductCard refechFn={refetchFn} product={item} />
+            <ProductCard key={item.id} refechFn={refetchFn} product={item} />
           ))}
         </div>
       )}
